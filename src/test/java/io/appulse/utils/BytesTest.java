@@ -30,7 +30,7 @@ public class BytesTest {
 
   @Test
   public void wrap () {
-    byte[] expected = new byte[] { 1, 2, 3};
+    byte[] expected = new byte[] { 1, 2, 3 };
 
     Bytes bytes = Bytes.wrap(expected);
 
@@ -45,10 +45,9 @@ public class BytesTest {
   public void position () {
     Bytes bytes = Bytes.allocate(4);
 
-
     assertThat(bytes.position()).isEqualTo(0);
 
-    bytes.put(10);
+    bytes.put4B(10);
     assertThat(bytes.position()).isEqualTo(4);
 
     bytes.position(2);
@@ -61,7 +60,7 @@ public class BytesTest {
   @Test
   public void clear () {
     Bytes bytes = Bytes.allocate()
-        .putAsByte(1);
+        .put1B(1);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1 });
@@ -79,12 +78,12 @@ public class BytesTest {
     assertThat(bytes.array())
         .isEqualTo(new byte[0]);
 
-    bytes.putAsByte(1);
+    bytes.put1B(1);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1 });
 
-    bytes.putAsByte(2);
+    bytes.put1B(2);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1, 2 });

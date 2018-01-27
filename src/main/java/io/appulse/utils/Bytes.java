@@ -73,9 +73,6 @@ public final class Bytes {
   BytesDelegatePuts puts;
 
   @Delegate
-  BytesDelegatePutsAs putsAs;
-
-  @Delegate
   BytesDelegateGets gets;
 
   @NonFinal
@@ -84,9 +81,7 @@ public final class Bytes {
 
   private Bytes (ByteBuffer buffer) {
     puts = new BytesDelegatePuts(this);
-    putsAs = new BytesDelegatePutsAs(this);
     gets = new BytesDelegateGets(this);
-
     this.buffer = buffer;
   }
 

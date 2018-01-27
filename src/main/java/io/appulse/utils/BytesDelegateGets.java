@@ -16,7 +16,10 @@
 
 package io.appulse.utils;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static lombok.AccessLevel.PRIVATE;
+
+import java.nio.charset.Charset;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -82,5 +85,21 @@ final class BytesDelegateGets {
 
   public double getDouble (int index) {
     return bytes.getBuffer().getDouble(index);
+  }
+
+  public String getString () {
+    return new String(bytes.getBytes(), UTF_8);
+  }
+
+  public String getString (Charset charset) {
+    return new String(bytes.getBytes(), charset);
+  }
+
+  public String getString (int length) {
+    return new String(bytes.getBytes(length), UTF_8);
+  }
+
+  public String getString (int length, Charset charset) {
+    return new String(bytes.getBytes(length), charset);
   }
 }
