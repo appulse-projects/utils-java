@@ -34,9 +34,9 @@ $> mvn clean package
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 15.211 s
-[INFO] Finished at: 2018-01-26T19:19:45+03:00
-[INFO] Final Memory: 61M/754M
+[INFO] Total time: 15.272 s
+[INFO] Finished at: 2018-01-27T18:04:44+03:00
+[INFO] Final Memory: 47M/483M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -54,7 +54,7 @@ $> mvn clean test
 [INFO]
 [INFO] Results:
 [INFO]
-[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
 [INFO]
 ...
 ```

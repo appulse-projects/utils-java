@@ -11,6 +11,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add more tests.
 
+## [1.0.1](https://github.com/appulse-projects/utils-java/releases/tag/1.0.1) - 2018-01-27
+
+### Added
+
+- `ReflectionUtils`;
+- More tests.
+
+### Changed
+
+- Optimize `ByteUtil` speed.
+- Refactored `Bytes` interface.
+
 ## [1.0.0](https://github.com/appulse-projects/utils-java/releases/tag/1.0.0) - 2018-01-26
 
 Initial release.
