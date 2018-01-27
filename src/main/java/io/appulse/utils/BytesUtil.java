@@ -32,7 +32,10 @@ import lombok.val;
 public final class BytesUtil {
 
   public static byte[] asBytes (char value) {
-    return ByteBuffer.allocate(Character.BYTES).putChar(value).array();
+    return new byte[] {
+        (byte) (value >> 8),
+        (byte) value
+    };
   }
 
   public static byte[] asBytes (byte value) {
@@ -40,23 +43,40 @@ public final class BytesUtil {
   }
 
   public static byte[] asBytes (short value) {
-    return ByteBuffer.allocate(Short.BYTES).putShort(value).array();
+    return new byte[] {
+        (byte) (value >> 8),
+        (byte) value
+    };
   }
 
   public static byte[] asBytes (int value) {
-    return ByteBuffer.allocate(Integer.BYTES).putInt(value).array();
+    return new byte[] {
+        (byte) (value >> 24),
+        (byte) (value >> 16),
+        (byte) (value >> 8),
+        (byte) value
+    };
   }
 
   public static byte[] asBytes (long value) {
-    return ByteBuffer.allocate(Long.BYTES).putLong(value).array();
+    return new byte[] {
+        (byte) (value >> 56),
+        (byte) (value >> 48),
+        (byte) (value >> 40),
+        (byte) (value >> 32),
+        (byte) (value >> 24),
+        (byte) (value >> 16),
+        (byte) (value >> 8),
+        (byte) value
+    };
   }
 
   public static byte[] asBytes (float value) {
-    return ByteBuffer.allocate(Float.BYTES).putFloat(value).array();
+    return asBytes(Float.floatToRawIntBits(value));
   }
 
   public static byte[] asBytes (double value) {
-    return ByteBuffer.allocate(Double.BYTES).putDouble(value).array();
+    return asBytes(Double.doubleToRawLongBits(value));
   }
 
   public static int asInteger (@NonNull ByteBuffer buffer, int length) {
