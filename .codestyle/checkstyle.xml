@@ -69,8 +69,11 @@ limitations under the License.
   <module name="Translation"/>
   <module name="UniqueProperties"/>
 
+  <module name="SuppressWarningsFilter" />
+
 
   <module name="TreeWalker">
+    <module name="SuppressWarningsHolder" />
 
     <!-- Checks for Javadoc comments.                     -->
     <!-- See http://checkstyle.sf.net/config_javadoc.html -->
