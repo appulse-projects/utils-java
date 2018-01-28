@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add more tests.
 
+## [1.0.2](https://github.com/appulse-projects/utils-java/releases/tag/1.0.2) - 2018-01-28
+
+### Changed
+
+- Speed up `BytesUtil` methods.
+
 ## [1.0.1](https://github.com/appulse-projects/utils-java/releases/tag/1.0.1) - 2018-01-27
 
 ### Added

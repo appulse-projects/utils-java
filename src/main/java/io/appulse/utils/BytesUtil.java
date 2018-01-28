@@ -79,15 +79,44 @@ public final class BytesUtil {
     return asBytes(Double.doubleToRawLongBits(value));
   }
 
-  public static int asInteger (@NonNull ByteBuffer buffer, int length) {
-    val bytes = new byte[length];
-    buffer.get(bytes, 0, length);
-    return asInteger(bytes);
+  public static short asShort (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Short.BYTES);
+    return (short) ((aligned[0] <<  8) | (aligned[1] & 0xff));
+  }
+
+  public static char asChar (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Short.BYTES);
+    return (char) ((aligned[0] <<  8) | (aligned[1] & 0xff));
   }
 
   public static int asInteger (@NonNull byte[] bytes) {
     val aligned = align(bytes, Integer.BYTES);
-    return ByteBuffer.wrap(aligned).getInt();
+    return (aligned[0] << 24)
+           | ((aligned[1] & 0xff) << 16)
+           | ((aligned[2] & 0xff) <<  8)
+           | (aligned[3] & 0xff);
+  }
+
+  public static long asLong (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Long.BYTES);
+    return ((long) aligned[0] << 56)
+           | (((long) aligned[1] & 0xff) << 48)
+           | (((long) aligned[2] & 0xff) << 40)
+           | (((long) aligned[3] & 0xff) << 32)
+           | (((long) aligned[4] & 0xff) << 24)
+           | (((long) aligned[5] & 0xff) << 16)
+           | (((long) aligned[6] & 0xff) <<  8)
+           | ((long) aligned[7] & 0xff);
+  }
+
+  public static float asFloat (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Float.BYTES);
+    return Float.intBitsToFloat(asInteger(aligned));
+  }
+
+  public static double asDouble (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Double.BYTES);
+    return Double.longBitsToDouble(asLong(aligned));
   }
 
   public static byte[] concatenate (@NonNull byte[]... arrays) {
@@ -101,7 +130,7 @@ public final class BytesUtil {
   }
 
   public static byte[] align (@NonNull byte[] bytes, int length) {
-    if (length <= 0) {
+    if (length <= 0 || bytes.length == length) {
       return bytes;
     }
 
