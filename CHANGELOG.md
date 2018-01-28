@@ -13,6 +13,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.0.3](https://github.com/appulse-projects/utils-java/releases/tag/1.0.3) - 2018-01-28
 
+### Changed
+
+- Refactored `Bytes` interface.
+
+### Removed
+
+- Netty's dependency.
+
+## [1.0.3](https://github.com/appulse-projects/utils-java/releases/tag/1.0.3) - 2018-01-28
+
 ### Added
 
 - New `Bytes` methods.

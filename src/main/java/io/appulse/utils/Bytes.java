@@ -23,8 +23,8 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-import io.netty.buffer.ByteBuf;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.Delegate;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
@@ -38,26 +38,15 @@ import lombok.val;
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public final class Bytes {
 
-  public static Bytes wrap (byte[] bytes) {
+  public static Bytes wrap (@NonNull byte[] bytes) {
     val result = allocate(bytes.length);
-    return result.put(bytes);
+    result.put(bytes);
+    result.flip();
+    return result;
   }
 
-  public static Bytes wrap (ByteBuffer buffer) {
-    val clone = ByteBuffer.wrap(buffer.array());
-    return new Bytes(clone);
-  }
-
-  public static Bytes wrap (ByteBuf buf) {
-    ByteBuffer buffer;
-    if (buf.isDirect()) {
-      buffer = buf.nioBuffer();
-    } else {
-      val bytes = new byte[buf.readableBytes()];
-      buf.getBytes(buf.readerIndex(), bytes);
-      buffer = ByteBuffer.wrap(bytes);
-    }
-    return new Bytes(buffer);
+  public static Bytes wrap (@NonNull ByteBuffer buffer) {
+    return wrap(buffer.array());
   }
 
   public static Bytes allocate () {
@@ -79,15 +68,20 @@ public final class Bytes {
   @Getter(value = PACKAGE)
   ByteBuffer buffer;
 
+  @NonFinal
+  int limit;
+
   private Bytes (ByteBuffer buffer) {
     puts = new BytesDelegatePuts(this);
     gets = new BytesDelegateGets(this);
     this.buffer = buffer;
+    limit = buffer.position();
   }
 
   public Bytes put (byte value) {
     checkCapacity(1);
     buffer.put(value);
+    limit++;
     return this;
   }
 
@@ -96,13 +90,14 @@ public final class Bytes {
     return this;
   }
 
-  public Bytes put (byte[] bytes) {
+  public Bytes put (@NonNull byte[] bytes) {
     checkCapacity(bytes.length);
     buffer.put(bytes);
+    limit += bytes.length;
     return this;
   }
 
-  public Bytes put (int index, byte[] bytes) {
+  public Bytes put (int index, @NonNull byte[] bytes) {
     checkCapacity(index, bytes.length);
     IntStream.range(index, index + bytes.length).forEach(it -> {
       buffer.put(it, bytes[it - index]);
@@ -133,15 +128,15 @@ public final class Bytes {
   }
 
   public byte[] array () {
-    return Arrays.copyOfRange(buffer.array(), 0, buffer.position());
+    return Arrays.copyOfRange(buffer.array(), 0, limit);
   }
 
   public int limit () {
-    return buffer.limit();
+    return limit;
   }
 
   public int remaining () {
-    return buffer.remaining();
+    return limit - buffer.position();
   }
 
   public int position () {
@@ -149,16 +144,23 @@ public final class Bytes {
   }
 
   public Bytes position (int position) {
+    if (position > limit || position < 0) {
+      throw new IllegalArgumentException();
+    }
     buffer.position(position);
     return this;
   }
 
-  public void clear () {
+  public Bytes clear () {
     buffer.clear();
+    limit = 0;
+    return this;
   }
 
-  public void flip () {
+  public Bytes flip () {
+    limit = buffer.position();
     buffer.flip();
+    return this;
   }
 
   private void checkCapacity (int size) {

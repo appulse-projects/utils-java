@@ -35,6 +35,12 @@ public class BytesTest {
     Bytes bytes = Bytes.wrap(expected);
 
     assertThat(bytes.position())
+        .isEqualTo(0);
+
+    assertThat(bytes.limit())
+        .isEqualTo(expected.length);
+
+    assertThat(bytes.remaining())
         .isEqualTo(expected.length);
 
     assertThat(bytes.array())
@@ -92,7 +98,7 @@ public class BytesTest {
   @Test
   public void limit () {
       Bytes bytes = Bytes.allocate(2);
-      assertThat(bytes.limit()).isEqualTo(2);
+      assertThat(bytes.limit()).isEqualTo(0);
 
       bytes.put4B(4);
       assertThat(bytes.limit()).isEqualTo(4);
@@ -104,15 +110,15 @@ public class BytesTest {
   @Test
   public void remaining () {
       Bytes bytes = Bytes.allocate(2);
-      assertThat(bytes.remaining()).isEqualTo(2);
+      assertThat(bytes.remaining()).isEqualTo(0);
 
       bytes.put4B(4);
       assertThat(bytes.remaining()).isEqualTo(0);
 
       Bytes wrapped = Bytes.wrap(new byte[] { 1 });
-      assertThat(wrapped.remaining()).isEqualTo(0);
+      assertThat(wrapped.remaining()).isEqualTo(1);
 
       wrapped.flip();
-      assertThat(wrapped.remaining()).isEqualTo(1);
+      assertThat(wrapped.remaining()).isEqualTo(0);
   }
 }
