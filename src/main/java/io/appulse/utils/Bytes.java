@@ -136,8 +136,12 @@ public final class Bytes {
     return Arrays.copyOfRange(buffer.array(), 0, buffer.position());
   }
 
-  public int size () {
-    return buffer.position();
+  public int limit () {
+    return buffer.limit();
+  }
+
+  public int remaining () {
+    return buffer.remaining();
   }
 
   public int position () {

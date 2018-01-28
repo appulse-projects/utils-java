@@ -88,4 +88,31 @@ public class BytesTest {
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1, 2 });
   }
+
+  @Test
+  public void limit () {
+      Bytes bytes = Bytes.allocate(2);
+      assertThat(bytes.limit()).isEqualTo(2);
+
+      bytes.put4B(4);
+      assertThat(bytes.limit()).isEqualTo(4);
+
+      Bytes wrapped = Bytes.wrap(new byte[] { 1 });
+      assertThat(wrapped.limit()).isEqualTo(1);
+  }
+
+  @Test
+  public void remaining () {
+      Bytes bytes = Bytes.allocate(2);
+      assertThat(bytes.remaining()).isEqualTo(2);
+
+      bytes.put4B(4);
+      assertThat(bytes.remaining()).isEqualTo(0);
+
+      Bytes wrapped = Bytes.wrap(new byte[] { 1 });
+      assertThat(wrapped.remaining()).isEqualTo(0);
+
+      wrapped.flip();
+      assertThat(wrapped.remaining()).isEqualTo(1);
+  }
 }
