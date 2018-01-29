@@ -11,7 +11,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 - Add more tests.
 
-## [1.0.3](https://github.com/appulse-projects/utils-java/releases/tag/1.0.3) - 2018-01-28
+## [1.1.0](https://github.com/appulse-projects/utils-java/releases/tag/1.1.0) - 2018-01-30
+
+### Added
+
+- `StreamReader` for effective reading `InputStream`.
+
+## [1.0.4](https://github.com/appulse-projects/utils-java/releases/tag/1.0.4) - 2018-01-28
 
 ### Changed
 

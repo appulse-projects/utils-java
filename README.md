@@ -29,14 +29,14 @@ For building routine automation, I am using [maven](https://maven.apache.org).
 To build the project, do the following:
 
 ```bash
-$> mvn clean package
+$> mvn clean compile
 ...
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time: 15.272 s
-[INFO] Finished at: 2018-01-27T18:04:44+03:00
-[INFO] Final Memory: 47M/483M
+[INFO] Total time: 13.033 s
+[INFO] Finished at: 2018-01-30T00:29:40+03:00
+[INFO] Final Memory: 43M/467M
 [INFO] ------------------------------------------------------------------------
 ```
 
@@ -54,7 +54,7 @@ $> mvn clean test
 [INFO]
 [INFO] Results:
 [INFO]
-[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
 [INFO]
 ...
 ```
