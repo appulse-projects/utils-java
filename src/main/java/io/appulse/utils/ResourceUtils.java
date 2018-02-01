@@ -45,14 +45,12 @@ public final class ResourceUtils {
       inputStream = ResourceUtils.class.getResourceAsStream(name);
       if (inputStream == null) {
         return empty();
-      } else {
-        byte[] bytes = BytesUtils.read(inputStream);
-        String string = new String(bytes, charset);
-        return of(string);
       }
-    } else {
-      return of("");
     }
+
+    val bytes = BytesUtils.read(inputStream);
+    val string = new String(bytes, charset);
+    return of(string);
   }
 
   private ResourceUtils () {

@@ -18,10 +18,6 @@ package io.appulse.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import static java.util.Optional.empty;
-
-import java.util.Optional;
-
 import org.junit.Test;
 
 /**
