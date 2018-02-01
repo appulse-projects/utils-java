@@ -21,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -30,15 +31,22 @@ import lombok.experimental.FieldDefaults;
 /**
  *
  * @author Artem Labazin
- * @since 1.1.0
+ * @since 1.2.0
  */
-public class StreamReaderTest {
+public class SocketUtilsTest {
+
+  @Test
+  public void isPortAvailable () {
+    Optional<Integer> port = SocketUtils.findFreePort();
+    assertThat(port).isPresent();
+    assertThat(SocketUtils.isPortAvailable(port.get())).isTrue();
+  }
 
   @Test
   public void read () throws Exception {
     byte[] expected = "Hello world".getBytes();
 
-    assertThat(StreamReader.read(new CustomInputStream(expected)))
+    assertThat(SocketUtils.read(new CustomInputStream(expected)))
         .isEqualTo(expected);
   }
 
@@ -47,7 +55,7 @@ public class StreamReaderTest {
     byte[] bytes = "Hello world".getBytes();
     byte[] expected = Arrays.copyOfRange(bytes, 0, 2);
 
-    assertThat(StreamReader.read(new CustomInputStream(bytes), 2))
+    assertThat(SocketUtils.read(new CustomInputStream(bytes), 2))
         .isEqualTo(expected);
   }
 
