@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
-## [1.2.0](https://github.com/appulse-projects/utils-java/releases/tag/1.2.0) - 2018-02-01
+## [1.2.1](https://github.com/appulse-projects/utils-java/releases/tag/1.2.1) - 2018-02-01
 
 Add socket utils class, with help functions related to sockets work.
 
