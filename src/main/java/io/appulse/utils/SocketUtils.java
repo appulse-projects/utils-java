@@ -16,10 +16,17 @@
 
 package io.appulse.utils;
 
+import static java.util.Optional.empty;
+import static java.util.Optional.of;
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Optional;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
@@ -28,9 +35,31 @@ import lombok.val;
 /**
  *
  * @author Artem Labazin
- * @since 1.1.0
+ * @since 1.2.0
  */
-public final class StreamReader {
+public final class SocketUtils {
+
+  public static Optional<Integer> findFreePort () {
+    return findFreePort(1024, 65535);
+  }
+
+  public static Optional<Integer> findFreePort (int from, int to) {
+    for (int port = from; port <= to; port++) {
+      if (isPortAvailable(port)) {
+        return of(port);
+      }
+    }
+    return empty();
+  }
+
+  public static boolean isPortAvailable (int port) {
+    try (Socket socket = new Socket()) {
+      socket.connect(new InetSocketAddress("localhost", port), (int) SECONDS.toMillis(1));
+      return false;
+    } catch (IOException ex) {
+      return true;
+    }
+  }
 
   @SneakyThrows
   public static byte[] read (@NonNull InputStream stream) {
@@ -98,6 +127,6 @@ public final class StreamReader {
     return readBytes(socket.getInputStream(), fixedLength);
   }
 
-  private StreamReader () {
+  private SocketUtils () {
   }
 }

@@ -131,6 +131,24 @@ public final class Bytes {
     return Arrays.copyOfRange(buffer.array(), 0, limit);
   }
 
+  /**
+   * Returns byte array representation of class, starting from specified position.
+   *
+   * @param offset start position
+   *
+   * @return byte array representation
+   *
+   * @throws IndexOutOfBoundsException if offset is lower zero or larger the limit
+   *
+   * @since 1.2.0
+   */
+  public byte[] array (int offset) {
+    if (offset < 0 || offset > limit) {
+      throw new IndexOutOfBoundsException();
+    }
+    return Arrays.copyOfRange(buffer.array(), offset, limit);
+  }
+
   public int limit () {
     return limit;
   }
