@@ -20,17 +20,13 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Optional;
 
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.val;
 
 /**
  *
@@ -62,69 +58,23 @@ public final class SocketUtils {
   }
 
   @SneakyThrows
-  public static byte[] read (@NonNull InputStream stream) {
-    val outputStream = new ByteArrayOutputStream(32);
-    val buffer = new byte[32];
-
-    while (true) {
-      val length = stream.read(buffer);
-      if (length == -1) {
-        break;
-      }
-      outputStream.write(buffer, 0, length);
-    }
-
-    return outputStream.toByteArray();
-  }
-
-  @SneakyThrows
   public static byte[] read (@NonNull Socket socket) {
-    return read(socket.getInputStream());
-  }
-
-  @SneakyThrows
-  public static byte[] read (@NonNull InputStream stream, int length) {
-    if (length < 0) {
-      throw new IndexOutOfBoundsException();
-    }
-
-    val result = new byte[length];
-    int readed = 0;
-
-    while (readed < length) {
-      val count = stream.read(result, readed, length - readed);
-      if (count < -1) {
-        throw new EOFException();
-      }
-      readed += count;
-    }
-
-    return result;
+    return BytesUtils.read(socket.getInputStream());
   }
 
   @SneakyThrows
   public static byte[] read (@NonNull Socket socket, int length) {
-    return read(socket.getInputStream(), length);
-  }
-
-  public static Bytes readBytes (@NonNull InputStream stream) {
-    val result = read(stream);
-    return Bytes.wrap(result);
+    return BytesUtils.read(socket.getInputStream(), length);
   }
 
   @SneakyThrows
   public static Bytes readBytes (@NonNull Socket socket) {
-    return readBytes(socket.getInputStream());
-  }
-
-  public static Bytes readBytes (@NonNull InputStream stream, int length) {
-    val result = read(stream, length);
-    return Bytes.wrap(result);
+    return BytesUtils.readBytes(socket.getInputStream());
   }
 
   @SneakyThrows
   public static Bytes readBytes (@NonNull Socket socket, int fixedLength) {
-    return readBytes(socket.getInputStream(), fixedLength);
+    return BytesUtils.readBytes(socket.getInputStream(), fixedLength);
   }
 
   private SocketUtils () {

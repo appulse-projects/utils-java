@@ -18,18 +18,22 @@ package io.appulse.utils;
 
 import static java.lang.Math.min;
 
+import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.stream.Stream;
 
 import lombok.NonNull;
+import lombok.SneakyThrows;
 import lombok.val;
 
 /**
  *
  * @author Artem Labazin
- * @since 1.0.0
+ * @since 1.3.0
  */
-public final class BytesUtil {
+public final class BytesUtils {
 
   public static byte[] asBytes (char value) {
     return new byte[] {
@@ -148,6 +152,90 @@ public final class BytesUtil {
     return result;
   }
 
-  private BytesUtil () {
+  /**
+   * Reads all bytes from stream till the end of the stream.
+   *
+   * @param stream steam
+   *
+   * @return readed bytes array
+   *
+   * @since 1.3.0
+   */
+  @SneakyThrows
+  public static byte[] read (@NonNull InputStream stream) {
+    val outputStream = new ByteArrayOutputStream(32);
+    val buffer = new byte[32];
+
+    while (true) {
+      val length = stream.read(buffer);
+      if (length == -1) {
+        break;
+      }
+      outputStream.write(buffer, 0, length);
+    }
+
+    return outputStream.toByteArray();
+  }
+
+  /**
+   * Reads fixed length bytes from the stream.
+   *
+   * @param stream steam
+   * @param length how many bytes to read from stream
+   *
+   * @return readed bytes array
+   *
+   * @since 1.3.0
+   */
+  @SneakyThrows
+  public static byte[] read (@NonNull InputStream stream, int length) {
+    if (length < 0) {
+      throw new IndexOutOfBoundsException();
+    }
+
+    val result = new byte[length];
+    int readed = 0;
+
+    while (readed < length) {
+      val count = stream.read(result, readed, length - readed);
+      if (count < -1) {
+        throw new EOFException();
+      }
+      readed += count;
+    }
+
+    return result;
+  }
+
+  /**
+   * Reads all bytes from stream till the end of the stream.
+   *
+   * @param stream steam
+   *
+   * @return readed bytes array wrapped in {@link Bytes} instance
+   *
+   * @since 1.3.0
+   */
+  public static Bytes readBytes (@NonNull InputStream stream) {
+    val result = read(stream);
+    return Bytes.wrap(result);
+  }
+
+  /**
+   * Reads fixed length bytes from the stream.
+   *
+   * @param stream steam
+   * @param length how many bytes to read from stream
+   *
+   * @return readed bytes array wrapped in {@link Bytes} instance
+   *
+   * @since 1.3.0
+   */
+  public static Bytes readBytes (@NonNull InputStream stream, int length) {
+    val result = read(stream, length);
+    return Bytes.wrap(result);
+  }
+
+  private BytesUtils () {
   }
 }

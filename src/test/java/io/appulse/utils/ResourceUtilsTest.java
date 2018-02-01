@@ -18,6 +18,8 @@ package io.appulse.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static java.util.Optional.empty;
+
 import java.util.Optional;
 
 import org.junit.Test;
@@ -25,14 +27,20 @@ import org.junit.Test;
 /**
  *
  * @author Artem Labazin
- * @since 1.2.0
+ * @since 1.3.0
  */
-public class SocketUtilsTest {
+public class ResourceUtilsTest {
 
   @Test
-  public void isPortAvailable () {
-    Optional<Integer> port = SocketUtils.findFreePort();
-    assertThat(port).isPresent();
-    assertThat(SocketUtils.isPortAvailable(port.get())).isTrue();
+  public void getResource () {
+    assertThat(ResourceUtils.getResource("/test.txt"))
+        .isPresent()
+        .hasValue("Hello world!\n");
+  }
+
+  @Test
+  public void notExist () {
+    assertThat(ResourceUtils.getResource("/not-exist.txt"))
+        .isNotPresent();
   }
 }

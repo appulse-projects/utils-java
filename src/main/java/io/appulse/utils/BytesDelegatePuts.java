@@ -16,8 +16,8 @@
 
 package io.appulse.utils;
 
-import static io.appulse.utils.BytesUtil.align;
-import static io.appulse.utils.BytesUtil.asBytes;
+import static io.appulse.utils.BytesUtils.align;
+import static io.appulse.utils.BytesUtils.asBytes;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static lombok.AccessLevel.PRIVATE;
 
