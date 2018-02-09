@@ -97,28 +97,54 @@ public class BytesTest {
 
   @Test
   public void limit () {
-      Bytes bytes = Bytes.allocate(2);
-      assertThat(bytes.limit()).isEqualTo(0);
+    Bytes bytes = Bytes.allocate(2);
+    assertThat(bytes.limit()).isEqualTo(0);
 
-      bytes.put4B(4);
-      assertThat(bytes.limit()).isEqualTo(4);
+    bytes.put4B(4);
+    assertThat(bytes.limit()).isEqualTo(4);
 
-      Bytes wrapped = Bytes.wrap(new byte[] { 1 });
-      assertThat(wrapped.limit()).isEqualTo(1);
+    Bytes wrapped = Bytes.wrap(new byte[] { 1 });
+    assertThat(wrapped.limit()).isEqualTo(1);
   }
 
   @Test
   public void remaining () {
-      Bytes bytes = Bytes.allocate(2);
-      assertThat(bytes.remaining()).isEqualTo(0);
+    Bytes bytes = Bytes.allocate(2);
+    assertThat(bytes.remaining()).isEqualTo(0);
 
-      bytes.put4B(4);
-      assertThat(bytes.remaining()).isEqualTo(0);
+    bytes.put4B(4);
+    assertThat(bytes.remaining()).isEqualTo(0);
 
-      Bytes wrapped = Bytes.wrap(new byte[] { 1 });
-      assertThat(wrapped.remaining()).isEqualTo(1);
+    Bytes wrapped = Bytes.wrap(new byte[] { 1 });
+    assertThat(wrapped.remaining()).isEqualTo(1);
 
-      wrapped.flip();
-      assertThat(wrapped.remaining()).isEqualTo(0);
+    wrapped.flip();
+    assertThat(wrapped.remaining()).isEqualTo(0);
+  }
+
+  @Test
+  public void unsignedTest () {
+    Bytes bytes = Bytes.allocate()
+        .put1B(254)
+        .put2B(62994)
+        .put4B(4_100_000_000L);
+
+    assertThat(bytes.getByte(0))
+        .isNotEqualTo(254);
+
+    assertThat(bytes.getUnsignedByte(0))
+        .isEqualTo((short) 254);
+
+    assertThat(bytes.getShort(1))
+        .isNotEqualTo(62994);
+
+    assertThat(bytes.getUnsignedShort(1))
+        .isEqualTo(62994);
+
+    assertThat(bytes.getInt(3))
+        .isNotEqualTo(4_100_000_000L);
+
+    assertThat(bytes.getUnsignedInt(3))
+        .isEqualTo(4_100_000_000L);
   }
 }

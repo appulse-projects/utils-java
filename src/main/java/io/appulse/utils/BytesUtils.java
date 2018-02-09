@@ -83,9 +83,48 @@ public final class BytesUtils {
     return asBytes(Double.doubleToRawLongBits(value));
   }
 
+  /**
+   * Converts byte to unsigned byte.
+   *
+   * @param value byte value
+   *
+   * @return unsigned byte value as short integer
+   *
+   * @since 1.3.1
+   */
+  public static short asUnsignedByte (byte value) {
+    return asUnsignedByte(new byte[] { value });
+  }
+
+  /**
+   * Transforms byte array to unsigned byte value as short integer.
+   *
+   * @param bytes byte array
+   *
+   * @return unsigned byte
+   *
+   * @since 1.3.1
+   */
+  public static short asUnsignedByte (@NonNull byte[] bytes) {
+    return asShort(bytes);
+  }
+
   public static short asShort (@NonNull byte[] bytes) {
     val aligned = align(bytes, Short.BYTES);
     return (short) ((aligned[0] <<  8) | (aligned[1] & 0xff));
+  }
+
+  /**
+   * Transforms byte array to unsigned short integer value as integer.
+   *
+   * @param bytes byte array
+   *
+   * @return unsigned short integer
+   *
+   * @since 1.3.1
+   */
+  public static int asUnsignedShort (@NonNull byte[] bytes) {
+    return asShort(bytes) & 0xFFFF;
   }
 
   public static char asChar (@NonNull byte[] bytes) {
@@ -99,6 +138,19 @@ public final class BytesUtils {
            | ((aligned[1] & 0xff) << 16)
            | ((aligned[2] & 0xff) <<  8)
            | (aligned[3] & 0xff);
+  }
+
+  /**
+   * Transforms byte array to unsigned integer value as long integer.
+   *
+   * @param bytes byte array
+   *
+   * @return unsigned integer
+   *
+   * @since 1.3.1
+   */
+  public static long asUnsignedInteger (@NonNull byte[] bytes) {
+    return asLong(bytes);
   }
 
   public static long asLong (@NonNull byte[] bytes) {

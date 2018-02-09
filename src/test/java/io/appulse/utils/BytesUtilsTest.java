@@ -70,6 +70,19 @@ public class BytesUtilsTest {
   }
 
   @Test
+  public void asUnsignedByte () {
+    val bytes = ByteBuffer.allocate(Byte.BYTES)
+        .put((byte) 254)
+        .array();
+
+    assertThat(bytes[0])
+        .isNotEqualTo(254);
+
+    assertThat(BytesUtils.asUnsignedByte(bytes))
+        .isNotEqualTo(254);
+  }
+
+  @Test
   public void asShort () {
     val bytes1 = ByteBuffer.allocate(Short.BYTES)
         .putShort(Short.MAX_VALUE)
@@ -91,6 +104,19 @@ public class BytesUtilsTest {
 
     assertThat(BytesUtils.asShort(bytes3))
         .isEqualTo((short) 42);
+  }
+
+  @Test
+  public void asUnsignedShort () {
+    val bytes = ByteBuffer.allocate(Short.BYTES)
+        .putShort((short) 62994)
+        .array();
+
+    assertThat(BytesUtils.asShort(bytes))
+        .isNotEqualTo(62994);
+
+    assertThat(BytesUtils.asUnsignedShort(bytes))
+        .isEqualTo(62994);
   }
 
   @Test
@@ -125,6 +151,19 @@ public class BytesUtilsTest {
 
     assertThat(BytesUtils.asInteger(bytes3))
         .isEqualTo(42);
+  }
+
+  @Test
+  public void asUnsignedInteger () {
+    val bytes = ByteBuffer.allocate(Integer.BYTES)
+        .putInt((int) 4_100_000_000L)
+        .array();
+
+    assertThat(BytesUtils.asInteger(bytes))
+        .isNotEqualTo(4_100_000_000L);
+
+    assertThat(BytesUtils.asUnsignedInteger(bytes))
+        .isEqualTo(4_100_000_000L);
   }
 
   @Test
