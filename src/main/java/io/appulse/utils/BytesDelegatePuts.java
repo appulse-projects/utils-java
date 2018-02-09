@@ -31,9 +31,9 @@ import lombok.experimental.FieldDefaults;
  * @author Artem Labazin
  * @since 1.0.0
  */
-@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 @RequiredArgsConstructor
 @FieldDefaults(level = PRIVATE, makeFinal = true)
+@SuppressWarnings("checkstyle:AbbreviationAsWordInName")
 final class BytesDelegatePuts {
 
   Bytes bytes;

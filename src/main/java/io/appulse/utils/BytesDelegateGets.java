@@ -23,6 +23,7 @@ import java.nio.charset.Charset;
 
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.val;
 
 /**
  *
@@ -34,6 +35,30 @@ import lombok.experimental.FieldDefaults;
 final class BytesDelegateGets {
 
   Bytes bytes;
+
+  /**
+   * Returns unsigned byte as short integer (2 bytes).
+   *
+   * @return unsigned byte
+   *
+   * @since 1.3.1
+   */
+  public short getUnsignedByte () {
+    return BytesUtils.asUnsignedByte(bytes.getByte());
+  }
+
+  /**
+   * Returns unsigned byte as short integer (2 bytes) from specific position.
+   *
+   * @param index index in buffer, where extract unsigned byte.
+   *
+   * @return unsigned byte
+   *
+   * @since 1.3.1
+   */
+  public short getUnsignedByte (int index) {
+    return BytesUtils.asUnsignedByte(bytes.getByte(index));
+  }
 
   public char getChar () {
     return bytes.getBuffer().getChar();
@@ -55,12 +80,57 @@ final class BytesDelegateGets {
     return bytes.getBuffer().getShort(index);
   }
 
+  /**
+   * Returns unsigned short (2 bytes) as integer (4 bytes) from specific position.
+   *
+   * @param index index in buffer, where extract unsigned short.
+   *
+   * @return unsigned short
+   *
+   * @since 1.3.1
+   */
+  public int getUnsignedShort (int index) {
+    return getShort(index) & 0xFFFF;
+  }
+
   public int getInt () {
     return bytes.getBuffer().getInt();
   }
 
+  /**
+   * Returns unsigned integer (4 bytes) as long (8 bytes).
+   *
+   * @return unsigned integer
+   *
+   * @since 1.3.1
+   */
+  public long getUnsignedInt () {
+    val intBytes = bytes.getBytes(Integer.BYTES);
+    return BytesUtils.asUnsignedInteger(intBytes);
+  }
+
   public int getInt (int index) {
     return bytes.getBuffer().getInt(index);
+  }
+
+  /**
+   * Returns unsigned integer (4 bytes) as long (8 bytes) from specific position.
+   *
+   * @param index index in buffer, where extract unsigned intger.
+   *
+   * @return unsigned integer
+   *
+   * @since 1.3.1
+   */
+  public long getUnsignedInt (int index) {
+    val oldPosition = bytes.position();
+    try {
+      bytes.position(index);
+      val intBytes = bytes.getBytes(Integer.BYTES);
+      return BytesUtils.asUnsignedInteger(intBytes);
+    } finally {
+      bytes.position(oldPosition);
+    }
   }
 
   public long getLong () {

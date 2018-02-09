@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.3.1](https://github.com/appulse-projects/utils-java/releases/tag/1.3.1) - 2018-02-09
+
+Minor release with unsigned numbers support.
+
+### Added
+
+- Byte arrays conversion to unsigned byte/short/int.
+- Unsigned tests.
+
+### Changed
+
+- Exceptions in tests have full stack traces.
+
 ## [1.3.0](https://github.com/appulse-projects/utils-java/releases/tag/1.3.0) - 2018-02-01
 
 Add resource utils class and made small refactorign.
