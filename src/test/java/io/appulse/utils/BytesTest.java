@@ -103,8 +103,15 @@ public class BytesTest {
     bytes.put4B(4);
     assertThat(bytes.limit()).isEqualTo(4);
 
-    Bytes wrapped = Bytes.wrap(new byte[] { 1 });
-    assertThat(wrapped.limit()).isEqualTo(1);
+    Bytes wrapped = Bytes.wrap(new byte[] { 1, 0 });
+    assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 0 });
+    assertThat(wrapped.limit()).isEqualTo(2);
+
+    wrapped.position(wrapped.limit());
+    wrapped.put(1, new byte[] { 2, 3 });
+    assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 2, 3 });
+    assertThat(wrapped.limit()).isEqualTo(3);
+    assertThat(wrapped.position()).isEqualTo(3);
   }
 
   @Test

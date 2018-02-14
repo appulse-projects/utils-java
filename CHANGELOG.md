@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.3.2](https://github.com/appulse-projects/utils-java/releases/tag/1.3.2) - 2018-02-14
+
+### Changed
+
+- Redesigned `Bytes.put(index, byte)` logic, now it moves `limit`.
+
 ## [1.3.1](https://github.com/appulse-projects/utils-java/releases/tag/1.3.1) - 2018-02-09
 
 Minor release with unsigned numbers support.

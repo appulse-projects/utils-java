@@ -86,7 +86,11 @@ public final class Bytes {
   }
 
   public Bytes put (int index, byte value) {
-    buffer.put(index, value);
+    if (index < limit) {
+      buffer.put(index, value);
+    } else {
+      put(value);
+    }
     return this;
   }
 
@@ -100,7 +104,7 @@ public final class Bytes {
   public Bytes put (int index, @NonNull byte[] bytes) {
     checkCapacity(index, bytes.length);
     IntStream.range(index, index + bytes.length).forEach(it -> {
-      buffer.put(it, bytes[it - index]);
+      put(it, bytes[it - index]);
     });
     return this;
   }
