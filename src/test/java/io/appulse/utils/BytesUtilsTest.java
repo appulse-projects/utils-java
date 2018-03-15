@@ -16,17 +16,17 @@
 
 package io.appulse.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static lombok.AccessLevel.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 
-import org.junit.Test;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
+import org.junit.Test;
 
 public class BytesUtilsTest {
 

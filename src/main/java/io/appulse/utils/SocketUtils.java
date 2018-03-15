@@ -40,7 +40,7 @@ public final class SocketUtils {
   }
 
   public static Optional<Integer> findFreePort (int from, int to) {
-    for (int port = from; port <= to; port++) {
+    for (int port = to; port >= from; port--) {
       if (isPortAvailable(port)) {
         return of(port);
       }
