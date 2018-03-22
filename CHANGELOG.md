@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.5.0](https://github.com/appulse-projects/utils-java/releases/tag/1.5.0) - 2018-03-22
+
+Added tests and threads helpers.
+
+### Added
+
+- Threads helpers: executor wrappers, customizable thread factory and executor builders.
+- Test helpers.
+
 ## [1.3.3](https://github.com/appulse-projects/utils-java/releases/tag/1.3.3) - 2018-03-15
 
 Small refactoring.
