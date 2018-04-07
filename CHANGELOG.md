@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.5.1](https://github.com/appulse-projects/utils-java/releases/tag/1.5.1) - 2018-04-07
+
+Add fancy logging for `ExecutorServiceWithClientTraceTest`.
+
+### Changed
+
+- No more re-throw exception in `ExecutorServiceWithClientTraceTest`.
+
 ## [1.5.0](https://github.com/appulse-projects/utils-java/releases/tag/1.5.0) - 2018-03-22
 
 Added tests and threads helpers.

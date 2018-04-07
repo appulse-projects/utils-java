@@ -59,6 +59,6 @@ public class ExecutorServiceWithClientTraceTest {
         .collect(joining("\n"));
 
     assertThat(logs)
-        .containsPattern("Exception '\\S+' in task submitted from thread '\\S+' here:");
+        .containsPattern("Exception during task execution submitted from thread '\\S+'");
   }
 }

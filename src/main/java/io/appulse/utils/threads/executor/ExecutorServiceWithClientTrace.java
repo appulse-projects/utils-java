@@ -31,23 +31,45 @@ import lombok.val;
 @SuppressWarnings("PMD.DoNotUseThreads")
 public final class ExecutorServiceWithClientTrace extends ExecutorServiceWrapper {
 
+  private static final String EXCEPTION_SEPARATOR = "------ submitted from: ------";
+
   public ExecutorServiceWithClientTrace (ExecutorService delegate) {
     super(delegate);
   }
 
   @Override
   public void execute (@NonNull Runnable command) {
-    val clientStack = new Exception("Client stack trace");
+    Exception clientStack = new Exception("Client stack trace");
     val threadName = Thread.currentThread().getName();
 
     super.execute(() -> {
       try {
         command.run();
       } catch (Exception ex) {
-        log.error("Exception '{}' in task submitted from thread '{}' here:",
-                  ex.getClass().getSimpleName(), threadName, clientStack);
-        throw ex;
+        log.error("Exception during task execution submitted from thread '{}'",
+                  threadName, merge(clientStack, ex));
       }
     });
+  }
+
+  private Throwable merge (Exception local, Exception remote) {
+    Throwable result = remote;
+
+    val remoteStackTrace = remote.getStackTrace();
+    val localStackTrace = local.getStackTrace();
+
+    val newStackTrace = new StackTraceElement[localStackTrace.length + remoteStackTrace.length];
+    System.arraycopy(remoteStackTrace, 0, newStackTrace, 0, remoteStackTrace.length);
+
+    newStackTrace[remoteStackTrace.length] = new StackTraceElement(
+        EXCEPTION_SEPARATOR,
+        "",
+        "",
+        -1
+    );
+    System.arraycopy(localStackTrace, 1, newStackTrace, remoteStackTrace.length + 1, localStackTrace.length - 1);
+
+    result.setStackTrace(newStackTrace);
+    return result;
   }
 }
