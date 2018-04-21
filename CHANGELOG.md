@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.5.2](https://github.com/appulse-projects/utils-java/releases/tag/1.5.2) - 2018-04-22
+
+Speed-up unsigned functions execution.
+
+### Changed
+
+- byte/short/int unsigned functions became more fast.
+- Catched exception in `ExecutorServiceWithClientTraceTest` rethrows again.
+
 ## [1.5.1](https://github.com/appulse-projects/utils-java/releases/tag/1.5.1) - 2018-04-07
 
 Add fancy logging for `ExecutorServiceWithClientTraceTest`.

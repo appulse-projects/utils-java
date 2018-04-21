@@ -117,6 +117,9 @@ public class BytesUtilsTest {
 
     assertThat(BytesUtils.asUnsignedShort(bytes))
         .isEqualTo(62994);
+
+    assertThat(BytesUtils.asUnsignedShort((short) -1))
+        .isEqualTo(65535);
   }
 
   @Test
@@ -164,6 +167,9 @@ public class BytesUtilsTest {
 
     assertThat(BytesUtils.asUnsignedInteger(bytes))
         .isEqualTo(4_100_000_000L);
+
+    assertThat(BytesUtils.asUnsignedInteger(-1))
+        .isEqualTo(4_294_967_295L);
   }
 
   @Test

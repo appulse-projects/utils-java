@@ -93,7 +93,7 @@ public final class BytesUtils {
    * @since 1.3.1
    */
   public static short asUnsignedByte (byte value) {
-    return asUnsignedByte(new byte[] { value });
+    return (short) (value & 0xff);
   }
 
   /**
@@ -111,7 +111,20 @@ public final class BytesUtils {
 
   public static short asShort (@NonNull byte[] bytes) {
     val aligned = align(bytes, Short.BYTES);
-    return (short) ((aligned[0] <<  8) | (aligned[1] & 0xff));
+    return (short) ((aligned[0] << 8) | (aligned[1] & 0xff));
+  }
+
+  /**
+   * Transforms byte array to unsigned short integer value as integer.
+   *
+   * @param value signed short value
+   *
+   * @return unsigned short as integer
+   *
+   * @since 1.5.2
+   */
+  public static int asUnsignedShort (short value) {
+    return value & 0xFFFF;
   }
 
   /**
@@ -119,7 +132,7 @@ public final class BytesUtils {
    *
    * @param bytes byte array
    *
-   * @return unsigned short integer
+   * @return unsigned short as integer
    *
    * @since 1.3.1
    */
@@ -129,15 +142,28 @@ public final class BytesUtils {
 
   public static char asChar (@NonNull byte[] bytes) {
     val aligned = align(bytes, Short.BYTES);
-    return (char) ((aligned[0] <<  8) | (aligned[1] & 0xff));
+    return (char) ((aligned[0] << 8) | (aligned[1] & 0xff));
   }
 
   public static int asInteger (@NonNull byte[] bytes) {
     val aligned = align(bytes, Integer.BYTES);
     return (aligned[0] << 24)
            | ((aligned[1] & 0xff) << 16)
-           | ((aligned[2] & 0xff) <<  8)
+           | ((aligned[2] & 0xff) << 8)
            | (aligned[3] & 0xff);
+  }
+
+  /**
+   * Transforms byte array to unsigned integer value as long integer.
+   *
+   * @param value signed integer value
+   *
+   * @return unsigned integer as long
+   *
+   * @since 1.5.2
+   */
+  public static long asUnsignedInteger (int value) {
+    return value & 0x00000000FFFFFFFFL;
   }
 
   /**
@@ -145,7 +171,7 @@ public final class BytesUtils {
    *
    * @param bytes byte array
    *
-   * @return unsigned integer
+   * @return unsigned integer as long
    *
    * @since 1.3.1
    */
@@ -161,7 +187,7 @@ public final class BytesUtils {
            | (((long) aligned[3] & 0xff) << 32)
            | (((long) aligned[4] & 0xff) << 24)
            | (((long) aligned[5] & 0xff) << 16)
-           | (((long) aligned[6] & 0xff) <<  8)
+           | (((long) aligned[6] & 0xff) << 8)
            | ((long) aligned[7] & 0xff);
   }
 

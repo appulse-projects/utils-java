@@ -48,6 +48,7 @@ public final class ExecutorServiceWithClientTrace extends ExecutorServiceWrapper
       } catch (Exception ex) {
         log.error("Exception during task execution submitted from thread '{}'",
                   threadName, merge(clientStack, ex));
+        throw ex;
       }
     });
   }
