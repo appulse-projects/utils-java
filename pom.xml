@@ -24,7 +24,7 @@ limitations under the License.
 
   <groupId>io.appulse</groupId>
   <artifactId>utils-java</artifactId>
-  <version>1.5.2</version>
+  <version>1.6.0</version>
   <packaging>jar</packaging>
 
   <properties>

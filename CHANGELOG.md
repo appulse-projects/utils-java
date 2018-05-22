@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.6.0](https://github.com/appulse-projects/utils-java/releases/tag/1.6.0) - 2018-05-22
+
+Created ExceptionUtils helper class.
+
+### Added
+
+- `ExceptionUtils` helper class.
+- Add `ExceptionUtils`.`softException` wrapper for sneaky throws exceptions.
+
 ## [1.5.2](https://github.com/appulse-projects/utils-java/releases/tag/1.5.2) - 2018-04-22
 
 Speed-up unsigned functions execution.
