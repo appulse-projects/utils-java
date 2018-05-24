@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.7.0](https://github.com/appulse-projects/utils-java/releases/tag/1.7.0) - 2018-05-24
+
+Created AnnotationUtils helper class.
+
+### Added
+
+- `AnnotationUtils` helper class.
+- `AnnotationUtils`.`findAnnotation` method for deep searching annotations.
+- `AnnotationUtils`.`isInJavaLangAnnotationPackage` method for determining user's/java annotations.
+
 ## [1.6.0](https://github.com/appulse-projects/utils-java/releases/tag/1.6.0) - 2018-05-22
 
 Created ExceptionUtils helper class.
