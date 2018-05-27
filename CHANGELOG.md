@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.8.0](https://github.com/appulse-projects/utils-java/releases/tag/1.8.0) - 2018-05-25
+
+Created SerializationUtils helper class and RoundRobin collection wrapper.
+
+### Added
+
+- `SerializationUtils` helper class.
+- `SerializationUtils`.`serialize` method for converting object to a byte array.
+- `SerializationUtils`.`deserialize` method for creating object from an array of bytes.
+- `SerializationException` exception thrown when the Serialization process fails.
+- `RoundRobin` collection wrapper.
+
 ## [1.7.0](https://github.com/appulse-projects/utils-java/releases/tag/1.7.0) - 2018-05-24
 
 Created AnnotationUtils helper class.
