@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.9.0](https://github.com/appulse-projects/utils-java/releases/tag/1.9.0) - 2018-09-11
+
+### Added
+
+- Created `LruCache` implementation.
+
 ## [1.8.0](https://github.com/appulse-projects/utils-java/releases/tag/1.8.0) - 2018-05-25
 
 Created SerializationUtils helper class and RoundRobin collection wrapper.

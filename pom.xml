@@ -24,7 +24,7 @@ limitations under the License.
 
   <groupId>io.appulse</groupId>
   <artifactId>utils-java</artifactId>
-  <version>1.8.0</version>
+  <version>1.9.0</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -62,7 +62,7 @@ limitations under the License.
     <url>https://github.com/appulse-projects/utils-java</url>
     <connection>scm:git:https://github.com/appulse-projects/utils-java.git</connection>
     <developerConnection>scm:git:https://github.com/appulse-projects/utils-java.git</developerConnection>
-    <tag>1.8.0</tag>
+    <tag>1.9.0</tag>
   </scm>
 
   <distributionManagement>
@@ -98,7 +98,7 @@ limitations under the License.
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.16.20</version>
+      <version>1.18.2</version>
       <scope>provided</scope>
     </dependency>
 
@@ -110,7 +110,7 @@ limitations under the License.
     <dependency>
       <groupId>io.appulse</groupId>
       <artifactId>logging-java</artifactId>
-      <version>1.0.2</version>
+      <version>1.1.0</version>
       <scope>provided</scope>
     </dependency>
 
@@ -124,7 +124,7 @@ limitations under the License.
     <dependency>
       <groupId>com.google.code.findbugs</groupId>
       <artifactId>annotations</artifactId>
-      <version>3.0.1</version>
+      <version>3.0.1u2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -137,7 +137,7 @@ limitations under the License.
     <dependency>
       <groupId>org.assertj</groupId>
       <artifactId>assertj-core</artifactId>
-      <version>3.9.1</version>
+      <version>3.11.1</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -277,7 +277,7 @@ limitations under the License.
           <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>8.8</version>
+            <version>8.12</version>
           </dependency>
         </dependencies>
         <executions>
