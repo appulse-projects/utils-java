@@ -12,6 +12,20 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.10.0](https://github.com/appulse-projects/utils-java/releases/tag/1.10.0) - 2018-09-25
+
+### Added
+
+- `FifoCache` implementation;
+- `ResourceUtils.getResourceUrls` function for flexible searching resource files;
+- `ResourceUtils.get*Content` functions for extracting resource files content;
+- A test for checking `ResourceUtils.getResourceUrls` and `ResourceUtils.get*Content` functions.
+
+### Changed
+
+- `ResourceUtils.getResource` are deprecated, use `ResourceUtils.get*Content` functions;
+- `LruCache` and `FifoCache` moved to `io.appulse.utils.cache` package.
+
 ## [1.9.0](https://github.com/appulse-projects/utils-java/releases/tag/1.9.0) - 2018-09-11
 
 ### Added

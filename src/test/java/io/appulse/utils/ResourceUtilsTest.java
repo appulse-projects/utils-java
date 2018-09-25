@@ -16,7 +16,11 @@
 
 package io.appulse.utils;
 
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 
@@ -38,5 +42,17 @@ public class ResourceUtilsTest {
   public void notExist () {
     assertThat(ResourceUtils.getResource("/not-exist.txt"))
         .isNotPresent();
+  }
+
+  @Test
+  public void getResourceUrls () {
+    List<String> list = ResourceUtils.getResourceUrls("folder", "file-?.*")
+        .stream()
+        .map(ResourceUtils::getTextContent)
+        .map(Optional::get)
+        .map(String::trim)
+        .collect(toList());
+
+    assertThat(list).contains("Artem", "Liza", "Milada", "Thais");
   }
 }

@@ -14,25 +14,31 @@
  * limitations under the License.
  */
 
-package io.appulse.utils;
+package io.appulse.utils.cache;
+
+import static lombok.AccessLevel.PRIVATE;
 
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 
+import lombok.experimental.FieldDefaults;
+
+
 /**
- * LRU cache implementation based on {@code LinkedHashMap}
+ * FIFO cache implementation based on {@code LinkedHashMap}.
  *
  * @author Artem Labazin
- * @since 1.9.0
+ * @since 1.10.0
  */
-public class LruCache<K, V> extends LinkedHashMap<K, V> {
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+public class FifoCache<K, V> extends LinkedHashMap<K, V> {
 
-  private static final long serialVersionUID = -1100634446524987320L;
+  private static final long serialVersionUID = 2326368924657010098L;
 
-  private final int maxSize;
+  int maxSize;
 
-  public LruCache (int maxSize) {
-    super(maxSize + 1, 1.0F, true);
+  public FifoCache (int maxSize) {
+    super(maxSize + 1, 1.0F, false);
     this.maxSize = maxSize;
   }
 
