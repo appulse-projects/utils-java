@@ -28,16 +28,16 @@ import java.util.HashMap;
 import io.appulse.utils.exception.SerializationException;
 
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author alabazin
  */
-public class SerializationUtilsTest {
+class SerializationUtilsTest {
 
   @Test
-  public void testSerializeStream () throws Exception {
+  void testSerializeStream () throws Exception {
     HashMap<Object, Object> map = new HashMap<>(2);
     map.put("foo", "foo");
     map.put("bar", 7);
@@ -59,7 +59,7 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testSerializeStreamUnserializable () throws Exception {
+  void testSerializeStreamUnserializable () throws Exception {
     HashMap<Object, Object> map = new HashMap<>(2);
     map.put("foo", "foo");
     map.put("bar", 7);
@@ -71,7 +71,7 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testSerializeStreamNullObj () throws Exception {
+  void testSerializeStreamNullObj () throws Exception {
     val streamTest = new ByteArrayOutputStream();
     SerializationUtils.serialize(null, streamTest);
 
@@ -89,19 +89,19 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testSerializeStreamObjNull () throws Exception {
+  void testSerializeStreamObjNull () throws Exception {
     assertThatThrownBy(() -> SerializationUtils.serialize(new HashMap<>(), null))
         .isExactlyInstanceOf(NullPointerException.class);
   }
 
   @Test
-  public void testSerializeStreamNullNull () throws Exception {
+  void testSerializeStreamNullNull () throws Exception {
     assertThatThrownBy(() -> SerializationUtils.serialize(null, null))
         .isExactlyInstanceOf(NullPointerException.class);
   }
 
   @Test
-  public void testSerializeException () throws Exception {
+  void testSerializeException () throws Exception {
     val outputStream = new OutputStream() {
 
       @Override
@@ -116,7 +116,7 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testDeserializeBytes () throws Exception {
+  void testDeserializeBytes () throws Exception {
     HashMap<Object, Object> map = new HashMap<>(2);
     map.put("foo", "foo");
     map.put("bar", 7);
@@ -143,7 +143,7 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testDeserializeBytesOfNull () throws IOException {
+  void testDeserializeBytesOfNull () throws IOException {
     val byteArrayOutputStream = new ByteArrayOutputStream();
     val objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
     objectOutputStream.writeObject(null);
@@ -155,13 +155,13 @@ public class SerializationUtilsTest {
   }
 
   @Test
-  public void testDeserializeBytesNull () {
+  void testDeserializeBytesNull () {
     assertThatThrownBy(() -> SerializationUtils.deserialize((byte[]) null))
         .isExactlyInstanceOf(NullPointerException.class);
   }
 
   @Test
-  public void testDeserializeBytesBadStream () {
+  void testDeserializeBytesBadStream () {
     assertThatThrownBy(() -> SerializationUtils.deserialize(new byte[0]))
         .isExactlyInstanceOf(SerializationException.class);
   }

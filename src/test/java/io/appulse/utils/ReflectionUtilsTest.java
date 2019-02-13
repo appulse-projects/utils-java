@@ -21,16 +21,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  */
-public class ReflectionUtilsTest {
+class ReflectionUtilsTest {
 
   @Test
-  public void getFieldValueFrom () {
+  void getFieldValueFrom () {
     ChildClass object = new ChildClass("Artem", 27);
 
     assertThat(ReflectionUtils.getFieldValueFrom(object, "name"))
@@ -46,7 +46,7 @@ public class ReflectionUtilsTest {
   }
 
   @Test
-  public void invokeMethodOf () {
+  void invokeMethodOf () {
     ChildClass object = new ChildClass("Artem", 27);
 
     assertThat(ReflectionUtils.invokeMethodOf(object, "getName"))

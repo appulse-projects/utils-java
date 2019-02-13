@@ -65,7 +65,7 @@ public final class Bytes {
   BytesDelegateGets gets;
 
   @NonFinal
-  @Getter(value = PACKAGE)
+  @Getter(PACKAGE)
   ByteBuffer buffer;
 
   @NonFinal

@@ -20,17 +20,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.2.0
  */
-public class SocketUtilsTest {
+class SocketUtilsTest {
 
   @Test
-  public void isPortAvailable () {
+  void isPortAvailable () {
     Optional<Integer> port = SocketUtils.findFreePort();
     assertThat(port).isPresent();
     assertThat(SocketUtils.isPortAvailable(port.get())).isTrue();

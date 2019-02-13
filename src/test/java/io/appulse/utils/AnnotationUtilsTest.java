@@ -28,16 +28,16 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author alabazin
  */
-public class AnnotationUtilsTest {
+class AnnotationUtilsTest {
 
   @Test
-  public void testType1 () {
+  void testType1 () {
     String str = AnnotationUtils.findAnnotation(Child.class, ChildAnnotation.class)
         .map(ChildAnnotation::value)
         .orElse("");
@@ -46,7 +46,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testType2 () {
+  void testType2 () {
     String str = AnnotationUtils.findAnnotation(Child.class, ParentAnnotation.class)
         .map(ParentAnnotation::value)
         .orElse("");
@@ -55,7 +55,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testType3 () {
+  void testType3 () {
     String str = AnnotationUtils.findAnnotation(Parent.class, ParentAnnotation.class)
         .map(ParentAnnotation::value)
         .orElse("");
@@ -64,7 +64,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testMethod1 () throws NoSuchMethodException {
+  void testMethod1 () throws NoSuchMethodException {
     Method method = Child.class.getMethod("method");
     String str = AnnotationUtils.findAnnotation(method, ChildAnnotation.class)
         .map(ChildAnnotation::value)
@@ -74,7 +74,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testMethod2 () throws NoSuchMethodException {
+  void testMethod2 () throws NoSuchMethodException {
     Method method = Child.class.getMethod("method");
     String str = AnnotationUtils.findAnnotation(method, ParentAnnotation.class)
         .map(ParentAnnotation::value)
@@ -84,7 +84,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testMethod3 () throws NoSuchMethodException {
+  void testMethod3 () throws NoSuchMethodException {
     Method method = Parent.class.getMethod("method");
     String str = AnnotationUtils.findAnnotation(method, ParentAnnotation.class)
         .map(ParentAnnotation::value)
@@ -94,7 +94,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testField1 () throws NoSuchFieldException {
+  void testField1 () throws NoSuchFieldException {
     Field field = Child.class.getDeclaredField("field");
     String str = AnnotationUtils.findAnnotation(field, ChildAnnotation.class)
         .map(ChildAnnotation::value)
@@ -104,7 +104,7 @@ public class AnnotationUtilsTest {
   }
 
   @Test
-  public void testField2 () throws NoSuchFieldException {
+ void testField2 () throws NoSuchFieldException {
     Field field = Child.class.getDeclaredField("field");
     String str = AnnotationUtils.findAnnotation(field, ParentAnnotation.class)
         .map(ParentAnnotation::value)

@@ -26,12 +26,12 @@ import java.util.Arrays;
 
 import lombok.experimental.FieldDefaults;
 import lombok.val;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-public class BytesUtilsTest {
+class BytesUtilsTest {
 
   @Test
-  public void asBytes () {
+  void asBytes () {
     assertThat(BytesUtils.asBytes('a'))
         .isEqualTo(new byte[] { 0, 97 });
 
@@ -55,13 +55,13 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void concatenate () {
+  void concatenate () {
     assertThat(BytesUtils.concatenate(new byte[] { 1 }, new byte[] { 2 }, new byte[] { 3 }))
         .isEqualTo(new byte[] { 1, 2, 3 });
   }
 
   @Test
-  public void align () {
+  void align () {
     assertThat(BytesUtils.align(new byte[] { 1 }, 4))
         .isEqualTo(new byte[] { 0, 0, 0, 1 });
 
@@ -70,7 +70,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asUnsignedByte () {
+  void asUnsignedByte () {
     val bytes = ByteBuffer.allocate(Byte.BYTES)
         .put((byte) 254)
         .array();
@@ -83,7 +83,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asShort () {
+  void asShort () {
     val bytes1 = ByteBuffer.allocate(Short.BYTES)
         .putShort(Short.MAX_VALUE)
         .array();
@@ -107,7 +107,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asUnsignedShort () {
+  void asUnsignedShort () {
     val bytes = ByteBuffer.allocate(Short.BYTES)
         .putShort((short) 62994)
         .array();
@@ -123,7 +123,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asChar () {
+  void asChar () {
     val bytes = ByteBuffer.allocate(Character.BYTES)
         .putChar('z')
         .array();
@@ -133,7 +133,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asInteger () {
+  void asInteger () {
     val bytes1 = ByteBuffer.allocate(Integer.BYTES)
         .putInt(Integer.MAX_VALUE)
         .array();
@@ -157,7 +157,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asUnsignedInteger () {
+  void asUnsignedInteger () {
     val bytes = ByteBuffer.allocate(Integer.BYTES)
         .putInt((int) 4_100_000_000L)
         .array();
@@ -173,7 +173,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asLong () {
+  void asLong () {
     val bytes1 = ByteBuffer.allocate(Long.BYTES)
         .putLong(Long.MAX_VALUE)
         .array();
@@ -197,7 +197,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asFloat () {
+  void asFloat () {
     val bytes1 = ByteBuffer.allocate(Float.BYTES)
         .putFloat(Float.MAX_VALUE)
         .array();
@@ -221,7 +221,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void asDouble () {
+  void asDouble () {
     val bytes1 = ByteBuffer.allocate(Double.BYTES)
         .putDouble(Double.MAX_VALUE)
         .array();
@@ -245,7 +245,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void read () throws Exception {
+  void read () throws Exception {
     byte[] expected = "Hello world".getBytes();
 
     assertThat(BytesUtils.read(new CustomInputStream(expected)))
@@ -253,7 +253,7 @@ public class BytesUtilsTest {
   }
 
   @Test
-  public void readWithLength () throws Exception {
+  void readWithLength () throws Exception {
     byte[] bytes = "Hello world".getBytes();
     byte[] expected = Arrays.copyOfRange(bytes, 0, 2);
 

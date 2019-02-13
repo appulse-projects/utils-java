@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-package io.appulse.utils.test;
-
-import lombok.val;
-
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
+package io.appulse.utils.threads;
 
 /**
  *
  * @author Artem Labazin
- * @since 1.5.0
+ * @since 1.11.0
  */
-@SuppressWarnings("PMD.SystemPrintln")
-public class TestMethodNamePrinter extends TestWatcher {
+public class FutureUtilsTests {
 
-  @Override
-  protected void starting (Description description) {
-    val message = String.format("%nRUNNING TEST: %s.%s%n",
-                                description.getClassName(),
-                                description.getMethodName());
-    System.out.println(message);
-  }
+
 }

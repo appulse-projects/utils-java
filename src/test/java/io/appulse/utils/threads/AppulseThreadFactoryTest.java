@@ -22,17 +22,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadFactory;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.5.0
  */
-public class AppulseThreadFactoryTest {
+class AppulseThreadFactoryTest {
 
   @Test
-  public void simpleName () throws Exception {
+  void simpleName () throws Exception {
     CompletableFuture<String> future = new CompletableFuture<>();
 
     AppulseThreadFactory.builder()
@@ -46,7 +46,7 @@ public class AppulseThreadFactoryTest {
   }
 
   @Test
-  public void nameWithCount () throws Exception {
+  void nameWithCount () throws Exception {
     ThreadFactory factory = AppulseThreadFactory.builder()
         .name("popa-%d")
         .build();

@@ -28,23 +28,24 @@ import io.appulse.utils.threads.AppulseExecutors;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.val;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.5.0
  */
-public class ExecutorServiceWithTimeMonitorTest {
+class ExecutorServiceWithTimeMonitorTest {
 
-  @Before
-  public void before () {
+  @BeforeEach
+  void before () {
     TestAppender.EVENTS.clear();
   }
 
   @Test
-  public void monitor () throws Exception {
+  void monitor () throws Exception {
     ExecutorService service = AppulseExecutors.newSingleThreadExecutor()
         .enableTimeLogging()
         .build();

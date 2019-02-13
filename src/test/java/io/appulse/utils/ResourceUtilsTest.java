@@ -22,30 +22,30 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.3.0
  */
-public class ResourceUtilsTest {
+class ResourceUtilsTest {
 
   @Test
-  public void getResource () {
+  void getResource () {
     assertThat(ResourceUtils.getResource("/test.txt"))
         .isPresent()
         .hasValue("Hello world!\n");
   }
 
   @Test
-  public void notExist () {
+  void notExist () {
     assertThat(ResourceUtils.getResource("/not-exist.txt"))
         .isNotPresent();
   }
 
   @Test
-  public void getResourceUrls () {
+  void getResourceUrls () {
     List<String> list = ResourceUtils.getResourceUrls("folder", "file-?.*")
         .stream()
         .map(ResourceUtils::getTextContent)

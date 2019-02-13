@@ -32,6 +32,7 @@ import io.appulse.utils.threads.executor.builder.ScheduledExecutorServiceBuilder
  * @author Artem Labazin
  * @since 1.5.0
  */
+@SuppressWarnings("PMD.ClassNamingConventions")
 public final class AppulseExecutors {
 
   public static ExecutorServiceBuilder newFixedThreadPool (int threads) {

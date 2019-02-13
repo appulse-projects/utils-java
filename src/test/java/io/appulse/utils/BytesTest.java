@@ -19,17 +19,17 @@ package io.appulse.utils;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.0.0
  */
-public class BytesTest {
+class BytesTest {
 
   @Test
-  public void wrap () {
+  void wrap () {
     byte[] expected = new byte[] { 1, 2, 3 };
 
     Bytes bytes = Bytes.wrap(expected);
@@ -48,7 +48,7 @@ public class BytesTest {
   }
 
   @Test
-  public void position () {
+  void position () {
     Bytes bytes = Bytes.allocate(4);
 
     assertThat(bytes.position()).isEqualTo(0);
@@ -64,7 +64,7 @@ public class BytesTest {
   }
 
   @Test
-  public void clear () {
+  void clear () {
     Bytes bytes = Bytes.allocate()
         .put1B(1);
 
@@ -78,7 +78,7 @@ public class BytesTest {
   }
 
   @Test
-  public void array () {
+  void array () {
     Bytes bytes = Bytes.allocate();
 
     assertThat(bytes.array())
@@ -96,7 +96,7 @@ public class BytesTest {
   }
 
   @Test
-  public void limit () {
+  void limit () {
     Bytes bytes = Bytes.allocate(2);
     assertThat(bytes.limit()).isEqualTo(0);
 
@@ -115,7 +115,7 @@ public class BytesTest {
   }
 
   @Test
-  public void remaining () {
+  void remaining () {
     Bytes bytes = Bytes.allocate(2);
     assertThat(bytes.remaining()).isEqualTo(0);
 
@@ -130,7 +130,7 @@ public class BytesTest {
   }
 
   @Test
-  public void unsignedTest () {
+  void unsignedTest () {
     Bytes bytes = Bytes.allocate()
         .put1B(254)
         .put2B(62994)

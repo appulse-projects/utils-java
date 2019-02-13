@@ -22,17 +22,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.io.IOException;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  *
  * @author Artem Labazin
  * @since 1.6.0
  */
-public class ExceptionUtilsTest {
+class ExceptionUtilsTest {
 
   @Test
-  public void test () {
+  void test () {
     assertThat(doSomething(true)).isTrue();
 
     assertThatThrownBy(() -> doSomething(false)).isExactlyInstanceOf(IOException.class);

@@ -18,16 +18,16 @@ package io.appulse.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * @author Artem Labazin
  * @since 1.8.0
  */
-public class RoundRobinTest {
+class RoundRobinTest {
 
   @Test
-  public void test () {
+  void test () {
     RoundRobin<String> roundRobin = new RoundRobin<>("one", "two");
     assertThat(roundRobin.getNext()).isEqualTo("one");
     assertThat(roundRobin.getNext()).isEqualTo("two");

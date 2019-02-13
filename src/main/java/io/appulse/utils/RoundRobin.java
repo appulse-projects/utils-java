@@ -19,6 +19,7 @@ package io.appulse.utils;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -46,7 +47,7 @@ public final class RoundRobin<T> {
     if (elements.length == 0) {
       throw new IllegalArgumentException("Elements array is empty");
     }
-    this.elements = elements;
+    this.elements = Arrays.copyOf(elements, elements.length);
     size = elements.length;
   }
 
