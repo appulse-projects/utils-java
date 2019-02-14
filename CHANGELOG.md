@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.11.0](https://github.com/appulse-projects/utils-java/releases/tag/1.11.0) - 2019-02-14
+
+### Added
+
+- [FutureUtils](./src/main/java/io/appulse/utils/threads/FutureUtils.java) helper class;
+- [Tests](./src/test/java/io/appulse/utils/threads/FutureUtilsTests.java) for `FutureUtils`.
+
+### Changed
+
+- Updated `pom` dependencies;
+- Fixed copyright year.
+
 ## [1.10.0](https://github.com/appulse-projects/utils-java/releases/tag/1.10.0) - 2018-09-25
 
 ### Added
