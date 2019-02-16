@@ -37,7 +37,7 @@ final class CompletablePromiseContext {
 
   ScheduledExecutorService scheduler;
 
-  private CompletablePromiseContext () {
+  CompletablePromiseContext () {
     scheduler = Executors.newSingleThreadScheduledExecutor();
   }
 

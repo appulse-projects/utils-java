@@ -97,6 +97,7 @@ public final class ExecutorServiceBuilder {
 
   public ExecutorServiceBuilder queueLimit (int value) {
     this.queueLimit = value;
+    queue = null;
     return this;
   }
 
