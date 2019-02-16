@@ -40,10 +40,11 @@ import lombok.experimental.FieldDefaults;
  * @since 1.5.0
  */
 @SuppressWarnings({
-    "PMD.DoNotUseThreads",
     "PMD.AvoidLiteralsInIfCondition",
     "PMD.CyclomaticComplexity",
-    "PMD.NPathComplexity"
+    "PMD.DoNotUseThreads",
+    "PMD.NPathComplexity",
+    "PMD.NullAssignment"
 })
 @FieldDefaults(level = PRIVATE)
 public final class ExecutorServiceBuilder {
