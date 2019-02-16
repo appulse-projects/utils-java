@@ -14,36 +14,39 @@
  * limitations under the License.
  */
 
-package io.appulse.utils.cache;
+package io.appulse.utils.threads;
 
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.util.LinkedHashMap;
-import java.util.Map.Entry;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 import lombok.experimental.FieldDefaults;
 
-
-/**
- * LRU cache implementation based on {@code LinkedHashMap}.
- *
- * @author Artem Labazin
- * @since 1.9.0
- */
+@SuppressWarnings({
+    "PMD.DoNotUseThreads",
+    "PMD.ClassNamingConventions"
+})
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class LruCache<K, V> extends LinkedHashMap<K, V> {
+final class CompletablePromiseContext {
 
-  private static final long serialVersionUID = -1100634446524987320L;
-
-  int maxSize;
-
-  public LruCache (int maxSize) {
-    super(maxSize + 1, 1.0F, true);
-    this.maxSize = maxSize;
+  static CompletablePromiseContext getInstance () {
+    return LazyHolder.INSTANCE;
   }
 
-  @Override
-  protected boolean removeEldestEntry (Entry<K, V> eldest) {
-    return size() > maxSize;
+  ScheduledExecutorService scheduler;
+
+  private CompletablePromiseContext () {
+    scheduler = Executors.newSingleThreadScheduledExecutor();
+  }
+
+  void schedule (Runnable runnable) {
+    scheduler.schedule(runnable, 1, MILLISECONDS);
+  }
+
+  private static class LazyHolder {
+
+    static final CompletablePromiseContext INSTANCE = new CompletablePromiseContext();
   }
 }

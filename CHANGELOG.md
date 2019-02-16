@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.11.1](https://github.com/appulse-projects/utils-java/releases/tag/1.11.1) - 2019-02-16
+
+### Added
+
+- [CompletablePromise](./src/main/java/io/appulse/utils/threads/CompletablePromise.java) for wrapping `Future` objects;
+- `FutureUtils`.`toCompletableFuture` helper method for wrapping `Future`s objects.
+
+### Changed
+
+- [ExecutorServiceBuilder](./src/main/java/io/appulse/utils/threads/executor/builder/ExecutorServiceBuilder.java) has the new final values validation rules;
+- Fixed a copyright's year.
+
 ## [1.11.0](https://github.com/appulse-projects/utils-java/releases/tag/1.11.0) - 2019-02-14
 
 ### Added

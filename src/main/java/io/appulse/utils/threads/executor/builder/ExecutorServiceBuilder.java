@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 the original author or authors.
+ * Copyright 2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,8 @@ import lombok.experimental.FieldDefaults;
 @SuppressWarnings({
     "PMD.DoNotUseThreads",
     "PMD.AvoidLiteralsInIfCondition",
-    "PMD.CyclomaticComplexity"
+    "PMD.CyclomaticComplexity",
+    "PMD.NPathComplexity"
 })
 @FieldDefaults(level = PRIVATE)
 public final class ExecutorServiceBuilder {
@@ -70,25 +71,16 @@ public final class ExecutorServiceBuilder {
   RejectedExecutionHandler handler;
 
   public ExecutorServiceBuilder corePoolSize (int value) {
-    if (value < 1) {
-      throw new IllegalArgumentException("Core pool size must be greater than 0");
-    }
     this.corePoolSize = value;
     return this;
   }
 
   public ExecutorServiceBuilder maxPoolSize (int value) {
-    if (value < 1) {
-      throw new IllegalArgumentException("Max pool size must be greater than 0");
-    }
     this.maxPoolSize = value;
     return this;
   }
 
   public ExecutorServiceBuilder keepAliveTime (long value) {
-    if (value < 0L) {
-      throw new IllegalArgumentException("Keep alive time must be greater than 0");
-    }
     this.keepAliveTime = value;
     return this;
   }
@@ -104,9 +96,6 @@ public final class ExecutorServiceBuilder {
   }
 
   public ExecutorServiceBuilder queueLimit (int value) {
-    if (value < 1) {
-      throw new IllegalArgumentException("Queue limit must be greater than 1");
-    }
     this.queueLimit = value;
     return this;
   }
@@ -140,14 +129,23 @@ public final class ExecutorServiceBuilder {
   }
 
   public ExecutorService build () {
-    if (corePoolSize < 1) {
-      throw new IllegalArgumentException("Core pool size must be greater than 0");
+    if (corePoolSize < 0) {
+      throw new IllegalArgumentException("Core pool size must be greater or equals than 0");
     }
-    if (maxPoolSize < corePoolSize) {
+
+    if (maxPoolSize <= 0) {
+      throw new IllegalArgumentException("Max pool size must be greater than 0");
+    } else if (maxPoolSize < corePoolSize) {
       maxPoolSize = corePoolSize;
     }
 
-    if (queueLimit > 0 && queue != null) {
+    if (keepAliveTime < 0L) {
+      throw new IllegalArgumentException("Keep alive time must be greater than 0");
+    }
+
+    if (queueLimit < 0) {
+      throw new IllegalArgumentException("Queue limit must be greater than 0");
+    } else if (queueLimit > 0 && queue != null) {
       throw new IllegalArgumentException("I couldn't set queue limit and queue simultaneously");
     } else if (queueLimit > 0) {
       queue = new LinkedBlockingQueue<>(queueLimit);

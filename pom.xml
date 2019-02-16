@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!--
-Copyright 2018 the original author or authors.
+Copyright 2019 the original author or authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ limitations under the License.
 
   <groupId>io.appulse</groupId>
   <artifactId>utils-java</artifactId>
-  <version>1.11.0</version>
+  <version>1.11.1</version>
   <packaging>jar</packaging>
 
   <properties>
@@ -47,7 +47,7 @@ limitations under the License.
     Utils for Appulse Java projects
   </description>
   <url>https://github.com/appulse-projects/utils-java</url>
-  <inceptionYear>2018</inceptionYear>
+  <inceptionYear>2019</inceptionYear>
 
   <organization>
     <name>Appulse</name>
@@ -66,7 +66,7 @@ limitations under the License.
     <url>https://github.com/appulse-projects/utils-java</url>
     <connection>scm:git:https://github.com/appulse-projects/utils-java.git</connection>
     <developerConnection>scm:git:https://github.com/appulse-projects/utils-java.git</developerConnection>
-    <tag>1.11.0</tag>
+    <tag>1.11.1</tag>
   </scm>
 
   <distributionManagement>
