@@ -17,7 +17,7 @@
 package io.appulse.utils;
 
 import static io.appulse.utils.BytesUtils.align;
-import static io.appulse.utils.BytesUtils.asBytes;
+import static io.appulse.utils.BytesUtils.toBytes;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static lombok.AccessLevel.PRIVATE;
 
@@ -39,35 +39,35 @@ final class BytesDelegatePuts {
   Bytes bytes;
 
   public Bytes putNB (byte value, int length) {
-    return bytes.put(align(asBytes(value), length));
+    return bytes.put(align(toBytes(value), length));
   }
 
   public Bytes putNB (int index, byte value, int length) {
-    return bytes.put(index, align(asBytes(value), length));
+    return bytes.put(index, align(toBytes(value), length));
   }
 
   public Bytes putNB (short value, int length) {
-    return bytes.put(align(asBytes(value), length));
+    return bytes.put(align(toBytes(value), length));
   }
 
   public Bytes putNB (int index, short value, int length) {
-    return bytes.put(index, align(asBytes(value), length));
+    return bytes.put(index, align(toBytes(value), length));
   }
 
   public Bytes putNB (int value, int length) {
-    return bytes.put(align(asBytes(value), length));
+    return bytes.put(align(toBytes(value), length));
   }
 
   public Bytes putNB (int index, int value, int length) {
-    return bytes.put(index, align(asBytes(value), length));
+    return bytes.put(index, align(toBytes(value), length));
   }
 
   public Bytes putNB (long value, int length) {
-    return bytes.put(align(asBytes(value), length));
+    return bytes.put(align(toBytes(value), length));
   }
 
   public Bytes putNB (int index, long value, int length) {
-    return bytes.put(index, align(asBytes(value), length));
+    return bytes.put(index, align(toBytes(value), length));
   }
 
   public Bytes putNB (byte[] value, int length) {
@@ -207,51 +207,51 @@ final class BytesDelegatePuts {
   }
 
   public Bytes put (short value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, short value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (int value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, int value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (long value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, long value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (float value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, float value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (double value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, double value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (char value) {
-    return bytes.put(asBytes(value));
+    return bytes.put(toBytes(value));
   }
 
   public Bytes put (int index, char value) {
-    return bytes.put(index, asBytes(value));
+    return bytes.put(index, toBytes(value));
   }
 
   public Bytes put (String value) {

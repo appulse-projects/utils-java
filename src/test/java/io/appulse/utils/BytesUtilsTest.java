@@ -31,26 +31,26 @@ import org.junit.jupiter.api.Test;
 class BytesUtilsTest {
 
   @Test
-  void asBytes () {
-    assertThat(BytesUtils.asBytes('a'))
+  void toBytes () {
+    assertThat(BytesUtils.toBytes('a'))
         .isEqualTo(new byte[] { 0, 97 });
 
-    assertThat(BytesUtils.asBytes((byte) 1))
+    assertThat(BytesUtils.toBytes((byte) 1))
         .isEqualTo(new byte[] { 1 });
 
-    assertThat(BytesUtils.asBytes((short) 300))
+    assertThat(BytesUtils.toBytes((short) 300))
         .isEqualTo(new byte[] { 1, 44 });
 
-    assertThat(BytesUtils.asBytes(40_000))
+    assertThat(BytesUtils.toBytes(40_000))
         .isEqualTo(new byte[] { 0, 0, -100, 64 });
 
-    assertThat(BytesUtils.asBytes(100L))
+    assertThat(BytesUtils.toBytes(100L))
         .isEqualTo(new byte[] { 0, 0, 0, 0, 0, 0, 0, 100 });
 
-    assertThat(BytesUtils.asBytes(.5F))
+    assertThat(BytesUtils.toBytes(.5F))
         .isEqualTo(new byte[] { 63, 0, 0, 0 });
 
-    assertThat(BytesUtils.asBytes(.3D))
+    assertThat(BytesUtils.toBytes(.3D))
         .isEqualTo(new byte[] { 63, -45, 51, 51, 51, 51, 51, 51 });
   }
 

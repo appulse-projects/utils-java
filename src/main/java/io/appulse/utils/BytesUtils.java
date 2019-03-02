@@ -24,6 +24,9 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.stream.Stream;
 
+import io.appulse.utils.exception.CantReadFromArrayException;
+import io.appulse.utils.exception.CantWriteToArrayException;
+
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -33,62 +36,749 @@ import lombok.val;
  * @author Artem Labazin
  * @since 1.3.0
  */
+@SuppressWarnings({
+    "PMD.ExcessiveClassLength",
+    "PMD.GodClass",
+    "PMD.CyclomaticComplexity"
+})
 public final class BytesUtils {
 
-  public static byte[] asBytes (char value) {
-    return new byte[] {
-        (byte) (value >> 8),
-        (byte) value
-    };
-  }
-
-  public static byte[] asBytes (byte value) {
-    return new byte[] { value };
-  }
-
-  public static byte[] asBytes (short value) {
-    return new byte[] {
-        (byte) (value >> 8),
-        (byte) value
-    };
-  }
-
-  public static byte[] asBytes (int value) {
-    return new byte[] {
-        (byte) (value >> 24),
-        (byte) (value >> 16),
-        (byte) (value >> 8),
-        (byte) value
-    };
-  }
-
-  public static byte[] asBytes (long value) {
-    return new byte[] {
-        (byte) (value >> 56),
-        (byte) (value >> 48),
-        (byte) (value >> 40),
-        (byte) (value >> 32),
-        (byte) (value >> 24),
-        (byte) (value >> 16),
-        (byte) (value >> 8),
-        (byte) value
-    };
-  }
-
-  public static byte[] asBytes (float value) {
-    return asBytes(Float.floatToRawIntBits(value));
-  }
-
-  public static byte[] asBytes (double value) {
-    return asBytes(Double.doubleToRawLongBits(value));
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (byte value, byte[] bytes, int index) {
+    bytes[index] = (byte) value;
   }
 
   /**
-   * Converts byte to unsigned byte.
+   * Unsafe write to a byte array.
    *
-   * @param value byte value
+   * @param value a value to write to the byte array
    *
-   * @return unsigned byte value as short integer
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (short value, byte[] bytes, int index) {
+    bytes[index] = (byte) (value >> 8);
+    bytes[index + 1] = (byte) value;
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (int value, byte[] bytes, int index) {
+    bytes[index] = (byte) (value >> 24);
+    bytes[index + 1] = (byte) (value >> 16);
+    bytes[index + 2] = (byte) (value >> 8);
+    bytes[index + 3] = (byte) value;
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (long value, byte[] bytes, int index) {
+    bytes[index] = (byte) (value >> 56);
+    bytes[index + 1] = (byte) (value >> 48);
+    bytes[index + 2] = (byte) (value >> 40);
+    bytes[index + 3] = (byte) (value >> 32);
+    bytes[index + 4] = (byte) (value >> 24);
+    bytes[index + 5] = (byte) (value >> 16);
+    bytes[index + 6] = (byte) (value >> 8);
+    bytes[index + 7] = (byte) value;
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (float value, byte[] bytes, int index) {
+    val intValue = Float.floatToIntBits(value);
+    unsafeWrite(intValue, bytes, index);
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (double value, byte[] bytes, int index) {
+    val longValue = Double.doubleToRawLongBits(value);
+    unsafeWrite(longValue, bytes, index);
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (char value, byte[] bytes, int index) {
+    bytes[index] = (byte) (value >> 8);
+    bytes[index + 1] = (byte) value;
+  }
+
+  /**
+   * Unsafe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @since 1.11.2
+   */
+  public static void unsafeWrite (byte[] value, byte[] bytes, int index) {
+    for (int i = 0; i < value.length; i++) {
+      bytes[index + i] = value[i];
+    }
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (byte value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Byte.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Byte.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (short value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Short.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Short.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (int value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Integer.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Integer.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (long value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Long.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Long.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (float value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Float.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Float.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (double value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Double.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Double.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (char value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Character.BYTES) {
+      throw new CantWriteToArrayException(bytes, index, Character.BYTES);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Safe write to a byte array.
+   *
+   * @param value a value to write to the byte array
+   *
+   * @param bytes the byte array to write to
+   *
+   * @param index where to start write index
+   *
+   * @throws CantWriteToArrayException in case of discrepancy of the byte array's length and the write index
+   *
+   * @since 1.11.2
+   */
+  public static void write (byte[] value, @NonNull byte[] bytes, int index) {
+    if (bytes.length < index + value.length) {
+      throw new CantWriteToArrayException(bytes, index, value.length);
+    }
+    unsafeWrite(value, bytes, index);
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (byte value) {
+    val result = new byte[Byte.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (short value) {
+    val result = new byte[Short.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (char value) {
+    val result = new byte[Character.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (int value) {
+    val result = new byte[Integer.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (long value) {
+    val result = new byte[Long.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (float value) {
+    val result = new byte[Float.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Converts a value to a byte array.
+   *
+   * @param value the value to convert
+   *
+   * @return the byte array result
+   *
+   * @since 1.11.2
+   */
+  public static byte[] toBytes (double value) {
+    val result = new byte[Double.BYTES];
+    write(value, result, 0);
+    return result;
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static short unsafeReadUnsignedByte (byte[] bytes, int index) {
+    return (short) (bytes[index] & 0xff);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static short unsafeReadShort (byte[] bytes, int index) {
+    return (short) ((bytes[index] << 8) | (bytes[index + 1] & 0xff));
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static int unsafeReadUnsignedShort (byte[] bytes, int index) {
+    val value = unsafeReadShort(bytes, index);
+    return asUnsignedShort(value);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static char unsafeReadCharacter (byte[] bytes, int index) {
+    return (char) ((bytes[index] << 8) | (bytes[index + 1] & 0xff));
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static int unsafeReadInteger (byte[] bytes, int index) {
+    return (bytes[index] << 24)
+           | ((bytes[index + 1] & 0xff) << 16)
+           | ((bytes[index + 2] & 0xff) << 8)
+           | (bytes[index + 3] & 0xff);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static long unsafeReadUnsignedInteger (byte[] bytes, int index) {
+    val value = unsafeReadInteger(bytes, index);
+    return asUnsignedInteger(value);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static long unsafeReadLong (byte[] bytes, int index) {
+    return ((long) bytes[index] << 56)
+           | (((long) bytes[index + 1] & 0xff) << 48)
+           | (((long) bytes[index + 2] & 0xff) << 40)
+           | (((long) bytes[index + 3] & 0xff) << 32)
+           | (((long) bytes[index + 4] & 0xff) << 24)
+           | (((long) bytes[index + 5] & 0xff) << 16)
+           | (((long) bytes[index + 6] & 0xff) << 8)
+           | ((long) bytes[index + 7] & 0xff);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static float unsafeReadFloat (byte[] bytes, int index) {
+    val value = unsafeReadInteger(bytes, index);
+    return Float.intBitsToFloat(value);
+  }
+
+  /**
+   * Unsafe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @since 1.11.2
+   */
+  public static double unsafeReadDouble (byte[] bytes, int index) {
+    val value = unsafeReadLong(bytes, index);
+    return Double.longBitsToDouble(value);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static short readUnsignedByte (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Byte.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Byte.BYTES);
+    }
+    return unsafeReadUnsignedByte(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static short readShort (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Short.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Short.BYTES);
+    }
+    return unsafeReadShort(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static int readUnsignedShort (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Short.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Short.BYTES);
+    }
+    return unsafeReadUnsignedShort(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static char readCharacter (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Character.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Character.BYTES);
+    }
+    return unsafeReadCharacter(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static int readInteger (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Integer.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Integer.BYTES);
+    }
+    return unsafeReadInteger(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static long readUnsignedInteger (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Integer.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Integer.BYTES);
+    }
+    return unsafeReadUnsignedInteger(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static long readLong (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Long.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Long.BYTES);
+    }
+    return unsafeReadLong(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static float readFloat (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Long.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Long.BYTES);
+    }
+    return unsafeReadFloat(bytes, index);
+  }
+
+  /**
+   * Safe read a value from a byte array.
+   *
+   * @param bytes the byte array to read from
+   *
+   * @param index where to start read index
+   *
+   * @return a parsed value
+   *
+   * @throws CantReadFromArrayException in case of discrepancy of the byte array's length and the read index
+   *
+   * @since 1.11.2
+   */
+  public static double readDouble (@NonNull byte[] bytes, int index) {
+    if (bytes.length < index + Double.BYTES) {
+      throw new CantReadFromArrayException(bytes, index, Double.BYTES);
+    }
+    return unsafeReadDouble(bytes, index);
+  }
+
+  /**
+   * Converts a value into an unsigned value.
+   *
+   * @param value the signed value
+   *
+   * @return the unsigned value
    *
    * @since 1.3.1
    */
@@ -97,11 +787,15 @@ public final class BytesUtils {
   }
 
   /**
-   * Transforms byte array to unsigned byte value as short integer.
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
    *
-   * @param bytes byte array
+   * @param bytes the byte array for parsing
    *
-   * @return unsigned byte
+   * @return the parsed value
    *
    * @since 1.3.1
    */
@@ -109,17 +803,28 @@ public final class BytesUtils {
     return asShort(bytes);
   }
 
+  /**
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
+   *
+   * @param bytes the byte array for parsing
+   *
+   * @return the parsed value
+   */
   public static short asShort (@NonNull byte[] bytes) {
     val aligned = align(bytes, Short.BYTES);
-    return (short) ((aligned[0] << 8) | (aligned[1] & 0xff));
+    return unsafeReadShort(aligned, 0);
   }
 
   /**
-   * Transforms byte array to unsigned short integer value as integer.
+   * Converts a value into an unsigned value.
    *
-   * @param value signed short value
+   * @param value the signed value
    *
-   * @return unsigned short as integer
+   * @return the unsigned value
    *
    * @since 1.5.2
    */
@@ -128,11 +833,15 @@ public final class BytesUtils {
   }
 
   /**
-   * Transforms byte array to unsigned short integer value as integer.
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
    *
-   * @param bytes byte array
+   * @param bytes the byte array for parsing
    *
-   * @return unsigned short as integer
+   * @return the parsed value
    *
    * @since 1.3.1
    */
@@ -140,25 +849,44 @@ public final class BytesUtils {
     return asShort(bytes) & 0xFFFF;
   }
 
+  /**
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
+   *
+   * @param bytes the byte array for parsing
+   *
+   * @return the parsed value
+   */
   public static char asChar (@NonNull byte[] bytes) {
     val aligned = align(bytes, Short.BYTES);
-    return (char) ((aligned[0] << 8) | (aligned[1] & 0xff));
-  }
-
-  public static int asInteger (@NonNull byte[] bytes) {
-    val aligned = align(bytes, Integer.BYTES);
-    return (aligned[0] << 24)
-           | ((aligned[1] & 0xff) << 16)
-           | ((aligned[2] & 0xff) << 8)
-           | (aligned[3] & 0xff);
+    return unsafeReadCharacter(aligned, 0);
   }
 
   /**
-   * Transforms byte array to unsigned integer value as long integer.
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
    *
-   * @param value signed integer value
+   * @param bytes the byte array for parsing
    *
-   * @return unsigned integer as long
+   * @return the parsed value
+   */
+  public static int asInteger (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Integer.BYTES);
+    return unsafeReadInteger(aligned, 0);
+  }
+
+  /**
+   * Converts a value into an unsigned value.
+   *
+   * @param value the signed value
+   *
+   * @return the unsigned value
    *
    * @since 1.5.2
    */
@@ -167,40 +895,75 @@ public final class BytesUtils {
   }
 
   /**
-   * Transforms byte array to unsigned integer value as long integer.
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
    *
-   * @param bytes byte array
+   * @param bytes the byte array for parsing
    *
-   * @return unsigned integer as long
-   *
-   * @since 1.3.1
+   * @return the parsed value
    */
   public static long asUnsignedInteger (@NonNull byte[] bytes) {
     return asLong(bytes);
   }
 
+  /**
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
+   *
+   * @param bytes the byte array for parsing
+   *
+   * @return the parsed value
+   */
   public static long asLong (@NonNull byte[] bytes) {
     val aligned = align(bytes, Long.BYTES);
-    return ((long) aligned[0] << 56)
-           | (((long) aligned[1] & 0xff) << 48)
-           | (((long) aligned[2] & 0xff) << 40)
-           | (((long) aligned[3] & 0xff) << 32)
-           | (((long) aligned[4] & 0xff) << 24)
-           | (((long) aligned[5] & 0xff) << 16)
-           | (((long) aligned[6] & 0xff) << 8)
-           | ((long) aligned[7] & 0xff);
+    return unsafeReadLong(aligned, 0);
   }
 
+  /**
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
+   *
+   * @param bytes the byte array for parsing
+   *
+   * @return the parsed value
+   */
   public static float asFloat (@NonNull byte[] bytes) {
     val aligned = align(bytes, Float.BYTES);
-    return Float.intBitsToFloat(asInteger(aligned));
+    return unsafeReadFloat(aligned, 0);
   }
 
+  /**
+   * Parses a byte array into a value.
+   * <p>
+   * The main difference from the {@code read*} methods -
+   * before parsing the byte array the method aligns it an
+   * expected size.
+   *
+   * @param bytes the byte array for parsing
+   *
+   * @return the parsed value
+   */
   public static double asDouble (@NonNull byte[] bytes) {
     val aligned = align(bytes, Double.BYTES);
-    return Double.longBitsToDouble(asLong(aligned));
+    return unsafeReadDouble(aligned, 0);
   }
 
+  /**
+   * Concatenates the several byte arrays into a single one.
+   *
+   * @param arrays the byte arrays for concatenation
+   *
+   * @return the byte array
+   */
   public static byte[] concatenate (@NonNull byte[]... arrays) {
     val size = Stream.of(arrays)
         .mapToInt(it -> it.length)
@@ -211,6 +974,15 @@ public final class BytesUtils {
     return buffer.array();
   }
 
+  /**
+   * Aligns (expand or narrow) a byte array to a specified length.
+   *
+   * @param bytes the byte array for operation
+   *
+   * @param length the new array's length
+   *
+   * @return an aligned byte array
+   */
   public static byte[] align (@NonNull byte[] bytes, int length) {
     if (length <= 0 || bytes.length == length) {
       return bytes;

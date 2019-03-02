@@ -12,6 +12,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.11.2](https://github.com/appulse-projects/utils-java/releases/tag/1.11.2) - 2019-03-02
+
+### Added
+
+- The new [BytesUtils](./src/main/java/io/appulse/utils/BytesUtils.java) methods;
+- Several exception for working with the byte arrays;
+- A test for a cached executor.
+
+### Removed
+
+- All `asBytes` methods from [BytesUtils](./src/main/java/io/appulse/utils/BytesUtils.java).
+
 ## [1.11.1](https://github.com/appulse-projects/utils-java/releases/tag/1.11.1) - 2019-02-16
 
 ### Added
