@@ -29,7 +29,7 @@ import lombok.val;
 
 @RequiredArgsConstructor(access = PACKAGE)
 @FieldDefaults(level = PRIVATE)
-class BytesByteBuffer extends AbstractBytes {
+class BytesByteBuffer extends BytesAbstract {
 
   @NonNull
   final ByteBuffer buffer;

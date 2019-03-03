@@ -24,7 +24,7 @@ import java.nio.charset.Charset;
 import lombok.NonNull;
 import lombok.val;
 
-abstract class AbstractBytes implements Bytes {
+abstract class BytesAbstract implements Bytes {
 
   @Override
   public Bytes putNB (@NonNull byte[] bytes) {

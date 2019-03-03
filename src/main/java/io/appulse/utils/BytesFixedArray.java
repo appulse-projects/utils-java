@@ -26,7 +26,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @FieldDefaults(level = PROTECTED)
-class BytesFixedArray extends AbstractBytes {
+class BytesFixedArray extends BytesAbstract {
 
   byte[] buffer;
 
