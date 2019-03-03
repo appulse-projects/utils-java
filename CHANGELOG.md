@@ -12,6 +12,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.12.0](https://github.com/appulse-projects/utils-java/releases/tag/1.12.0) - 2019-03-04
+
+### Changed
+
+- Rewriten [Bytes](./src/main/java/io/appulse/utils/Bytes.java) holder;
+- Renamed the new `write*` and `unsafeWrite*` methods in [BytesUtils](./src/main/java/io/appulse/utils/BytesUtils.java) methods;
+- Add `BytesUtils`.`asUnsignedLong*` methods.
+
 ## [1.11.2](https://github.com/appulse-projects/utils-java/releases/tag/1.11.2) - 2019-03-02
 
 ### Added

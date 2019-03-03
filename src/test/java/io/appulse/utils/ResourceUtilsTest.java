@@ -33,14 +33,14 @@ class ResourceUtilsTest {
 
   @Test
   void getResource () {
-    assertThat(ResourceUtils.getResource("/test.txt"))
+    assertThat(ResourceUtils.getTextContent("/test.txt"))
         .isPresent()
         .hasValue("Hello world!\n");
   }
 
   @Test
   void notExist () {
-    assertThat(ResourceUtils.getResource("/not-exist.txt"))
+    assertThat(ResourceUtils.getTextContent("/not-exist.txt"))
         .isNotPresent();
   }
 

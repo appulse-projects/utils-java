@@ -34,13 +34,16 @@ class BytesTest {
 
     Bytes bytes = Bytes.wrap(expected);
 
-    assertThat(bytes.position())
+    assertThat(bytes.readerIndex())
         .isEqualTo(0);
 
-    assertThat(bytes.limit())
+    assertThat(bytes.writerIndex())
+        .isEqualTo(2);
+
+    assertThat(bytes.capacity())
         .isEqualTo(expected.length);
 
-    assertThat(bytes.remaining())
+    assertThat(bytes.readableBytes())
         .isEqualTo(expected.length);
 
     assertThat(bytes.array())
@@ -51,16 +54,17 @@ class BytesTest {
   void position () {
     Bytes bytes = Bytes.allocate(4);
 
-    assertThat(bytes.position()).isEqualTo(0);
+    assertThat(bytes.readerIndex()).isEqualTo(0);
+    assertThat(bytes.writerIndex()).isEqualTo(0);
 
     bytes.put4B(10);
-    assertThat(bytes.position()).isEqualTo(4);
+    assertThat(bytes.writerIndex()).isEqualTo(4);
 
-    bytes.position(2);
-    assertThat(bytes.position()).isEqualTo(2);
+    bytes.readerIndex(2);
+    assertThat(bytes.readerIndex()).isEqualTo(2);
 
-    assertThatExceptionOfType(IllegalArgumentException.class)
-        .isThrownBy(() -> bytes.position(5));
+    assertThatExceptionOfType(IndexOutOfBoundsException.class)
+        .isThrownBy(() -> bytes.writerIndex(5));
   }
 
   @Test
@@ -97,36 +101,20 @@ class BytesTest {
 
   @Test
   void limit () {
-    Bytes bytes = Bytes.allocate(2);
-    assertThat(bytes.limit()).isEqualTo(0);
+    Bytes bytes = Bytes.allocate(4);
+    assertThat(bytes.writerIndex()).isEqualTo(0);
 
     bytes.put4B(4);
-    assertThat(bytes.limit()).isEqualTo(4);
+    assertThat(bytes.writerIndex()).isEqualTo(4);
 
-    Bytes wrapped = Bytes.wrap(new byte[] { 1, 0 });
-    assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 0 });
-    assertThat(wrapped.limit()).isEqualTo(2);
+    Bytes wrapped = Bytes.wrap(new byte[] { 1, 0, 0 });
+    assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 0, 0 });
+    assertThat(wrapped.writerIndex()).isEqualTo(2);
 
-    wrapped.position(wrapped.limit());
-    wrapped.put(1, new byte[] { 2, 3 });
+    wrapped.putNB(1, new byte[] { 2, 3 });
     assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 2, 3 });
-    assertThat(wrapped.limit()).isEqualTo(3);
-    assertThat(wrapped.position()).isEqualTo(3);
-  }
-
-  @Test
-  void remaining () {
-    Bytes bytes = Bytes.allocate(2);
-    assertThat(bytes.remaining()).isEqualTo(0);
-
-    bytes.put4B(4);
-    assertThat(bytes.remaining()).isEqualTo(0);
-
-    Bytes wrapped = Bytes.wrap(new byte[] { 1 });
-    assertThat(wrapped.remaining()).isEqualTo(1);
-
-    wrapped.flip();
-    assertThat(wrapped.remaining()).isEqualTo(0);
+    assertThat(wrapped.writerIndex()).isEqualTo(2);
+    assertThat(wrapped.readerIndex()).isEqualTo(0);
   }
 
   @Test

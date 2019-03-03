@@ -21,6 +21,7 @@ import static java.lang.Math.min;
 import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
 import java.io.InputStream;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.stream.Stream;
 
@@ -54,7 +55,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (byte value, byte[] bytes, int index) {
+  public static void unsafeWriteByte (int value, byte[] bytes, int index) {
     bytes[index] = (byte) value;
   }
 
@@ -69,7 +70,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (short value, byte[] bytes, int index) {
+  public static void unsafeWriteShort (int value, byte[] bytes, int index) {
     bytes[index] = (byte) (value >> 8);
     bytes[index + 1] = (byte) value;
   }
@@ -85,7 +86,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (int value, byte[] bytes, int index) {
+  public static void unsafeWriteInteger (int value, byte[] bytes, int index) {
     bytes[index] = (byte) (value >> 24);
     bytes[index + 1] = (byte) (value >> 16);
     bytes[index + 2] = (byte) (value >> 8);
@@ -103,7 +104,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (long value, byte[] bytes, int index) {
+  public static void unsafeWriteLong (long value, byte[] bytes, int index) {
     bytes[index] = (byte) (value >> 56);
     bytes[index + 1] = (byte) (value >> 48);
     bytes[index + 2] = (byte) (value >> 40);
@@ -125,9 +126,9 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (float value, byte[] bytes, int index) {
+  public static void unsafeWriteFloat (float value, byte[] bytes, int index) {
     val intValue = Float.floatToIntBits(value);
-    unsafeWrite(intValue, bytes, index);
+    unsafeWriteInteger(intValue, bytes, index);
   }
 
   /**
@@ -141,9 +142,9 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (double value, byte[] bytes, int index) {
-    val longValue = Double.doubleToRawLongBits(value);
-    unsafeWrite(longValue, bytes, index);
+  public static void unsafeWriteDouble (double value, byte[] bytes, int index) {
+    val longValue = Double.doubleToLongBits(value);
+    unsafeWriteLong(longValue, bytes, index);
   }
 
   /**
@@ -157,7 +158,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (char value, byte[] bytes, int index) {
+  public static void unsafeWriteCharacter (char value, byte[] bytes, int index) {
     bytes[index] = (byte) (value >> 8);
     bytes[index + 1] = (byte) value;
   }
@@ -173,7 +174,7 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void unsafeWrite (byte[] value, byte[] bytes, int index) {
+  public static void unsafeWriteBytes (byte[] value, byte[] bytes, int index) {
     for (int i = 0; i < value.length; i++) {
       bytes[index + i] = value[i];
     }
@@ -192,11 +193,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (byte value, @NonNull byte[] bytes, int index) {
+  public static void writeByte (int value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Byte.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Byte.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteByte(value, bytes, index);
   }
 
   /**
@@ -212,11 +213,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (short value, @NonNull byte[] bytes, int index) {
+  public static void writeShort (int value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Short.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Short.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteShort(value, bytes, index);
   }
 
   /**
@@ -232,11 +233,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (int value, @NonNull byte[] bytes, int index) {
+  public static void writeInteger (int value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Integer.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Integer.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteInteger(value, bytes, index);
   }
 
   /**
@@ -252,11 +253,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (long value, @NonNull byte[] bytes, int index) {
+  public static void writeLong (long value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Long.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Long.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteLong(value, bytes, index);
   }
 
   /**
@@ -272,11 +273,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (float value, @NonNull byte[] bytes, int index) {
+  public static void writeFloat (float value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Float.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Float.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteFloat(value, bytes, index);
   }
 
   /**
@@ -292,11 +293,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (double value, @NonNull byte[] bytes, int index) {
+  public static void writeDouble (double value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Double.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Double.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteDouble(value, bytes, index);
   }
 
   /**
@@ -312,11 +313,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (char value, @NonNull byte[] bytes, int index) {
+  public static void writeCharacter (char value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + Character.BYTES) {
       throw new CantWriteToArrayException(bytes, index, Character.BYTES);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteCharacter(value, bytes, index);
   }
 
   /**
@@ -332,11 +333,11 @@ public final class BytesUtils {
    *
    * @since 1.11.2
    */
-  public static void write (byte[] value, @NonNull byte[] bytes, int index) {
+  public static void writeBytes (byte[] value, @NonNull byte[] bytes, int index) {
     if (bytes.length < index + value.length) {
       throw new CantWriteToArrayException(bytes, index, value.length);
     }
-    unsafeWrite(value, bytes, index);
+    unsafeWriteBytes(value, bytes, index);
   }
 
   /**
@@ -350,7 +351,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (byte value) {
     val result = new byte[Byte.BYTES];
-    write(value, result, 0);
+    writeByte(value, result, 0);
     return result;
   }
 
@@ -365,7 +366,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (short value) {
     val result = new byte[Short.BYTES];
-    write(value, result, 0);
+    writeShort(value, result, 0);
     return result;
   }
 
@@ -380,7 +381,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (char value) {
     val result = new byte[Character.BYTES];
-    write(value, result, 0);
+    writeCharacter(value, result, 0);
     return result;
   }
 
@@ -395,7 +396,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (int value) {
     val result = new byte[Integer.BYTES];
-    write(value, result, 0);
+    writeInteger(value, result, 0);
     return result;
   }
 
@@ -410,7 +411,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (long value) {
     val result = new byte[Long.BYTES];
-    write(value, result, 0);
+    writeLong(value, result, 0);
     return result;
   }
 
@@ -425,7 +426,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (float value) {
     val result = new byte[Float.BYTES];
-    write(value, result, 0);
+    writeFloat(value, result, 0);
     return result;
   }
 
@@ -440,7 +441,7 @@ public final class BytesUtils {
    */
   public static byte[] toBytes (double value) {
     val result = new byte[Double.BYTES];
-    write(value, result, 0);
+    writeDouble(value, result, 0);
     return result;
   }
 
@@ -923,6 +924,25 @@ public final class BytesUtils {
   public static long asLong (@NonNull byte[] bytes) {
     val aligned = align(bytes, Long.BYTES);
     return unsafeReadLong(aligned, 0);
+  }
+
+  public static BigInteger asUnsignedLong (long value) {
+    val bytes = new byte[] {
+        (byte) (value >> 56),
+        (byte) (value >> 48),
+        (byte) (value >> 40),
+        (byte) (value >> 32),
+        (byte) (value >> 24),
+        (byte) (value >> 16),
+        (byte) (value >> 8),
+        (byte) (value >> 0)
+    };
+    return asUnsignedLong(bytes);
+  }
+
+  public static BigInteger asUnsignedLong (@NonNull byte[] bytes) {
+    val aligned = align(bytes, Long.BYTES);
+    return new BigInteger(1, aligned);
   }
 
   /**

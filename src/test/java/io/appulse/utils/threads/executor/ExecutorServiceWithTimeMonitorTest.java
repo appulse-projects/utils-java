@@ -66,6 +66,9 @@ class ExecutorServiceWithTimeMonitorTest {
 
     future.get(5, SECONDS);
 
+    service.shutdown();
+    service.awaitTermination(3, SECONDS);
+
     val logs = TestAppender.EVENTS.stream()
         .map(ILoggingEvent::getFormattedMessage)
         .collect(joining("\n"));

@@ -16,196 +16,249 @@
 
 package io.appulse.utils;
 
-import static lombok.AccessLevel.PACKAGE;
-import static lombok.AccessLevel.PRIVATE;
-
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.util.Arrays;
-import java.util.stream.IntStream;
+import java.nio.charset.Charset;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.experimental.Delegate;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.NonFinal;
-import lombok.val;
+import io.netty.buffer.ByteBuf;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.0.0
- */
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-public final class Bytes {
+public interface Bytes {
 
-  public static Bytes wrap (@NonNull byte[] bytes) {
-    val result = allocate(bytes.length);
-    result.put(bytes);
-    result.flip();
-    return result;
+  static Bytes wrap (byte[] bytes) {
+    return new BytesFixedArray(bytes);
   }
 
-  public static Bytes wrap (@NonNull ByteBuffer buffer) {
-    return wrap(buffer.array());
+  static Bytes wrap (ByteBuffer buffer) {
+    return new BytesByteBuffer(buffer);
   }
 
-  public static Bytes allocate () {
-    return allocate(32);
+  static Bytes wrap (ByteBuf buffer) {
+    return new BytesByteBuf(buffer);
   }
 
-  public static Bytes allocate (int capacity) {
-    val buffer = ByteBuffer.allocate(capacity);
-    return new Bytes(buffer);
+  static Bytes allocate (int size) {
+    return new BytesFixedArray(size);
   }
 
-  @Delegate
-  BytesDelegatePuts puts;
-
-  @Delegate
-  BytesDelegateGets gets;
-
-  @NonFinal
-  @Getter(PACKAGE)
-  ByteBuffer buffer;
-
-  @NonFinal
-  int limit;
-
-  private Bytes (ByteBuffer buffer) {
-    puts = new BytesDelegatePuts(this);
-    gets = new BytesDelegateGets(this);
-    this.buffer = buffer;
-    limit = buffer.position();
+  static Bytes allocate () {
+    return new BytesExtendableArray();
   }
 
-  public Bytes put (byte value) {
-    checkCapacity(1);
-    buffer.put(value);
-    limit++;
-    return this;
-  }
+  boolean isExtendable ();
 
-  public Bytes put (int index, byte value) {
-    if (index < limit) {
-      buffer.put(index, value);
-    } else {
-      put(value);
-    }
-    return this;
-  }
+  Bytes putNB (byte[] bytes);
 
-  public Bytes put (@NonNull byte[] bytes) {
-    checkCapacity(bytes.length);
-    buffer.put(bytes);
-    limit += bytes.length;
-    return this;
-  }
+  Bytes putNB (int index, byte[] bytes);
 
-  public Bytes put (int index, @NonNull byte[] bytes) {
-    checkCapacity(index, bytes.length);
-    IntStream.range(index, index + bytes.length).forEach(it -> {
-      put(it, bytes[it - index]);
-    });
-    return this;
-  }
+  Bytes putNB (byte[] bytes, int offset);
 
-  public byte getByte () {
-    return buffer.get();
-  }
+  Bytes putNB (int index, byte[] bytes, int offset);
 
-  public byte getByte (int index) {
-    return buffer.get(index);
-  }
+  Bytes putNB (byte[] bytes, int offset, int length);
 
-  public byte[] getBytes () {
-    return getBytes(0, buffer.remaining());
-  }
+  Bytes putNB (int index, byte[] bytes, int offset, int length);
 
-  public byte[] getBytes (int length) {
-    return getBytes(0, length);
-  }
+  Bytes put1B (byte value);
 
-  public byte[] getBytes (int offset, int length) {
-    val result = new byte[length];
-    buffer.get(result, offset, length);
-    return result;
-  }
+  Bytes put1B (int index, byte value);
 
-  public byte[] array () {
-    return Arrays.copyOfRange(buffer.array(), 0, limit);
-  }
+  Bytes put1B (short value);
 
-  /**
-   * Returns byte array representation of class, starting from specified position.
-   *
-   * @param offset start position
-   *
-   * @return byte array representation
-   *
-   * @throws IndexOutOfBoundsException if offset is lower zero or larger the limit
-   *
-   * @since 1.2.0
-   */
-  public byte[] array (int offset) {
-    if (offset < 0 || offset > limit) {
-      throw new IndexOutOfBoundsException();
-    }
-    return Arrays.copyOfRange(buffer.array(), offset, limit);
-  }
+  Bytes put1B (int index, short value);
 
-  public int limit () {
-    return limit;
-  }
+  Bytes put1B (int value);
 
-  public int remaining () {
-    return limit - buffer.position();
-  }
+  Bytes put1B (int index, int value);
 
-  public int position () {
-    return buffer.position();
-  }
+  Bytes put1B (long value);
 
-  public Bytes position (int position) {
-    if (position > limit || position < 0) {
-      throw new IllegalArgumentException();
-    }
-    buffer.position(position);
-    return this;
-  }
+  Bytes put1B (int index, long value);
 
-  public Bytes clear () {
-    buffer.clear();
-    limit = 0;
-    return this;
-  }
+  Bytes put1B (float value);
 
-  public Bytes flip () {
-    limit = buffer.position();
-    buffer.flip();
-    return this;
-  }
+  Bytes put1B (int index, float value);
 
-  private void checkCapacity (int size) {
-    if (buffer.remaining() >= size) {
-      return;
-    }
+  Bytes put1B (double value);
 
-    int newCapacity;
-    for (newCapacity = buffer.limit() * 2;
-         newCapacity - buffer.position() < size;
-         newCapacity *= 2) {
-      // empty body
-    }
+  Bytes put1B (int index, double value);
 
-    buffer.flip();
-    buffer = ByteBuffer.allocate(newCapacity)
-        .put(buffer);
-  }
+  Bytes put1B (char value);
 
-  private void checkCapacity (int from, int size) {
-    int difference = size - (buffer.position() - from);
-    if (difference > 0) {
-      checkCapacity(difference);
-    }
-  }
+  Bytes put1B (int index, char value);
+
+  Bytes put2B (byte value);
+
+  Bytes put2B (int index, byte value);
+
+  Bytes put2B (short value);
+
+  Bytes put2B (int index, short value);
+
+  Bytes put2B (int value);
+
+  Bytes put2B (int index, int value);
+
+  Bytes put2B (long value);
+
+  Bytes put2B (int index, long value);
+
+  Bytes put2B (float value);
+
+  Bytes put2B (int index, float value);
+
+  Bytes put2B (double value);
+
+  Bytes put2B (int index, double value);
+
+  Bytes put2B (char value);
+
+  Bytes put2B (int index, char value);
+
+  Bytes put4B (byte value);
+
+  Bytes put4B (int index, byte value);
+
+  Bytes put4B (short value);
+
+  Bytes put4B (int index, short value);
+
+  Bytes put4B (int value);
+
+  Bytes put4B (int index, int value);
+
+  Bytes put4B (long value);
+
+  Bytes put4B (int index, long value);
+
+  Bytes put4B (float value);
+
+  Bytes put4B (int index, float value);
+
+  Bytes put4B (double value);
+
+  Bytes put4B (int index, double value);
+
+  Bytes put4B (char value);
+
+  Bytes put4B (int index, char value);
+
+  Bytes put8B (byte value);
+
+  Bytes put8B (int index, byte value);
+
+  Bytes put8B (short value);
+
+  Bytes put8B (int index, short value);
+
+  Bytes put8B (int value);
+
+  Bytes put8B (int index, int value);
+
+  Bytes put8B (long value);
+
+  Bytes put8B (int index, long value);
+
+  Bytes put8B (float value);
+
+  Bytes put8B (int index, float value);
+
+  Bytes put8B (double value);
+
+  Bytes put8B (int index, double value);
+
+  Bytes put8B (char value);
+
+  Bytes put8B (int index, char value);
+
+  byte getByte ();
+
+  byte getByte (int index);
+
+  short getUnsignedByte ();
+
+  short getUnsignedByte (int index);
+
+  short getShort ();
+
+  short getShort (int index);
+
+  int getUnsignedShort ();
+
+  int getUnsignedShort (int index);
+
+  int getInt ();
+
+  int getInt (int index);
+
+  long getUnsignedInt ();
+
+  long getUnsignedInt (int index);
+
+  long getLong ();
+
+  long getLong (int index);
+
+  BigInteger getUnsignedLong ();
+
+  BigInteger getUnsignedLong (int index);
+
+  float getFloat ();
+
+  float getFloat (int index);
+
+  double getDouble ();
+
+  double getDouble (int index);
+
+  char getChar ();
+
+  char getChar (int index);
+
+  byte[] getBytes ();
+
+  byte[] getBytes (int index);
+
+  byte[] getBytes (int index, int length);
+
+  Bytes getBytes (byte[] destination);
+
+  Bytes getBytes (byte[] destination, int offset, int length);
+
+  String getString ();
+
+  String getString (Charset charset);
+
+  String getString (int index);
+
+  String getString (int index, Charset charset);
+
+  String getString (int index, int length);
+
+  String getString (int index, int length, Charset charset);
+
+  int capacity ();
+
+  int writerIndex ();
+
+  Bytes writerIndex (int newIndex);
+
+  int writableBytes ();
+
+  boolean isWritable ();
+
+  boolean isWritable (int size);
+
+  int readerIndex ();
+
+  Bytes readerIndex (int newIndex);
+
+  int readableBytes ();
+
+  boolean isReadable ();
+
+  boolean isReadable (int size);
+
+  Bytes clear ();
+
+  byte[] array ();
 }
