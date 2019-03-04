@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
 
 import io.netty.buffer.ByteBuf;
 
+@SuppressWarnings("PMD.LinguisticNaming")
 public interface Bytes {
 
   static Bytes wrap (byte[] bytes) {
@@ -36,11 +37,23 @@ public interface Bytes {
     return new BytesByteBuf(buffer);
   }
 
+  static Bytes copy (byte[] bytes) {
+    return BytesFixedArray.copy(bytes);
+  }
+
+  static Bytes copy (ByteBuffer buffer) {
+    return BytesByteBuffer.copy(buffer);
+  }
+
+  static Bytes copy (ByteBuf buffer) {
+    return BytesByteBuf.copy(buffer);
+  }
+
   static Bytes allocate (int size) {
     return new BytesFixedArray(size);
   }
 
-  static Bytes allocate () {
+  static Bytes resizableArray () {
     return new BytesExtendableArray();
   }
 
@@ -272,7 +285,7 @@ public interface Bytes {
 
   boolean isReadable (int size);
 
-  Bytes clear ();
+  Bytes reset ();
 
   byte[] array ();
 }

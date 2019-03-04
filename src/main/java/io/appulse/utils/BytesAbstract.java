@@ -24,6 +24,7 @@ import java.nio.charset.Charset;
 import lombok.NonNull;
 import lombok.val;
 
+@SuppressWarnings("PMD.LinguisticNaming")
 abstract class BytesAbstract implements Bytes {
 
   @Override
@@ -466,7 +467,7 @@ abstract class BytesAbstract implements Bytes {
   }
 
   @Override
-  public Bytes clear () {
+  public Bytes reset () {
     readerIndex(0);
     writerIndex(0);
     return this;

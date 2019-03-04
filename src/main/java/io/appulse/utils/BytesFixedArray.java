@@ -26,7 +26,13 @@ import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @FieldDefaults(level = PROTECTED)
+@SuppressWarnings("PMD.LinguisticNaming")
 class BytesFixedArray extends BytesAbstract {
+
+  static BytesFixedArray copy (@NonNull byte[] bytes) {
+    val copy = Arrays.copyOf(bytes, bytes.length);
+    return new BytesFixedArray(copy);
+  }
 
   byte[] buffer;
 

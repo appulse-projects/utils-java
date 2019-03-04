@@ -69,13 +69,13 @@ class BytesTest {
 
   @Test
   void clear () {
-    Bytes bytes = Bytes.allocate()
+    Bytes bytes = Bytes.resizableArray()
         .write1B(1);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1 });
 
-    bytes.clear();
+    bytes.reset();
 
     assertThat(bytes.array())
         .isEqualTo(new byte[0]);
@@ -83,7 +83,7 @@ class BytesTest {
 
   @Test
   void array () {
-    Bytes bytes = Bytes.allocate();
+    Bytes bytes = Bytes.resizableArray();
 
     assertThat(bytes.array())
         .isEqualTo(new byte[0]);
@@ -119,7 +119,7 @@ class BytesTest {
 
   @Test
   void unsignedTest () {
-    Bytes bytes = Bytes.allocate()
+    Bytes bytes = Bytes.resizableArray()
         .write1B(254)
         .write2B(62994)
         .write4B(4_100_000_000L);

@@ -27,9 +27,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
+@SuppressWarnings("PMD.LinguisticNaming")
 @RequiredArgsConstructor(access = PACKAGE)
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 class BytesByteBuf extends BytesAbstract {
+
+  static BytesByteBuf copy (@NonNull ByteBuf buffer) {
+    val copy = buffer.copy();
+    return new BytesByteBuf(copy);
+  }
 
   @NonNull
   ByteBuf buffer;
