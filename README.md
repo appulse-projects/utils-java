@@ -2,6 +2,7 @@
 
 [![build_status](https://travis-ci.org/appulse-projects/utils-java.svg?branch=master)](https://travis-ci.org/appulse-projects/utils-java)
 [![maven_central](https://maven-badges.herokuapp.com/maven-central/io.appulse/utils-java/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.appulse/utils-java)
+[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
 Common utility classes for Appulse projects.
 
