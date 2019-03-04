@@ -45,7 +45,7 @@ class BytesByteBuffer extends BytesAbstract {
   int readerIndex;
 
   @Override
-  public boolean isExtendable () {
+  public boolean isResizable () {
     return false;
   }
 
