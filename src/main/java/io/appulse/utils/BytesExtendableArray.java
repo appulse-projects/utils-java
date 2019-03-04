@@ -53,7 +53,7 @@ class BytesExtendableArray extends BytesFixedArray {
     if (index < readerIndex()) {
       throw new IndexOutOfBoundsException();
     }
-    if (index + length > capacity()) {
+    while (index + length > capacity()) {
       extendBuffer();
     }
   }

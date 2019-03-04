@@ -27,285 +27,368 @@ import lombok.val;
 abstract class BytesAbstract implements Bytes {
 
   @Override
-  public Bytes putNB (@NonNull byte[] bytes) {
-    return putNB(bytes, 0);
+  public Bytes writeNB (@NonNull byte[] bytes) {
+    return writeNB(bytes, 0);
   }
 
   @Override
-  public Bytes putNB (int index, @NonNull byte[] bytes) {
-    return putNB(index, bytes, 0, bytes.length);
+  public Bytes writeNB (@NonNull byte[] bytes, int offset) {
+    return writeNB(bytes, offset, bytes.length);
   }
 
   @Override
-  public Bytes putNB (@NonNull byte[] bytes, int offset) {
-    return putNB(bytes, offset, bytes.length);
+  public Bytes writeNB (String value) {
+    return writeNB(value, ISO_8859_1);
   }
 
   @Override
-  public Bytes putNB (int index, @NonNull byte[] bytes, int offset) {
-    return putNB(index, bytes, offset, bytes.length);
+  public Bytes writeNB (@NonNull String value, @NonNull Charset charset) {
+    val bytes = value.getBytes(charset);
+    return writeNB(bytes);
   }
 
   @Override
-  public Bytes put1B (short value) {
-    return put1B((byte) value);
+  public Bytes write1B (short value) {
+    return write1B((byte) value);
   }
 
   @Override
-  public Bytes put1B (int index, short value) {
-    return put1B(index, (byte) value);
+  public Bytes write1B (int value) {
+    return write1B((byte) value);
   }
 
   @Override
-  public Bytes put1B (int value) {
-    return put1B((byte) value);
+  public Bytes write1B (long value) {
+    return write1B((byte) value);
   }
 
   @Override
-  public Bytes put1B (int index, int value) {
-    return put1B(index, (byte) value);
-  }
-
-  @Override
-  public Bytes put1B (long value) {
-    return put1B((byte) value);
-  }
-
-  @Override
-  public Bytes put1B (int index, long value) {
-    return put1B(index, (byte) value);
-  }
-
-  @Override
-  public Bytes put1B (float value) {
+  public Bytes write1B (float value) {
     val intValue = Float.floatToIntBits(value);
-    return put1B((byte) intValue);
+    return write1B((byte) intValue);
   }
 
   @Override
-  public Bytes put1B (int index, float value) {
+  public Bytes write1B (double value) {
+    val longValue = Double.doubleToLongBits(value);
+    return write1B((byte) longValue);
+  }
+
+  @Override
+  public Bytes write1B (char value) {
+    return write1B((byte) value);
+  }
+
+  @Override
+  public Bytes write2B (byte value) {
+    return write2B((short) value);
+  }
+
+  @Override
+  public Bytes write2B (int value) {
+    return write2B((short) value);
+  }
+
+  @Override
+  public Bytes write2B (long value) {
+    return write2B((short) value);
+  }
+
+  @Override
+  public Bytes write2B (float value) {
     val intValue = Float.floatToIntBits(value);
-    return put1B(index, (byte) intValue);
+    return write2B((short) intValue);
   }
 
   @Override
-  public Bytes put1B (double value) {
+  public Bytes write2B (double value) {
     val longValue = Double.doubleToLongBits(value);
-    return put1B((byte) longValue);
+    return write2B((short) longValue);
   }
 
   @Override
-  public Bytes put1B (int index, double value) {
-    val longValue = Double.doubleToLongBits(value);
-    return put1B(index, (byte) longValue);
+  public Bytes write2B (char value) {
+    return write2B((short) value);
   }
 
   @Override
-  public Bytes put1B (char value) {
-    return put1B((byte) value);
+  public Bytes write4B (byte value) {
+    return write4B((int) value);
   }
 
   @Override
-  public Bytes put1B (int index, char value) {
-    return put1B(index, (byte) value);
+  public Bytes write4B (short value) {
+    return write4B((int) value);
   }
 
   @Override
-  public Bytes put2B (byte value) {
-    return put2B((short) value);
+  public Bytes write4B (long value) {
+    return write4B((int) value);
   }
 
   @Override
-  public Bytes put2B (int index, byte value) {
-    return put2B(index, (short) value);
-  }
-
-  @Override
-  public Bytes put2B (int value) {
-    return put2B((short) value);
-  }
-
-  @Override
-  public Bytes put2B (int index, int value) {
-    return put2B(index, (short) value);
-  }
-
-  @Override
-  public Bytes put2B (long value) {
-    return put2B((short) value);
-  }
-
-  @Override
-  public Bytes put2B (int index, long value) {
-    return put2B(index, (short) value);
-  }
-
-  @Override
-  public Bytes put2B (float value) {
+  public Bytes write4B (float value) {
     val intValue = Float.floatToIntBits(value);
-    return put2B((short) intValue);
+    return write4B(intValue);
   }
 
   @Override
-  public Bytes put2B (int index, float value) {
+  public Bytes write4B (double value) {
+    val longValue = Double.doubleToLongBits(value);
+    return write4B((int) longValue);
+  }
+
+  @Override
+  public Bytes write4B (char value) {
+    return write4B((int) value);
+  }
+
+  @Override
+  public Bytes write8B (byte value) {
+    return write8B((long) value);
+  }
+
+  @Override
+  public Bytes write8B (short value) {
+    return write8B((long) value);
+  }
+
+  @Override
+  public Bytes write8B (int value) {
+    return write8B((long) value);
+  }
+
+  @Override
+  public Bytes write8B (float value) {
     val intValue = Float.floatToIntBits(value);
-    return put2B(index, (short) intValue);
+    return write8B((long) intValue);
   }
 
   @Override
-  public Bytes put2B (double value) {
+  public Bytes write8B (double value) {
     val longValue = Double.doubleToLongBits(value);
-    return put2B((short) longValue);
+    return write8B(longValue);
   }
 
   @Override
-  public Bytes put2B (int index, double value) {
-    val longValue = Double.doubleToLongBits(value);
-    return put2B(index, (short) longValue);
+  public Bytes write8B (char value) {
+    return write8B((long) value);
   }
 
   @Override
-  public Bytes put2B (char value) {
-    return put2B((short) value);
+  public Bytes setNB (int index, @NonNull byte[] bytes) {
+    return setNB(index, bytes, 0, bytes.length);
   }
 
   @Override
-  public Bytes put2B (int index, char value) {
-    return put2B(index, (short) value);
+  public Bytes setNB (int index, @NonNull byte[] bytes, int offset) {
+    return setNB(index, bytes, offset, bytes.length);
   }
 
   @Override
-  public Bytes put4B (byte value) {
-    return put4B((int) value);
+  public Bytes setNB (int index, String value) {
+    return setNB(index, value, ISO_8859_1);
   }
 
   @Override
-  public Bytes put4B (int index, byte value) {
-    return put4B(index, (int) value);
+  public Bytes setNB (int index, @NonNull String value, @NonNull Charset charset) {
+    val bytes = value.getBytes(charset);
+    return setNB(index, bytes);
   }
 
   @Override
-  public Bytes put4B (short value) {
-    return put4B((int) value);
+  public Bytes set1B (int index, short value) {
+    return set1B(index, (byte) value);
   }
 
   @Override
-  public Bytes put4B (int index, short value) {
-    return put4B(index, (int) value);
+  public Bytes set1B (int index, int value) {
+    return set1B(index, (byte) value);
   }
 
   @Override
-  public Bytes put4B (long value) {
-    return put4B((int) value);
+  public Bytes set1B (int index, long value) {
+    return set1B(index, (byte) value);
   }
 
   @Override
-  public Bytes put4B (int index, long value) {
-    return put4B(index, (int) value);
-  }
-
-  @Override
-  public Bytes put4B (float value) {
+  public Bytes set1B (int index, float value) {
     val intValue = Float.floatToIntBits(value);
-    return put4B(intValue);
+    return set1B(index, (byte) intValue);
   }
 
   @Override
-  public Bytes put4B (int index, float value) {
+  public Bytes set1B (int index, double value) {
+    val longValue = Double.doubleToLongBits(value);
+    return set1B(index, (byte) longValue);
+  }
+
+  @Override
+  public Bytes set1B (int index, char value) {
+    return set1B(index, (byte) value);
+  }
+
+  @Override
+  public Bytes set2B (int index, byte value) {
+    return set2B(index, (short) value);
+  }
+
+  @Override
+  public Bytes set2B (int index, int value) {
+    return set2B(index, (short) value);
+  }
+
+  @Override
+  public Bytes set2B (int index, long value) {
+    return set2B(index, (short) value);
+  }
+
+  @Override
+  public Bytes set2B (int index, float value) {
     val intValue = Float.floatToIntBits(value);
-    return put4B(index, intValue);
+    return set2B(index, (short) intValue);
   }
 
   @Override
-  public Bytes put4B (double value) {
+  public Bytes set2B (int index, double value) {
     val longValue = Double.doubleToLongBits(value);
-    return put4B((int) longValue);
+    return set2B(index, (short) longValue);
   }
 
   @Override
-  public Bytes put4B (int index, double value) {
-    val longValue = Double.doubleToLongBits(value);
-    return put4B(index, (int) longValue);
+  public Bytes set2B (int index, char value) {
+    return set2B(index, (short) value);
   }
 
   @Override
-  public Bytes put4B (char value) {
-    return put4B((int) value);
+  public Bytes set4B (int index, byte value) {
+    return set4B(index, (int) value);
   }
 
   @Override
-  public Bytes put4B (int index, char value) {
-    return put4B(index, (int) value);
+  public Bytes set4B (int index, short value) {
+    return set4B(index, (int) value);
   }
 
   @Override
-  public Bytes put8B (byte value) {
-    return put8B((long) value);
+  public Bytes set4B (int index, long value) {
+    return set4B(index, (int) value);
   }
 
   @Override
-  public Bytes put8B (int index, byte value) {
-    return put8B(index, (long) value);
-  }
-
-  @Override
-  public Bytes put8B (short value) {
-    return put8B((long) value);
-  }
-
-  @Override
-  public Bytes put8B (int index, short value) {
-    return put8B(index, (long) value);
-  }
-
-  @Override
-  public Bytes put8B (int value) {
-    return put8B((long) value);
-  }
-
-  @Override
-  public Bytes put8B (int index, int value) {
-    return put8B(index, (long) value);
-  }
-
-  @Override
-  public Bytes put8B (float value) {
+  public Bytes set4B (int index, float value) {
     val intValue = Float.floatToIntBits(value);
-    return put8B((long) intValue);
+    return set4B(index, intValue);
   }
 
   @Override
-  public Bytes put8B (int index, float value) {
+  public Bytes set4B (int index, double value) {
+    val longValue = Double.doubleToLongBits(value);
+    return set4B(index, (int) longValue);
+  }
+
+  @Override
+  public Bytes set4B (int index, char value) {
+    return set4B(index, (int) value);
+  }
+
+  @Override
+  public Bytes set8B (int index, byte value) {
+    return set8B(index, (long) value);
+  }
+
+  @Override
+  public Bytes set8B (int index, short value) {
+    return set8B(index, (long) value);
+  }
+
+  @Override
+  public Bytes set8B (int index, int value) {
+    return set8B(index, (long) value);
+  }
+
+  @Override
+  public Bytes set8B (int index, float value) {
     val intValue = Float.floatToIntBits(value);
-    return put8B(index, (long) intValue);
+    return set8B(index, (long) intValue);
   }
 
   @Override
-  public Bytes put8B (double value) {
+  public Bytes set8B (int index, double value) {
     val longValue = Double.doubleToLongBits(value);
-    return put8B(longValue);
+    return set8B(index, longValue);
   }
 
   @Override
-  public Bytes put8B (int index, double value) {
-    val longValue = Double.doubleToLongBits(value);
-    return put8B(index, longValue);
+  public Bytes set8B (int index, char value) {
+    return set8B(index, (long) value);
   }
 
   @Override
-  public Bytes put8B (char value) {
-    return put8B((long) value);
-  }
-
-  @Override
-  public Bytes put8B (int index, char value) {
-    return put8B(index, (long) value);
-  }
-
-  @Override
-  public short getUnsignedByte () {
-    val value = getByte();
+  public short readUnsignedByte () {
+    val value = readByte();
     return BytesUtils.asUnsignedByte(value);
+  }
+
+  @Override
+  public int readUnsignedShort () {
+    val value = readShort();
+    return BytesUtils.asUnsignedShort(value);
+  }
+
+  @Override
+  public long readUnsignedInt () {
+    val value = readInt();
+    return BytesUtils.asUnsignedInteger(value);
+  }
+
+  @Override
+  public BigInteger readUnsignedLong () {
+    val value = readLong();
+    return BytesUtils.asUnsignedLong(value);
+  }
+
+  @Override
+  public byte[] readBytes () {
+    val result = readBytes(readerIndex());
+    readerIndex(capacity());
+    return result;
+  }
+
+  @Override
+  public byte[] readBytes (int length) {
+    val result = new byte[length];
+    readBytes(result);
+    return result;
+  }
+
+  @Override
+  public Bytes readBytes (@NonNull byte[] destination) {
+    return readBytes(destination, 0, destination.length);
+  }
+
+  @Override
+  public String readString () {
+    return readString(ISO_8859_1);
+  }
+
+  @Override
+  public String readString (int length) {
+    return readString(length, ISO_8859_1);
+  }
+
+  @Override
+  public String readString (Charset charset) {
+    val result = getString(readerIndex(), charset);
+    readerIndex(capacity());
+    return result;
+  }
+
+  @Override
+  public String readString (int length, Charset charset) {
+    val result = getString(readerIndex(), length, charset);
+    readerIndex(readerIndex() + length);
+    return result;
   }
 
   @Override
@@ -315,21 +398,9 @@ abstract class BytesAbstract implements Bytes {
   }
 
   @Override
-  public int getUnsignedShort () {
-    val value = getShort();
-    return BytesUtils.asUnsignedShort(value);
-  }
-
-  @Override
   public int getUnsignedShort (int index) {
     val value = getShort(index);
     return BytesUtils.asUnsignedShort(value);
-  }
-
-  @Override
-  public long getUnsignedInt () {
-    val value = getInt();
-    return BytesUtils.asUnsignedInteger(value);
   }
 
   @Override
@@ -339,44 +410,14 @@ abstract class BytesAbstract implements Bytes {
   }
 
   @Override
-  public BigInteger getUnsignedLong () {
-    val value = getLong();
-    return BytesUtils.asUnsignedLong(value);
-  }
-
-  @Override
   public BigInteger getUnsignedLong (int index) {
     val value = getLong(index);
     return BytesUtils.asUnsignedLong(value);
   }
 
   @Override
-  public byte[] getBytes () {
-    val result = getBytes(readerIndex());
-    readerIndex(capacity());
-    return result;
-  }
-
-  @Override
   public byte[] getBytes (int index) {
     return getBytes(index, capacity() - index);
-  }
-
-  @Override
-  public Bytes getBytes (@NonNull byte[] destination) {
-    return getBytes(destination, 0, destination.length);
-  }
-
-  @Override
-  public String getString () {
-    return getString(ISO_8859_1);
-  }
-
-  @Override
-  public String getString (Charset charset) {
-    val result = getString(readerIndex(), charset);
-    readerIndex(capacity());
-    return result;
   }
 
   @Override
@@ -396,7 +437,7 @@ abstract class BytesAbstract implements Bytes {
 
   @Override
   public int readableBytes () {
-    return writerIndex() - readerIndex() + 1;
+    return writerIndex() - readerIndex();
   }
 
   @Override
@@ -433,13 +474,17 @@ abstract class BytesAbstract implements Bytes {
 
   protected void checkWriteBounds (int index, int length) {
     if (index < readerIndex() || index + length > capacity()) {
-      throw new IndexOutOfBoundsException();
+      val msg = String.format("Writer index error. index(%d) < readerIndex(%d) || index(%d)+length(%d) > capacity(%d)",
+                              index, readerIndex(), index, length, capacity());
+      throw new IndexOutOfBoundsException(msg);
     }
   }
 
   protected void checkReaderBounds (int index, int length) {
     if (index < 0 || index + length > writerIndex()) {
-      throw new IndexOutOfBoundsException();
+      val msg = String.format("Reader index error. index(%d) < 0 || index(%d)+length(%d) > writerIndex(%d)",
+                              index, index, length, writerIndex());
+      throw new IndexOutOfBoundsException(msg);
     }
   }
 }

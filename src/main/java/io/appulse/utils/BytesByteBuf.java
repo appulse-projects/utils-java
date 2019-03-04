@@ -40,68 +40,104 @@ class BytesByteBuf extends BytesAbstract {
   }
 
   @Override
-  public Bytes putNB (byte[] bytes, int offset, int length) {
+  public Bytes writeNB (byte[] bytes, int offset, int length) {
     buffer.writeBytes(bytes, offset, length);
     return this;
   }
 
   @Override
-  public Bytes putNB (int index, byte[] bytes, int offset, int length) {
-    buffer.setBytes(index, bytes, offset, length);
-    return this;
-  }
-
-  @Override
-  public Bytes put1B (byte value) {
+  public Bytes write1B (byte value) {
     buffer.writeByte(value);
     return this;
   }
 
   @Override
-  public Bytes put1B (int index, byte value) {
-    buffer.setByte(index, value);
-    return this;
-  }
-
-  @Override
-  public Bytes put2B (short value) {
+  public Bytes write2B (short value) {
     buffer.writeShort(value);
     return this;
   }
 
   @Override
-  public Bytes put2B (int index, short value) {
-    buffer.setShort(index, value);
-    return this;
-  }
-
-  @Override
-  public Bytes put4B (int value) {
+  public Bytes write4B (int value) {
     buffer.writeInt(value);
     return this;
   }
 
   @Override
-  public Bytes put4B (int index, int value) {
-    buffer.setInt(index, value);
-    return this;
-  }
-
-  @Override
-  public Bytes put8B (long value) {
+  public Bytes write8B (long value) {
     buffer.writeLong(value);
     return this;
   }
 
   @Override
-  public Bytes put8B (int index, long value) {
+  public Bytes setNB (int index, byte[] bytes, int offset, int length) {
+    buffer.setBytes(index, bytes, offset, length);
+    return this;
+  }
+
+  @Override
+  public Bytes set1B (int index, byte value) {
+    buffer.setByte(index, value);
+    return this;
+  }
+
+  @Override
+  public Bytes set2B (int index, short value) {
+    buffer.setShort(index, value);
+    return this;
+  }
+
+  @Override
+  public Bytes set4B (int index, int value) {
+    buffer.setInt(index, value);
+    return this;
+  }
+
+  @Override
+  public Bytes set8B (int index, long value) {
     buffer.setLong(index, value);
     return this;
   }
 
   @Override
-  public byte getByte () {
+  public byte readByte () {
     return buffer.readByte();
+  }
+
+  @Override
+  public short readShort () {
+    return buffer.readShort();
+  }
+
+  @Override
+  public int readInt () {
+    return buffer.readInt();
+  }
+
+  @Override
+  public long readLong () {
+    return buffer.readLong();
+  }
+
+  @Override
+  public float readFloat () {
+    return buffer.readFloat();
+  }
+
+  @Override
+  public double readDouble () {
+    return buffer.readDouble();
+  }
+
+  @Override
+  public char readChar () {
+    return buffer.readChar();
+  }
+
+  @Override
+  public Bytes readBytes (byte[] destination, int offset, int length) {
+    buffer.readBytes(destination, offset, length);
+    return this;
   }
 
   @Override
@@ -110,18 +146,8 @@ class BytesByteBuf extends BytesAbstract {
   }
 
   @Override
-  public short getShort () {
-    return buffer.readShort();
-  }
-
-  @Override
   public short getShort (int index) {
     return buffer.getShort(index);
-  }
-
-  @Override
-  public int getInt () {
-    return buffer.readInt();
   }
 
   @Override
@@ -130,18 +156,8 @@ class BytesByteBuf extends BytesAbstract {
   }
 
   @Override
-  public long getLong () {
-    return buffer.readLong();
-  }
-
-  @Override
   public long getLong (int index) {
     return buffer.getLong(index);
-  }
-
-  @Override
-  public float getFloat () {
-    return buffer.readFloat();
   }
 
   @Override
@@ -150,18 +166,8 @@ class BytesByteBuf extends BytesAbstract {
   }
 
   @Override
-  public double getDouble () {
-    return buffer.readDouble();
-  }
-
-  @Override
   public double getDouble (int index) {
     return buffer.getDouble(index);
-  }
-
-  @Override
-  public char getChar () {
-    return buffer.readChar();
   }
 
   @Override
@@ -174,12 +180,6 @@ class BytesByteBuf extends BytesAbstract {
     val result = new byte[length];
     buffer.getBytes(index, result);
     return result;
-  }
-
-  @Override
-  public Bytes getBytes (byte[] destination, int offset, int length) {
-    buffer.readBytes(destination, offset, length);
-    return this;
   }
 
   @Override

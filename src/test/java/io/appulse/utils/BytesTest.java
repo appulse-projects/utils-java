@@ -38,7 +38,7 @@ class BytesTest {
         .isEqualTo(0);
 
     assertThat(bytes.writerIndex())
-        .isEqualTo(2);
+        .isEqualTo(3);
 
     assertThat(bytes.capacity())
         .isEqualTo(expected.length);
@@ -57,7 +57,7 @@ class BytesTest {
     assertThat(bytes.readerIndex()).isEqualTo(0);
     assertThat(bytes.writerIndex()).isEqualTo(0);
 
-    bytes.put4B(10);
+    bytes.write4B(10);
     assertThat(bytes.writerIndex()).isEqualTo(4);
 
     bytes.readerIndex(2);
@@ -70,7 +70,7 @@ class BytesTest {
   @Test
   void clear () {
     Bytes bytes = Bytes.allocate()
-        .put1B(1);
+        .write1B(1);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1 });
@@ -88,12 +88,12 @@ class BytesTest {
     assertThat(bytes.array())
         .isEqualTo(new byte[0]);
 
-    bytes.put1B(1);
+    bytes.write1B(1);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1 });
 
-    bytes.put1B(2);
+    bytes.write1B(2);
 
     assertThat(bytes.array())
         .isEqualTo(new byte[] { 1, 2 });
@@ -104,25 +104,25 @@ class BytesTest {
     Bytes bytes = Bytes.allocate(4);
     assertThat(bytes.writerIndex()).isEqualTo(0);
 
-    bytes.put4B(4);
+    bytes.write4B(4);
     assertThat(bytes.writerIndex()).isEqualTo(4);
 
     Bytes wrapped = Bytes.wrap(new byte[] { 1, 0, 0 });
     assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 0, 0 });
-    assertThat(wrapped.writerIndex()).isEqualTo(2);
+    assertThat(wrapped.writerIndex()).isEqualTo(3);
 
-    wrapped.putNB(1, new byte[] { 2, 3 });
+    wrapped.setNB(1, new byte[] { 2, 3 });
     assertThat(wrapped.array()).isEqualTo(new byte[] { 1, 2, 3 });
-    assertThat(wrapped.writerIndex()).isEqualTo(2);
+    assertThat(wrapped.writerIndex()).isEqualTo(3);
     assertThat(wrapped.readerIndex()).isEqualTo(0);
   }
 
   @Test
   void unsignedTest () {
     Bytes bytes = Bytes.allocate()
-        .put1B(254)
-        .put2B(62994)
-        .put4B(4_100_000_000L);
+        .write1B(254)
+        .write2B(62994)
+        .write4B(4_100_000_000L);
 
     assertThat(bytes.getByte(0))
         .isNotEqualTo(254);

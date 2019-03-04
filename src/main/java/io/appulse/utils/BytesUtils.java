@@ -784,7 +784,7 @@ public final class BytesUtils {
    * @since 1.3.1
    */
   public static short asUnsignedByte (byte value) {
-    return (short) (value & 0xff);
+    return (short) (((int) value) & 0xff);
   }
 
   /**
@@ -830,7 +830,7 @@ public final class BytesUtils {
    * @since 1.5.2
    */
   public static int asUnsignedShort (short value) {
-    return value & 0xFFFF;
+    return ((int) value) & 0xFFFF;
   }
 
   /**
@@ -892,7 +892,7 @@ public final class BytesUtils {
    * @since 1.5.2
    */
   public static long asUnsignedInteger (int value) {
-    return value & 0x00000000FFFFFFFFL;
+    return ((long) value) & 0xFFFFFFFFL;
   }
 
   /**

@@ -44,14 +44,42 @@ class BytesByteBuffer extends BytesAbstract {
   }
 
   @Override
-  public Bytes putNB (@NonNull byte[] bytes, int offset, int length) {
-    putNB(writerIndex, bytes, offset, length);
+  public Bytes writeNB (@NonNull byte[] bytes, int offset, int length) {
+    setNB(writerIndex, bytes, offset, length);
     writerIndex += length;
     return this;
   }
 
   @Override
-  public Bytes putNB (int index, @NonNull byte[] bytes, int offset, int length) {
+  public Bytes write1B (byte value) {
+    set1B(writerIndex, value);
+    writerIndex += Byte.BYTES;
+    return this;
+  }
+
+  @Override
+  public Bytes write2B (short value) {
+    set2B(writerIndex, value);
+    writerIndex += Short.BYTES;
+    return this;
+  }
+
+  @Override
+  public Bytes write4B (int value) {
+    set4B(writerIndex, value);
+    writerIndex += Integer.BYTES;
+    return this;
+  }
+
+  @Override
+  public Bytes write8B (long value) {
+    set8B(writerIndex, value);
+    writerIndex += Long.BYTES;
+    return this;
+  }
+
+  @Override
+  public Bytes setNB (int index, @NonNull byte[] bytes, int offset, int length) {
     val position = buffer.position();
     buffer.position(index);
     buffer.put(bytes, offset, length);
@@ -60,66 +88,88 @@ class BytesByteBuffer extends BytesAbstract {
   }
 
   @Override
-  public Bytes put1B (byte value) {
-    put1B(writerIndex, value);
-    writerIndex += Byte.BYTES;
-    return this;
-  }
-
-  @Override
-  public Bytes put1B (int index, byte value) {
+  public Bytes set1B (int index, byte value) {
     checkWriteBounds(index, Byte.BYTES);
     buffer.put(index, value);
     return this;
   }
 
   @Override
-  public Bytes put2B (short value) {
-    put2B(writerIndex, value);
-    writerIndex += Short.BYTES;
-    return this;
-  }
-
-  @Override
-  public Bytes put2B (int index, short value) {
+  public Bytes set2B (int index, short value) {
     checkWriteBounds(index, Short.BYTES);
     buffer.putShort(index, value);
     return this;
   }
 
   @Override
-  public Bytes put4B (int value) {
-    put4B(writerIndex, value);
-    writerIndex += Integer.BYTES;
-    return this;
-  }
-
-  @Override
-  public Bytes put4B (int index, int value) {
+  public Bytes set4B (int index, int value) {
     checkWriteBounds(index, Integer.BYTES);
     buffer.putInt(index, value);
     return this;
   }
 
   @Override
-  public Bytes put8B (long value) {
-    put8B(writerIndex, value);
-    writerIndex += Long.BYTES;
-    return this;
-  }
-
-  @Override
-  public Bytes put8B (int index, long value) {
+  public Bytes set8B (int index, long value) {
     checkWriteBounds(index, Long.BYTES);
     buffer.putLong(index, value);
     return this;
   }
 
   @Override
-  public byte getByte () {
+  public byte readByte () {
     val result = getByte(readerIndex);
     readerIndex += Byte.BYTES;
     return result;
+  }
+
+  @Override
+  public short readShort () {
+    val result = getShort(readerIndex);
+    readerIndex += Short.BYTES;
+    return result;
+  }
+
+  @Override
+  public int readInt () {
+    val result = getInt(readerIndex);
+    readerIndex += Integer.BYTES;
+    return result;
+  }
+
+  @Override
+  public long readLong () {
+    val result = getLong(readerIndex);
+    readerIndex += Long.BYTES;
+    return result;
+  }
+
+  @Override
+  public float readFloat () {
+    val result = getFloat(readerIndex);
+    readerIndex += Float.BYTES;
+    return result;
+  }
+
+  @Override
+  public double readDouble () {
+    val result = getDouble(readerIndex);
+    readerIndex += Double.BYTES;
+    return result;
+  }
+
+  @Override
+  public char readChar () {
+    val result = getChar(readerIndex);
+    readerIndex += Character.BYTES;
+    return result;
+  }
+
+  @Override
+  public Bytes readBytes (@NonNull byte[] destination, int offset, int length) {
+    checkReaderBounds(readerIndex, length);
+    buffer.get(destination, offset, length);
+    readerIndex += length;
+    return this;
   }
 
   @Override
@@ -129,23 +179,9 @@ class BytesByteBuffer extends BytesAbstract {
   }
 
   @Override
-  public short getShort () {
-    val result = getShort(readerIndex);
-    readerIndex += Short.BYTES;
-    return result;
-  }
-
-  @Override
   public short getShort (int index) {
     checkReaderBounds(index, Short.BYTES);
     return buffer.getShort(index);
-  }
-
-  @Override
-  public int getInt () {
-    val result = getInt(readerIndex);
-    readerIndex += Integer.BYTES;
-    return result;
   }
 
   @Override
@@ -155,23 +191,9 @@ class BytesByteBuffer extends BytesAbstract {
   }
 
   @Override
-  public long getLong () {
-    val result = getLong(readerIndex);
-    readerIndex += Long.BYTES;
-    return result;
-  }
-
-  @Override
   public long getLong (int index) {
     checkReaderBounds(index, Long.BYTES);
     return buffer.getLong(index);
-  }
-
-  @Override
-  public float getFloat () {
-    val result = getFloat(readerIndex);
-    readerIndex += Float.BYTES;
-    return result;
   }
 
   @Override
@@ -181,23 +203,9 @@ class BytesByteBuffer extends BytesAbstract {
   }
 
   @Override
-  public double getDouble () {
-    val result = getDouble(readerIndex);
-    readerIndex += Double.BYTES;
-    return result;
-  }
-
-  @Override
   public double getDouble (int index) {
     checkReaderBounds(index, Double.BYTES);
     return buffer.getDouble(index);
-  }
-
-  @Override
-  public char getChar () {
-    val result = getChar(readerIndex);
-    readerIndex += Character.BYTES;
-    return result;
   }
 
   @Override
@@ -216,14 +224,6 @@ class BytesByteBuffer extends BytesAbstract {
     buffer.put(result);
     buffer.position(position);
     return result;
-  }
-
-  @Override
-  public Bytes getBytes (@NonNull byte[] destination, int offset, int length) {
-    checkReaderBounds(readerIndex, length);
-    buffer.get(destination, offset, length);
-    readerIndex += length;
-    return this;
   }
 
   @Override
