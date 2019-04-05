@@ -20,8 +20,6 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-import io.netty.buffer.ByteBuf;
-
 /**
  * This interface provides an abstract view for a primitive byte
  * arrays ({@code byte[]}).
@@ -64,20 +62,6 @@ public interface Bytes {
   }
 
   /**
-   * Wraps a {@link ByteBuf} buffer into a new {@link Bytes} object.
-   * <p>
-   * Modifications to this buffer's content will cause the wrapped
-   * buffer's content to be modified, and vice versa.
-   *
-   * @param buffer the value to wrap
-   *
-   * @return the new {@link Bytes} instance
-   */
-  static Bytes wrap (ByteBuf buffer) {
-    return new BytesByteBuf(buffer);
-  }
-
-  /**
    * Copies a byte array into a new {@link Bytes} object.
    * <p>
    * Modifications to this array's content will not cause the wrapped
@@ -106,20 +90,6 @@ public interface Bytes {
   }
 
   /**
-   * Copies a {@link ByteBuf} buffer into a new {@link Bytes} object.
-   * <p>
-   * Modifications to this buffer's content will not cause the wrapped
-   * buffer's content to be modified, and vice versa.
-   *
-   * @param buffer the value to copy
-   *
-   * @return the new {@link Bytes} instance
-   */
-  static Bytes copy (ByteBuf buffer) {
-    return BytesByteBuf.copy(buffer);
-  }
-
-  /**
    * Create a new {@link Bytes} instance with a fixed size content
    *
    * @return the new {@link Bytes} instance
@@ -135,6 +105,19 @@ public interface Bytes {
    */
   static Bytes resizableArray () {
     return new BytesExtendableArray();
+  }
+
+  /**
+   * Creates a new {@link Bytes} instance with a resizable content.
+   *
+   * @param initialSize the initial buffer's size
+   *
+   * @return the new {@link Bytes} instance
+   *
+   * @since 1.13.0
+   */
+  static Bytes resizableArray (int initialSize) {
+    return new BytesExtendableArray(initialSize);
   }
 
   /**
@@ -1773,4 +1756,15 @@ public interface Bytes {
    * @return the array that backs this buffer
    */
   byte[] array ();
+
+  /**
+   * Returns the copy of range the buffer's back byte array from
+   * <b>0</b> till <b>writeIndex</t>.
+   * <p>
+   * Modifications to this buffer's content may NOT cause the
+   * returned array's content to be modified, and vice versa.
+   *
+   * @return the copy of the array that backs this buffer
+   */
+  byte[] arrayCopy ();
 }

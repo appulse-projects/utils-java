@@ -23,6 +23,7 @@ import java.io.EOFException;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
+import java.nio.channels.ReadableByteChannel;
 import java.util.stream.Stream;
 
 import io.appulse.utils.exception.CantReadFromArrayException;
@@ -1075,6 +1076,46 @@ public final class BytesUtils {
     }
 
     return result;
+  }
+
+  /**
+   * Reads all bytes from the channel till the buffer is full.
+   *
+   * @param channel the bytes source
+   *
+   * @param buffer the destination, whre readed bytes store
+   *
+   * @since 1.13.0
+   */
+  @SneakyThrows
+  public static void read (@NonNull ReadableByteChannel channel, @NonNull ByteBuffer buffer) {
+    int totalReaded = 0;
+    do {
+      val readed = channel.read(buffer);
+      if (readed > 0) {
+        totalReaded += readed;
+      } else if (readed == -1) {
+        return;
+      }
+    } while (totalReaded < buffer.capacity());
+  }
+
+  /**
+   * Reads the bytes from the channel till the buffer's limit.
+   *
+   * @param channel the bytes source
+   *
+   * @param buffer the destination, whre readed bytes store
+   *
+   * @param limit the limit amount of bytes for read
+   *
+   * @since 1.13.0
+   */
+  @SneakyThrows
+  public static void read (@NonNull ReadableByteChannel channel, @NonNull ByteBuffer buffer, int limit) {
+    val subBuffer = ByteBuffer.allocate(limit);
+    read(channel, subBuffer);
+    buffer.put(subBuffer);
   }
 
   /**

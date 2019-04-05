@@ -16,10 +16,13 @@
 
 package io.appulse.utils;
 
+import static java.util.Arrays.copyOfRange;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 import org.junit.jupiter.api.Test;
+
+import lombok.val;
 
 /**
  *
@@ -51,6 +54,24 @@ class BytesTest {
   }
 
   @Test
+  void set () {
+    Bytes bytes = Bytes.allocate(8);
+    bytes.write1B(1);
+
+    val writerIndex = bytes.writerIndex();
+    bytes.write4B(0);
+
+    bytes.write1B(7);
+    bytes.set4B(writerIndex, bytes.writerIndex() - writerIndex - Integer.BYTES);
+
+    assertThat(bytes.array())
+        .isEqualTo(new byte[] { 1, 0, 0, 0, 1, 7, 0, 0 });
+
+    assertThat(copyOfRange(bytes.array(), bytes.readerIndex(), bytes.readableBytes()))
+        .isEqualTo(new byte[] { 1, 0, 0, 0, 1, 7 });
+  }
+
+  @Test
   void position () {
     Bytes bytes = Bytes.allocate(4);
 
@@ -69,7 +90,7 @@ class BytesTest {
 
   @Test
   void clear () {
-    Bytes bytes = Bytes.resizableArray()
+    Bytes bytes = Bytes.resizableArray(1)
         .write1B(1);
 
     assertThat(bytes.array())
@@ -78,24 +99,42 @@ class BytesTest {
     bytes.reset();
 
     assertThat(bytes.array())
-        .isEqualTo(new byte[0]);
+        .isEqualTo(new byte[] { 1 });
   }
 
   @Test
   void array () {
-    Bytes bytes = Bytes.resizableArray();
+    Bytes bytes = Bytes.resizableArray(4);
 
     assertThat(bytes.array())
-        .isEqualTo(new byte[0]);
+        .isEqualTo(new byte[4]);
 
     bytes.write1B(1);
 
     assertThat(bytes.array())
-        .isEqualTo(new byte[] { 1 });
+        .isEqualTo(new byte[] { 1, 0, 0, 0 });
 
     bytes.write1B(2);
 
     assertThat(bytes.array())
+        .isEqualTo(new byte[] { 1, 2, 0, 0 });
+  }
+
+  @Test
+  void arrayCopy () {
+    Bytes bytes = Bytes.resizableArray(4);
+
+    assertThat(bytes.arrayCopy())
+        .isEqualTo(new byte[0]);
+
+    bytes.write1B(1);
+
+    assertThat(bytes.arrayCopy())
+        .isEqualTo(new byte[] { 1 });
+
+    bytes.write1B(2);
+
+    assertThat(bytes.arrayCopy())
         .isEqualTo(new byte[] { 1, 2 });
   }
 

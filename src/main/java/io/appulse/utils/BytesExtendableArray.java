@@ -22,8 +22,20 @@ import lombok.val;
 
 class BytesExtendableArray extends BytesFixedArray {
 
+  /**
+   * The maximum size of array to allocate.
+   * Some VMs reserve some header words in an array.
+   * Attempts to allocate larger arrays may result in
+   * OutOfMemoryError: Requested array size exceeds VM limit
+   */
+  private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
+
   BytesExtendableArray () {
-    super(16);
+    this(16);
+  }
+
+  BytesExtendableArray (int initialSize) {
+    super(initialSize);
   }
 
   @Override
@@ -36,31 +48,31 @@ class BytesExtendableArray extends BytesFixedArray {
     if (newIndex < readerIndex()) {
       throw new IndexOutOfBoundsException();
     }
-    while (newIndex > capacity()) {
-      extendBuffer();
-    }
+    checkWriteBounds(newIndex, 1);
     writerIndex = newIndex;
     return this;
   }
 
   @Override
-  public byte[] array () {
-    return Arrays.copyOfRange(buffer, 0, writerIndex);
-  }
-
-  @Override
   protected void checkWriteBounds (int index, int length) {
-    if (index < readerIndex()) {
-      throw new IndexOutOfBoundsException();
+    // if (index < readerIndex()) {
+    //   throw new IndexOutOfBoundsException();
+    // }
+    val currentCapacity = capacity();
+    val neededCapacity = index + length;
+    if (currentCapacity >= neededCapacity) {
+      return;
     }
-    while (index + length > capacity()) {
-      extendBuffer();
-    }
-  }
 
-  private void extendBuffer () {
-    val newBuffer = new byte[capacity() * 2];
-    System.arraycopy(buffer, 0, newBuffer, 0, buffer.length);
-    buffer = newBuffer;
+    int newCapacity = currentCapacity * 2;
+    if (newCapacity - neededCapacity < 0) {
+      newCapacity = neededCapacity;
+    }
+    if (newCapacity - MAX_ARRAY_SIZE > 0) {
+      newCapacity = neededCapacity > MAX_ARRAY_SIZE
+                    ? Integer.MAX_VALUE
+                    : MAX_ARRAY_SIZE;
+    }
+    buffer = Arrays.copyOf(buffer, newCapacity);
   }
 }

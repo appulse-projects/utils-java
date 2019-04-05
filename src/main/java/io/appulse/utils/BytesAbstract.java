@@ -20,6 +20,7 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 
 import java.math.BigInteger;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import lombok.NonNull;
 import lombok.val;
@@ -471,6 +472,11 @@ abstract class BytesAbstract implements Bytes {
     readerIndex(0);
     writerIndex(0);
     return this;
+  }
+
+  @Override
+  public byte[] arrayCopy () {
+    return Arrays.copyOfRange(array(), 0, writerIndex());
   }
 
   protected void checkWriteBounds (int index, int length) {
