@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.13.0](https://github.com/appulse-projects/utils-java/releases/tag/1.13.0) - 2019-04-07
+
+### Changed
+
+- [Bytes](./src/main/java/io/appulse/utils/Bytes.java) static constructors.
+
+### Added
+
+- More tests.
+
 ## [1.12.0](https://github.com/appulse-projects/utils-java/releases/tag/1.12.0) - 2019-03-04
 
 ### Changed
