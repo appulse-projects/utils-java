@@ -20,9 +20,8 @@ import static java.util.Arrays.copyOfRange;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
-import org.junit.jupiter.api.Test;
-
 import lombok.val;
+import org.junit.jupiter.api.Test;
 
 /**
  *
