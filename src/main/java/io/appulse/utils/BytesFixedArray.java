@@ -244,6 +244,16 @@ class BytesFixedArray extends BytesAbstract {
   }
 
   @Override
+  public void capacity (int bytes) {
+    if (capacity() == bytes) {
+      return;
+    }
+    buffer = Arrays.copyOf(buffer, bytes);
+    writerIndex = Math.min(writerIndex, bytes - 1);
+    readerIndex = Math.min(readerIndex, bytes - 1);
+  }
+
+  @Override
   public int writerIndex () {
     return writerIndex;
   }

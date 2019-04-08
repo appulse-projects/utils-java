@@ -16,20 +16,18 @@
 
 package io.appulse.utils;
 
-import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @FieldDefaults(level = PRIVATE)
 @SuppressWarnings("PMD.LinguisticNaming")
-@RequiredArgsConstructor(access = PACKAGE)
 class BytesByteBuffer extends BytesAbstract {
 
   static BytesByteBuffer copy (@NonNull ByteBuffer buffer) {
@@ -37,12 +35,16 @@ class BytesByteBuffer extends BytesAbstract {
     return new BytesByteBuffer(copy);
   }
 
-  @NonNull
-  final ByteBuffer buffer;
+  ByteBuffer buffer;
 
   int writerIndex;
 
   int readerIndex;
+
+  BytesByteBuffer (@NonNull ByteBuffer buffer) {
+    super();
+    this.buffer = buffer;
+  }
 
   @Override
   public boolean isResizable () {
@@ -242,6 +244,22 @@ class BytesByteBuffer extends BytesAbstract {
   @Override
   public int capacity () {
     return buffer.capacity();
+  }
+
+  @Override
+  public void capacity (int bytes) {
+    if (capacity() == bytes) {
+      return;
+    }
+
+    val oldPosition = buffer.position();
+    val newByteArray = Arrays.copyOf(buffer.array(), bytes);
+
+    buffer = ByteBuffer.wrap(newByteArray);
+
+    buffer.position(Math.min(oldPosition, bytes - 1));
+    writerIndex = Math.min(writerIndex, bytes - 1);
+    readerIndex = Math.min(readerIndex, bytes - 1);
   }
 
   @Override

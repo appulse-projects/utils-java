@@ -1642,6 +1642,13 @@ public interface Bytes {
   int capacity ();
 
   /**
+   * Extends or reduces the buffer's capacity.
+   *
+   * @param bytes the new buffer's capacity
+   */
+  void capacity (int bytes);
+
+  /**
    * Returns the {@code writerIndex} of this buffer.
    *
    * @return {@code writerIndex}

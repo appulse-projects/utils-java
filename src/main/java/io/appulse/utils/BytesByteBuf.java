@@ -16,29 +16,65 @@
 
 package io.appulse.utils;
 
-import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @SuppressWarnings("PMD.LinguisticNaming")
-@RequiredArgsConstructor(access = PACKAGE)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-class BytesByteBuf extends BytesAbstract {
+@FieldDefaults(level = PRIVATE)
+public final class BytesByteBuf extends BytesAbstract {
 
-  static BytesByteBuf copy (@NonNull ByteBuf buffer) {
+  public static BytesByteBuf allocate (int size) {
+    val buffer = Unpooled.buffer(size);
+    buffer.clear();
+    return new BytesByteBuf(buffer);
+  }
+
+  public static BytesByteBuf wrap (@NonNull byte[] bytes) {
+    val wrapped = Unpooled.wrappedBuffer(bytes);
+    wrapped.clear();
+    return new BytesByteBuf(wrapped);
+  }
+
+  public static BytesByteBuf wrap (@NonNull ByteBuffer buffer) {
+    val wrapped = Unpooled.wrappedBuffer(buffer);
+    return new BytesByteBuf(wrapped);
+  }
+
+  public static BytesByteBuf wrap (@NonNull ByteBuf buffer) {
+    val wrapped = Unpooled.wrappedBuffer(buffer);
+    return new BytesByteBuf(wrapped);
+  }
+
+  public static BytesByteBuf copy (@NonNull byte[] bytes) {
+    val copy = Unpooled.copiedBuffer(bytes);
+    return new BytesByteBuf(copy);
+  }
+
+  public static BytesByteBuf copy (@NonNull ByteBuffer buffer) {
+    val copy = Unpooled.copiedBuffer(buffer);
+    return new BytesByteBuf(copy);
+  }
+
+  public static BytesByteBuf copy (@NonNull ByteBuf buffer) {
     val copy = buffer.copy();
     return new BytesByteBuf(copy);
   }
 
-  @NonNull
   ByteBuf buffer;
+
+  private BytesByteBuf (@NonNull ByteBuf buffer) {
+    super();
+    this.buffer = buffer;
+  }
 
   @Override
   public boolean isResizable () {
@@ -197,6 +233,21 @@ class BytesByteBuf extends BytesAbstract {
   @Override
   public int capacity () {
     return buffer.capacity();
+  }
+
+  @Override
+  public void capacity (int bytes) {
+    if (capacity() == bytes) {
+      return;
+    }
+
+    val oldReaderIndex = buffer.readerIndex();
+    val oldWriterIndex = buffer.writerIndex();
+    val newByteArray = Arrays.copyOf(buffer.array(), bytes);
+
+    buffer = Unpooled.wrappedBuffer(newByteArray);
+    buffer.readerIndex(Math.min(oldReaderIndex, bytes - 1));
+    buffer.writerIndex(Math.min(oldWriterIndex, bytes - 1));
   }
 
   @Override

@@ -20,6 +20,8 @@ import static java.util.Arrays.copyOfRange;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.nio.ByteBuffer;
+
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
@@ -179,5 +181,33 @@ class BytesTest {
 
     assertThat(bytes.getUnsignedInt(3))
         .isEqualTo(4_100_000_000L);
+  }
+
+  @Test
+  void capacity () {
+    assertCapacity(new BytesFixedArray(2));
+    assertCapacity(new BytesByteBuffer(ByteBuffer.allocate(2)));
+    assertCapacity(BytesByteBuf.allocate(2));
+  }
+
+  private void assertCapacity (Bytes buffer) {
+    buffer.capacity(2);
+    buffer.write2B(7);
+    assertThat(buffer.capacity())
+        .isEqualTo(2);
+    assertThat(buffer.array())
+        .isEqualTo(new byte[] { 0, 7 });
+
+    buffer.capacity(4);
+    assertThat(buffer.capacity())
+        .isEqualTo(4);
+    assertThat(buffer.array())
+        .isEqualTo(new byte[] { 0, 7, 0, 0 });
+
+    buffer.capacity(1);
+    assertThat(buffer.capacity())
+        .isEqualTo(1);
+    assertThat(buffer.array())
+        .isEqualTo(new byte[] { 0 });
   }
 }

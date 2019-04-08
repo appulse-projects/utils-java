@@ -12,6 +12,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.13.1](https://github.com/appulse-projects/utils-java/releases/tag/1.13.1) - 2019-04-08
+
+### Added
+
+- `Bytes`.`capacity(int)` method for resizing buffers.
+
+### Changed
+
+- Added static methods for `BytesByteBuf` wrapper;
+- Concrete Java version (1.8) now specified in `pom.xml`.
+
 ## [1.13.0](https://github.com/appulse-projects/utils-java/releases/tag/1.13.0) - 2019-04-07
 
 ### Changed
