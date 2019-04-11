@@ -16,21 +16,14 @@
 
 package io.appulse.utils;
 
-import static java.lang.Math.min;
-
-import java.io.ByteArrayOutputStream;
-import java.io.EOFException;
-import java.io.InputStream;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
-import java.nio.channels.ReadableByteChannel;
 import java.util.stream.Stream;
 
 import io.appulse.utils.exception.CantReadFromArrayException;
 import io.appulse.utils.exception.CantWriteToArrayException;
 
 import lombok.NonNull;
-import lombok.SneakyThrows;
 import lombok.val;
 
 /**
@@ -1019,134 +1012,11 @@ public final class BytesUtils {
       destPos = length - bytes.length;
     }
 
-    System.arraycopy(bytes, srcPos, result, destPos, min(bytes.length, length));
+    System.arraycopy(bytes, srcPos, result, destPos, Math.min(bytes.length, length));
     return result;
-  }
-
-  /**
-   * Reads all bytes from stream till the end of the stream.
-   *
-   * @param stream steam
-   *
-   * @return readed bytes array
-   *
-   * @since 1.3.0
-   */
-  @SneakyThrows
-  public static byte[] read (@NonNull InputStream stream) {
-    val outputStream = new ByteArrayOutputStream(32);
-    val buffer = new byte[32];
-
-    while (true) {
-      val length = stream.read(buffer);
-      if (length == -1) {
-        break;
-      }
-      outputStream.write(buffer, 0, length);
-    }
-
-    return outputStream.toByteArray();
-  }
-
-  /**
-   * Reads fixed length bytes from the stream.
-   *
-   * @param stream steam
-   * @param length how many bytes to read from stream
-   *
-   * @return readed bytes array
-   *
-   * @since 1.3.0
-   */
-  @SneakyThrows
-  public static byte[] read (@NonNull InputStream stream, int length) {
-    if (length < 0) {
-      throw new IndexOutOfBoundsException();
-    }
-
-    val result = new byte[length];
-    int readed = 0;
-
-    while (readed < length) {
-      val count = stream.read(result, readed, length - readed);
-      if (count < -1) {
-        throw new EOFException();
-      }
-      readed += count;
-    }
-
-    return result;
-  }
-
-  /**
-   * Reads all bytes from the channel till the buffer is full.
-   *
-   * @param channel the bytes source
-   *
-   * @param buffer the destination, whre readed bytes store
-   *
-   * @since 1.13.0
-   */
-  @SneakyThrows
-  public static void read (@NonNull ReadableByteChannel channel, @NonNull ByteBuffer buffer) {
-    int totalReaded = 0;
-    do {
-      val readed = channel.read(buffer);
-      if (readed > 0) {
-        totalReaded += readed;
-      } else if (readed == -1) {
-        return;
-      }
-    } while (totalReaded < buffer.capacity());
-  }
-
-  /**
-   * Reads the bytes from the channel till the buffer's limit.
-   *
-   * @param channel the bytes source
-   *
-   * @param buffer the destination, whre readed bytes store
-   *
-   * @param limit the limit amount of bytes for read
-   *
-   * @since 1.13.0
-   */
-  @SneakyThrows
-  public static void read (@NonNull ReadableByteChannel channel, @NonNull ByteBuffer buffer, int limit) {
-    val subBuffer = ByteBuffer.allocate(limit);
-    read(channel, subBuffer);
-    buffer.put(subBuffer);
-  }
-
-  /**
-   * Reads all bytes from stream till the end of the stream.
-   *
-   * @param stream steam
-   *
-   * @return readed bytes array wrapped in {@link Bytes} instance
-   *
-   * @since 1.3.0
-   */
-  public static Bytes readBytes (@NonNull InputStream stream) {
-    val result = read(stream);
-    return Bytes.wrap(result);
-  }
-
-  /**
-   * Reads fixed length bytes from the stream.
-   *
-   * @param stream steam
-   * @param length how many bytes to read from stream
-   *
-   * @return readed bytes array wrapped in {@link Bytes} instance
-   *
-   * @since 1.3.0
-   */
-  public static Bytes readBytes (@NonNull InputStream stream, int length) {
-    val result = read(stream, length);
-    return Bytes.wrap(result);
   }
 
   private BytesUtils () {
+    throw new UnsupportedOperationException();
   }
 }

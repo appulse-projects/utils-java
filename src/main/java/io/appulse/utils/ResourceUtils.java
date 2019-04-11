@@ -70,7 +70,7 @@ public final class ResourceUtils {
   public static Optional<byte[]> getBytesContent (@NonNull URL url) {
     try {
       InputStream inputStream = url.openStream();
-      byte[] bytes = BytesUtils.read(inputStream);
+      byte[] bytes = ReadBytesUtils.read(inputStream).arrayCopy();
       return of(bytes);
     } catch (Exception ex) {
       return empty();
@@ -127,7 +127,7 @@ public final class ResourceUtils {
       }
     }
 
-    val bytes = BytesUtils.read(inputStream);
+    val bytes = ReadBytesUtils.read(inputStream).arrayCopy();
     val string = new String(bytes, charset);
     return of(string);
   }

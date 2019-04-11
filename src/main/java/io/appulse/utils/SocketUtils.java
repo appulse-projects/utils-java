@@ -59,22 +59,22 @@ public final class SocketUtils {
 
   @SneakyThrows
   public static byte[] read (@NonNull Socket socket) {
-    return BytesUtils.read(socket.getInputStream());
+    return ReadBytesUtils.read(socket.getInputStream()).arrayCopy();
   }
 
   @SneakyThrows
   public static byte[] read (@NonNull Socket socket, int length) {
-    return BytesUtils.read(socket.getInputStream(), length);
+    return ReadBytesUtils.read(socket.getInputStream(), length).arrayCopy();
   }
 
   @SneakyThrows
   public static Bytes readBytes (@NonNull Socket socket) {
-    return BytesUtils.readBytes(socket.getInputStream());
+    return ReadBytesUtils.read(socket.getInputStream());
   }
 
   @SneakyThrows
   public static Bytes readBytes (@NonNull Socket socket, int fixedLength) {
-    return BytesUtils.readBytes(socket.getInputStream(), fixedLength);
+    return ReadBytesUtils.read(socket.getInputStream(), fixedLength);
   }
 
   private SocketUtils () {

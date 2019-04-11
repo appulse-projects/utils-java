@@ -121,12 +121,12 @@ public interface Bytes {
   }
 
   /**
-   * Tells if the buffer is resizable or not.
+   * Tells if the buffer is auto resizable or not.
    *
    * @return {@code true} if the buffer could be extandable
    *         {@code false} otherwise
    */
-  boolean isResizable ();
+  boolean isAutoResizable ();
 
   /**
    * Sets the specified byte array at the current {@code writerIndex}

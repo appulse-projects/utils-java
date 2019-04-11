@@ -248,7 +248,7 @@ class BytesUtilsTest {
   void read () throws Exception {
     byte[] expected = "Hello world".getBytes();
 
-    assertThat(BytesUtils.read(new CustomInputStream(expected)))
+    assertThat(ReadBytesUtils.read(new CustomInputStream(expected)).arrayCopy())
         .isEqualTo(expected);
   }
 
@@ -257,7 +257,7 @@ class BytesUtilsTest {
     byte[] bytes = "Hello world".getBytes();
     byte[] expected = Arrays.copyOfRange(bytes, 0, 2);
 
-    assertThat(BytesUtils.read(new CustomInputStream(bytes), 2))
+    assertThat(ReadBytesUtils.read(new CustomInputStream(bytes), 2).arrayCopy())
         .isEqualTo(expected);
   }
 

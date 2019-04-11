@@ -53,7 +53,7 @@ class BytesFixedArray extends BytesAbstract {
   }
 
   @Override
-  public boolean isResizable () {
+  public boolean isAutoResizable () {
     return false;
   }
 

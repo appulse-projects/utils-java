@@ -77,7 +77,7 @@ public final class BytesByteBuf extends BytesAbstract {
   }
 
   @Override
-  public boolean isResizable () {
+  public boolean isAutoResizable () {
     return false;
   }
 

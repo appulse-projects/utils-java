@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.14.0](https://github.com/appulse-projects/utils-java/releases/tag/1.14.0) - 2019-04-11
+
+### Added
+
+- `WriteBytesUtils` and `ReadBytesUtils` with write/read helpers.
+
+### Removed
+
+- All `write`/`read` functions from `BytesUtils`.
+
 ## [1.13.1](https://github.com/appulse-projects/utils-java/releases/tag/1.13.1) - 2019-04-08
 
 ### Added

@@ -39,7 +39,7 @@ class BytesExtendableArray extends BytesFixedArray {
   }
 
   @Override
-  public boolean isResizable () {
+  public boolean isAutoResizable () {
     return true;
   }
 
