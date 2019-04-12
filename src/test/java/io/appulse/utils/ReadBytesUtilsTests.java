@@ -16,12 +16,12 @@
 
 package io.appulse.utils;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.READ;
 import static java.nio.file.StandardOpenOption.WRITE;
 import static java.util.Comparator.reverseOrder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
 import java.io.InputStream;
@@ -32,12 +32,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+import lombok.SneakyThrows;
+import lombok.val;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import lombok.SneakyThrows;
-import lombok.val;
 
 class ReadBytesUtilsTests {
 
@@ -397,6 +396,7 @@ class ReadBytesUtilsTests {
 
   interface ConsumerWithThrowable<T> {
 
+    @SuppressWarnings("checkstyle:IllegalThrows")
     void consume (T value) throws Throwable;
   }
 }

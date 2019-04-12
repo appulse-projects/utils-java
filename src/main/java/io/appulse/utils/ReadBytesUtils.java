@@ -189,7 +189,7 @@ public final class ReadBytesUtils {
    *
    * @param inputStream the input data stream
    *
-   * @param buffer the buffer into which the data is read
+   * @param bytes the buffer into which the data is read
    *
    * @param offset the start offset in the <code>buffer</code> at which the data is written
    *
@@ -257,7 +257,7 @@ public final class ReadBytesUtils {
    *
    * @param channel the input data channel
    *
-   * @param buffer the buffer into which the data is read
+   * @param bytes the buffer into which the data is read
    *
    * @param offset the start offset in the <code>buffer</code> at which the data is written
    *
