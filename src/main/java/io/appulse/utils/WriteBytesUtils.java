@@ -50,7 +50,10 @@ public final class WriteBytesUtils {
   @SneakyThrows
   public static int write (@NonNull OutputStream outputStream, @NonNull byte[] bytes, int offset, int length) {
     if (offset < 0 || offset >= bytes.length) {
-      val msg = String.format(ENGLISH, "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length", offset);
+      val msg = String.format(ENGLISH,
+          "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length (%d)",
+          offset, bytes.length
+      );
       throw new IndexOutOfBoundsException(msg);
     }
     if (length < 0) {
@@ -81,13 +84,13 @@ public final class WriteBytesUtils {
   }
 
   public static int write (OutputStream outputStream, @NonNull Bytes buffer) {
-    return write(outputStream, buffer, buffer.writableBytes());
+    return write(outputStream, buffer, buffer.readableBytes());
   }
 
   public static int write (@NonNull OutputStream outputStream, @NonNull Bytes buffer, int length) {
     val bytes = buffer.array();
-    val written = write(outputStream, bytes, buffer.writerIndex(), length);
-    buffer.writerIndex(buffer.writerIndex() + written);
+    val written = write(outputStream, bytes, buffer.readerIndex(), length);
+    buffer.readerIndex(buffer.readerIndex() + written);
     return written;
   }
 
@@ -102,7 +105,10 @@ public final class WriteBytesUtils {
   @SneakyThrows
   public static int write (@NonNull WritableByteChannel channel, @NonNull byte[] bytes, int offset, int length) {
     if (offset < 0 || offset >= bytes.length) {
-      val msg = String.format(ENGLISH, "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length", offset);
+      val msg = String.format(ENGLISH,
+          "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length (%d)",
+          offset, bytes.length
+      );
       throw new IndexOutOfBoundsException(msg);
     }
     if (length < 0) {
@@ -121,6 +127,7 @@ public final class WriteBytesUtils {
       if (written < 0) {
         break;
       }
+      totalWritten += written;
     }
     return totalWritten;
   }
@@ -137,13 +144,13 @@ public final class WriteBytesUtils {
   }
 
   public static int write (WritableByteChannel channel, @NonNull Bytes buffer) {
-    return write(channel, buffer, buffer.writableBytes());
+    return write(channel, buffer, buffer.readableBytes());
   }
 
   public static int write (@NonNull WritableByteChannel channel, @NonNull Bytes buffer, int length) {
     val bytes = buffer.array();
-    val written = write(channel, bytes, buffer.writerIndex(), length);
-    buffer.writerIndex(buffer.writerIndex() + written);
+    val written = write(channel, bytes, buffer.readerIndex(), length);
+    buffer.readerIndex(buffer.readerIndex() + written);
     return written;
   }
 
@@ -168,7 +175,7 @@ public final class WriteBytesUtils {
   }
 
   public static int write (File file, @NonNull Bytes buffer) {
-    return write(file, buffer, buffer.writableBytes());
+    return write(file, buffer, buffer.readableBytes());
   }
 
   public static int write (@NonNull File file, Bytes buffer, int length) {
@@ -202,7 +209,7 @@ public final class WriteBytesUtils {
   }
 
   public static int write (Path path, @NonNull Bytes buffer) {
-    return write(path, buffer, buffer.writableBytes());
+    return write(path, buffer, buffer.readableBytes());
   }
 
   @SneakyThrows

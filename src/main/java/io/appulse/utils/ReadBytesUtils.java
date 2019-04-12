@@ -200,7 +200,10 @@ public final class ReadBytesUtils {
   @SneakyThrows
   public static int read (@NonNull InputStream inputStream, @NonNull byte[] bytes, int offset, int length) {
     if (offset < 0 || offset >= bytes.length) {
-      val msg = String.format(ENGLISH, "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length", offset);
+      val msg = String.format(ENGLISH,
+          "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length",
+          offset
+      );
       throw new IndexOutOfBoundsException(msg);
     }
     if (length < 0) {
@@ -208,15 +211,17 @@ public final class ReadBytesUtils {
       throw new IndexOutOfBoundsException(msg);
     }
 
+    int position = offset;
     int remaining = Math.min(bytes.length - offset, length);
     while (remaining > 0) {
-      val readed = inputStream.read(bytes, offset + length - remaining, remaining);
+      val readed = inputStream.read(bytes, position, remaining);
       if (readed < 0) {
         break;
       }
+      position += readed;
       remaining -= readed;
     }
-    return offset + length - remaining;
+    return position - offset;
   }
 
   /**
@@ -263,7 +268,10 @@ public final class ReadBytesUtils {
   @SneakyThrows
   public static int read (@NonNull ReadableByteChannel channel, @NonNull byte[] bytes, int offset, int length) {
     if (offset < 0 || offset >= bytes.length) {
-      val msg = String.format(ENGLISH, "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length", offset);
+      val msg = String.format(ENGLISH,
+          "Invalid offset %d. The offset must be equal or greater than 0 and less than byte array length",
+          offset
+      );
       throw new IndexOutOfBoundsException(msg);
     }
     if (length < 0) {
@@ -277,7 +285,7 @@ public final class ReadBytesUtils {
     byteBuffer.limit(limit);
 
     int totalReaded = 0;
-    while (true) {
+    while (byteBuffer.hasRemaining()) {
       val readed = channel.read(byteBuffer);
       if (readed < 0) {
         break;
