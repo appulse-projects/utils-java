@@ -163,7 +163,7 @@ public final class ReadBytesUtils {
   @SneakyThrows
   public static int read (@NonNull InputStream inputStream, @NonNull Bytes buffer, int length) {
     val readed = read(inputStream, buffer.array(), buffer.writerIndex(), length);
-    buffer.writerIndex(readed);
+    buffer.writerIndex(buffer.writerIndex() + readed);
     return readed;
   }
 
@@ -353,7 +353,7 @@ public final class ReadBytesUtils {
    */
   @SneakyThrows
   public static int read (@NonNull ReadableByteChannel channel, @NonNull Bytes buffer, int length) {
-    val readed = read(channel, buffer.array(), length);
+    val readed = read(channel, buffer.array(), buffer.writerIndex(), length);
     buffer.writerIndex(buffer.writerIndex() + readed);
     return readed;
   }
