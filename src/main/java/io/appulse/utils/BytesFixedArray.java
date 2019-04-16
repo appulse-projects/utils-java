@@ -261,7 +261,11 @@ class BytesFixedArray extends BytesAbstract {
   @Override
   public Bytes writerIndex (int newIndex) {
     if (newIndex < readerIndex() || newIndex > capacity()) {
-      throw new IndexOutOfBoundsException();
+      val msg = String.format(
+          "Writer index error: newIndex(%d) < readerIndex(%d) || newIndex(%d) > capacity(%d)",
+          newIndex, readerIndex(), newIndex, capacity()
+      );
+      throw new IndexOutOfBoundsException(msg);
     }
     writerIndex = newIndex;
     return this;
@@ -275,7 +279,11 @@ class BytesFixedArray extends BytesAbstract {
   @Override
   public Bytes readerIndex (int newIndex) {
     if (newIndex < 0 || newIndex > writerIndex()) {
-      throw new IndexOutOfBoundsException();
+      val msg = String.format(
+          "Reader index error: newIndex(%d) < 0 || newIndex(%d) > writerIndex(%d)",
+          newIndex, newIndex, writerIndex()
+      );
+      throw new IndexOutOfBoundsException(msg);
     }
     readerIndex = newIndex;
     return this;

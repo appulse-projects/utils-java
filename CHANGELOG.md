@@ -12,6 +12,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.15.0](https://github.com/appulse-projects/utils-java/releases/tag/1.15.0) - 2019-04-17
+
+### Added
+
+- `BytesPool` class for managing `Bytes` instances.
+
+### Changed
+
+- Added text messages to exceptions in bytes buffers wrappers.
+
 ## [1.14.1](https://github.com/appulse-projects/utils-java/releases/tag/1.14.1) - 2019-04-14
 
 ### Changed
