@@ -479,6 +479,17 @@ abstract class BytesAbstract implements Bytes {
     return Arrays.copyOfRange(array(), 0, writerIndex());
   }
 
+  @Override
+  public String toString () {
+    return new StringBuilder()
+        .append(getClass().getSimpleName()).append('{')
+        .append("capacity=").append(capacity()).append(',')
+        .append("readerIndex=").append(readerIndex()).append(',')
+        .append("writerIndex=").append(writerIndex())
+        .append('}')
+        .toString();
+  }
+
   protected void checkWriteBounds (int index, int length) {
     if (index < readerIndex() || index + length > capacity()) {
       val msg = String.format("Writer index error. index(%d) < readerIndex(%d) || index(%d)+length(%d) > capacity(%d)",
