@@ -16,6 +16,8 @@
 
 package io.appulse.utils;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import io.netty.util.internal.ThreadLocalRandom;
 import lombok.val;
 import org.junit.jupiter.api.Test;
@@ -38,5 +40,21 @@ class HexUtilTests {
 
     val prettyPrint = HexUtil.prettyHexDump(bytes);
     System.out.println(prettyPrint);
+  }
+
+  @Test
+  void toHexToByteArray () {
+    val bytes = new byte[] {
+        (byte) 0xDB, (byte) 0x68, (byte) 0xFE, (byte) 0x74, (byte) 0x59,
+        (byte) 0x7A, (byte) 0x9A, (byte) 0xC1, (byte) 0xCF, (byte) 0x27,
+        (byte) 0xCE, (byte) 0x65, (byte) 0x64, (byte) 0x08, (byte) 0xC8
+    };
+
+    val string = HexUtil.toHexString(bytes);
+    assertThat(string)
+        .isEqualTo("DB68FE74597A9AC1CF27CE656408C8");
+
+    assertThat(HexUtil.toByteArray(string))
+        .isEqualTo(bytes);
   }
 }

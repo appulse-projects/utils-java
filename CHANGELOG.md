@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.16.1](https://github.com/appulse-projects/utils-java/releases/tag/1.16.1) - 2019-04-26
+
+### Added
+
+- `HexUtil` to/from HEX string and byte array converter methods.
+
 ## [1.16.0](https://github.com/appulse-projects/utils-java/releases/tag/1.16.0) - 2019-04-24
 
 ### Added

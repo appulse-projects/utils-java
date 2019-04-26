@@ -45,6 +45,62 @@ public final class HexUtil {
     NEW_LINE = newLine;
   }
 
+  private static final char[] HEX_CODES = "0123456789ABCDEF".toCharArray();
+
+  /**
+   * Converts an array of bytes into a string.
+   *
+   * @param bytes an array of bytes
+   *
+   * @return a string containing a lexical representation of HEX binary
+   *
+   * @throws NullpointerException if {@code bytes} is null.
+   *
+   * @since 1.16.1
+   */
+  public static String toHexString (@NonNull byte[] bytes) {
+    val result = new StringBuilder(bytes.length * 2);
+    for (val value : bytes) {
+      result.append(HEX_CODES[(value >> 4) & 0xF]);
+      result.append(HEX_CODES[value & 0xF]);
+    }
+    return result.toString();
+  }
+
+  /**
+   * Converts the string argument into an array of bytes.
+   *
+   * @param string a string containing lexical representation of HEX binary.
+   *
+   * @return an array of bytes represented by the string argument.
+   *
+   * @throws NullpointerException if {@code string} is null.
+   *
+   * @throws IllegalArgumentException if string parameter does not conform to lexical
+   *                                  value space defined for HEX binary.
+   *
+   * @since 1.16.1
+   */
+  public static byte[] toByteArray (@NonNull String string) {
+    val length = string.length();
+    if (length % 2 != 0) {
+      val msg = String.format(ENGLISH, "hexBinary needs to be even-length: %s", string);
+      throw new IllegalArgumentException(msg);
+    }
+
+    val result = new byte[length / 2];
+    for (int index = 0; index < length; index += 2) {
+      int hight = hexToBin(string.charAt(index));
+      int low = hexToBin(string.charAt(index + 1));
+      if (hight == -1 || low == -1) {
+        val msg = String.format(ENGLISH, "contains illegal character for hexBinary: %s", string);
+        throw new IllegalArgumentException(msg);
+      }
+      result[index / 2] = (byte) (hight * 16 + low);
+    }
+    return result;
+  }
+
   /**
    * Converts an integer value into two-chars string with leading 0.
    *
@@ -133,10 +189,9 @@ public final class HexUtil {
       for (int index = 0; index < limit; index++) {
         val value = buffer.getUnsignedByte(rowStartIndex + index);
 
-        val hex = byteToHex(value);
         val hexIndex = 1 + 3 * index;
-        hexDump.setCharAt(hexIndex, hex.charAt(0));
-        hexDump.setCharAt(hexIndex + 1, hex.charAt(1));
+        hexDump.setCharAt(hexIndex, HEX_CODES[(value >> 4) & 0xF]);
+        hexDump.setCharAt(hexIndex + 1, HEX_CODES[value & 0xF]);
 
         asciiDump.setCharAt(index, byteToChar(value));
       }
@@ -148,6 +203,17 @@ public final class HexUtil {
     return result.append(NEW_LINE)
         .append("+--------+-------------------------------------------------+----------------+")
         .toString();
+  }
+
+  private static int hexToBin (char character) {
+    if (Character.isDigit(character)) {
+      return character - '0';
+    }
+
+    val letter = Character.toUpperCase(character);
+    return 'A' <= letter && letter <= 'F'
+           ? letter - 'A' + 10
+           : -1;
   }
 
   private HexUtil () {
