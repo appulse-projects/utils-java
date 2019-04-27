@@ -185,7 +185,7 @@ public final class HexUtil {
       val asciiDump = new StringBuilder("                ");
 
       val rowStartIndex = row * elementsInRow + offset;
-      val limit = Math.min(buffer.capacity() - rowStartIndex, elementsInRow);
+      val limit = Math.min(buffer.writerIndex() - rowStartIndex, elementsInRow);
       for (int index = 0; index < limit; index++) {
         val value = buffer.getUnsignedByte(rowStartIndex + index);
 

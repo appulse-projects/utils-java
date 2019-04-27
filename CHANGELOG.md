@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.16.2](https://github.com/appulse-projects/utils-java/releases/tag/1.16.2) - 2019-04-26
+
+### Changed
+
+- `HexUtil`.`prettyHexDump` bug, which calculate wrong buffer's limit.
+
 ## [1.16.1](https://github.com/appulse-projects/utils-java/releases/tag/1.16.1) - 2019-04-26
 
 ### Added
