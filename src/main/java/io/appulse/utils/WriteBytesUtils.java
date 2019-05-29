@@ -213,7 +213,7 @@ public final class WriteBytesUtils {
   }
 
   @SneakyThrows
-  public static int write (@NonNull Path path, @NonNull Bytes buffer, int length) {
+  public static int write (@NonNull Path path, Bytes buffer, int length) {
     try (val channel = Files.newByteChannel(path, CREATE, WRITE)) {
       return write(channel, buffer, length);
     }

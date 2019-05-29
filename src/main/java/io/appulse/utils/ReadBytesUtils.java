@@ -445,7 +445,7 @@ public final class ReadBytesUtils {
    * @return the total number of bytes read into the buffer.
    */
   @SneakyThrows
-  public static int read (@NonNull Path path, @NonNull byte[] buffer, int offset, int length) {
+  public static int read (@NonNull Path path, byte[] buffer, int offset, int length) {
     try (val channel = Files.newByteChannel(path, READ)) {
       return read(channel, buffer, offset, length);
     }
@@ -505,7 +505,7 @@ public final class ReadBytesUtils {
    * @return the total number of bytes read into the buffer.
    */
   @SneakyThrows
-  public static int read (@NonNull Path path, @NonNull Bytes buffer, int length) {
+  public static int read (@NonNull Path path, Bytes buffer, int length) {
     try (val channel = Files.newByteChannel(path, READ)) {
       return read(channel, buffer, length);
     }
@@ -564,7 +564,7 @@ public final class ReadBytesUtils {
    * @return the total number of bytes read into the buffer.
    */
   @SneakyThrows
-  public static int read (@NonNull Path path, @NonNull ByteBuffer buffer, int length) {
+  public static int read (@NonNull Path path, ByteBuffer buffer, int length) {
     try (val channel = Files.newByteChannel(path, READ)) {
       return read(channel, buffer, length);
     }

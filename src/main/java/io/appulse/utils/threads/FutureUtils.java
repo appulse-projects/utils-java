@@ -42,7 +42,7 @@ public final class FutureUtils {
    * @return completed exceptionally {@link CompletableFuture} instance.
    */
   public static <T> CompletableFuture<T> completedExceptionally (Throwable throwable) {
-    val future = new CompletableFuture<T>();
+    CompletableFuture<T> future = new CompletableFuture<>();
     future.completeExceptionally(throwable);
     return future;
   }
@@ -84,7 +84,7 @@ public final class FutureUtils {
 
   // https://stackoverflow.com/a/34163913
   private static <T> CompletableFuture<T> firstCompletedWithoutException (Stream<? extends CompletionStage<? extends T>> stream) {
-    val result = new CompletableFuture<T>();
+    CompletableFuture<T> result = new CompletableFuture<>();
     val complete = (Consumer<T>) result::complete;
 
     val futures = stream

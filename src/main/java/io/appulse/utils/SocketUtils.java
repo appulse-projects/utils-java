@@ -36,7 +36,7 @@ import lombok.SneakyThrows;
 public final class SocketUtils {
 
   public static Optional<Integer> findFreePort () {
-    return findFreePort(1024, 65535);
+    return findFreePort(1024, 65_535);
   }
 
   public static Optional<Integer> findFreePort (int from, int to) {
