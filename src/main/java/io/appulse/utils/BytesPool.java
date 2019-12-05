@@ -44,7 +44,7 @@ import lombok.val;
  * @since 1.15.0
  */
 @FieldDefaults(level = PRIVATE, makeFinal = true)
-public class BytesPool {
+public class BytesPool implements AutoCloseable {
 
   private static final int DEFAULT_INITIAL_BUFFERS_COUNT = 2;
 
@@ -66,6 +66,10 @@ public class BytesPool {
 
   Lock createNewLock;
 
+  public BytesPool () {
+    this(null, null, null, null);
+  }
+
   @Builder
   BytesPool (Integer initialBuffersCount,
              Integer maximumBuffersCount,
@@ -74,7 +78,6 @@ public class BytesPool {
   ) {
     int initialBuffers = ofNullable(initialBuffersCount)
         .filter(it -> it >= 0)
-        .filter(it -> it <= maximumBuffersCount)
         .orElse(DEFAULT_INITIAL_BUFFERS_COUNT);
 
     this.maximumBuffersCount = ofNullable(maximumBuffersCount)
@@ -86,14 +89,15 @@ public class BytesPool {
         .filter(it -> it > 0)
         .orElse(DEFAULT_INITIAL_BUFFER_SIZE);
 
-    this.bufferCreateFunction = bufferCreateFunction;
+    this.bufferCreateFunction = ofNullable(bufferCreateFunction)
+        .orElse(Bytes::resizableArray);
 
     totalElements = new LongAdder();
     acquiredBuffersCount = new LongAdder();
     createNewLock = new ReentrantLock(true);
 
     buffers = IntStream.range(0, initialBuffers)
-        .mapToObj(it -> bufferCreateFunction.apply(initialBufferSizeBytes))
+        .mapToObj(it -> this.bufferCreateFunction.apply(this.initialBufferSizeBytes))
         .peek(it -> totalElements.increment())
         .collect(toCollection(LinkedBlockingQueue::new));
   }
@@ -168,6 +172,16 @@ public class BytesPool {
    */
   public int getTotalCount () {
     return totalElements.intValue();
+  }
+
+  @Override
+  public void close () {
+    createNewLock.lock();
+    try {
+      buffers.clear();
+    } finally {
+      createNewLock.unlock();
+    }
   }
 
   private Bytes getOrCreateBuffer () throws InterruptedException {

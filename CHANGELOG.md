@@ -12,6 +12,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.16.4](https://github.com/appulse-projects/utils-java/releases/tag/1.16.4) - 2019-12-05
+
+### Changed
+
+- Added `AutoCloseable` interface to `BytesPool`;
+- Refactored initialization for `BytesPool`.
+
 ## [1.16.3](https://github.com/appulse-projects/utils-java/releases/tag/1.16.3) - 2019-05-29
 
 ### Changed

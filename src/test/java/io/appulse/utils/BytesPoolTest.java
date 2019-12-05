@@ -102,4 +102,12 @@ class BytesPoolTest {
         .isInstanceOf(IllegalArgumentException.class)
         .hasMessage("The buffer not from this pool");
   }
+
+  @Test
+  void instantiation () {
+    try (val pool = new BytesPool()) {
+      val buffer = pool.acquire(16);
+      assertThat(buffer.capacity()).isGreaterThanOrEqualTo(16);
+    }
+  }
 }
