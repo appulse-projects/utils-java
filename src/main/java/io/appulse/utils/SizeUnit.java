@@ -21,11 +21,14 @@ package io.appulse.utils;
  * unit of granularity and provides utility methods to convert across
  * the units.
  *
- * @author Artem Labazin
  * @since 1.13.0
+ * @author Artem Labazin
  */
 public enum SizeUnit {
 
+  /**
+   * Byte (B), 1 Byte.
+   */
   BYTES {
 
     public long toBytes (long value) {
@@ -57,6 +60,9 @@ public enum SizeUnit {
     }
   },
 
+  /**
+   * Kilobyte (kB), 2^10 Byte = 1.024 Byte.
+   */
   KILOBYTES {
 
     public long toBytes (long value) {
@@ -88,6 +94,9 @@ public enum SizeUnit {
     }
   },
 
+  /**
+   * Megabyte (MB), 2^20 Byte = 1.024 * 1.024 Byte = 1.048.576 Byte.
+   */
   MEGABYTES {
 
     public long toBytes (long value) {
@@ -119,6 +128,10 @@ public enum SizeUnit {
     }
   },
 
+  /**
+   * Gigabyte (GB),
+   * 2^30 Byte = 1.024 * 1.024 * 1.024 Byte = 1.073.741.824 Byte.
+   */
   GIGABYTES {
 
     public long toBytes (long value) {
@@ -150,6 +163,10 @@ public enum SizeUnit {
     }
   },
 
+  /**
+   * Terabyte (TB),
+   * 2^40 Byte = 1.024 * 1.024 * 1.024 * 1.024 Byte = 1.099.511.627.776 Byte.
+   */
   TERABYTES {
 
     public long toBytes (long value) {
@@ -181,6 +198,10 @@ public enum SizeUnit {
     }
   },
 
+  /**
+   * Petabyte (PB),
+   * 2^50 Byte = 1.024 * 1.024 * 1.024 * 1.024 * 1.024 Byte = 1.125.899.906.842.624 Byte.
+   */
   PETABYTES {
 
     public long toBytes (long value) {
@@ -235,30 +256,80 @@ public enum SizeUnit {
     return d * m;
   }
 
+  /**
+   * Converts a {@code source} value with a specified {@link SizeUnit} to that instance.
+   *
+   * @param source the value to convert.
+   * @param sourceUnit the value's size unit.
+   *
+   * @return converted value.
+   */
   public long convert (long source, SizeUnit sourceUnit) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to bytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in bytes.
+   */
   public long toBytes (long value) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to kilobytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in kilobytes.
+   */
   public long toKilobytes (long value) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to megabytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in megabytes.
+   */
   public long toMegabytes (long value) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to gigabytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in gigabytes.
+   */
   public long toGigabytes (long value) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to terabytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in terabytes.
+   */
   public long toTerabytes (long value) {
     throw new AbstractMethodError();
   }
 
+  /**
+   * Translates a value to petabytes.
+   *
+   * @param value the value to convert.
+   *
+   * @return converted value, in petabytes.
+   */
   public long toPetabytes (long value) {
     throw new AbstractMethodError();
   }

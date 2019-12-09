@@ -28,15 +28,9 @@ import io.appulse.utils.threads.AppulseExecutors;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import lombok.val;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.5.0
- */
 class ExecutorServiceWithTimeMonitorTest {
 
   @BeforeEach

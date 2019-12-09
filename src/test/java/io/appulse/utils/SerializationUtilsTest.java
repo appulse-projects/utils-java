@@ -30,10 +30,6 @@ import io.appulse.utils.exception.SerializationException;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author alabazin
- */
 class SerializationUtilsTest {
 
   @Test

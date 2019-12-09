@@ -33,8 +33,8 @@ import lombok.val;
 /**
  * Different reflection helpers.
  *
- * @author Artem Labazin
  * @since 1.0.1
+ * @author Artem Labazin
  */
 public final class ReflectionUtils {
 

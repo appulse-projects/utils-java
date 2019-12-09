@@ -23,10 +23,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- */
 class ReflectionUtilsTest {
 
   @Test

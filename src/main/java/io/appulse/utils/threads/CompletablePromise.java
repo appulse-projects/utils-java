@@ -28,8 +28,10 @@ import lombok.experimental.FieldDefaults;
 /**
  * {@link Future} object wrapper to {@link CompletableFuture}.
  *
- * @author Artem Labazin
+ * @param <T> the promis's generic type.
+ *
  * @since 1.11.1
+ * @author Artem Labazin
  */
 @FieldDefaults(level = PRIVATE)
 public class CompletablePromise<T> extends CompletableFuture<T> {

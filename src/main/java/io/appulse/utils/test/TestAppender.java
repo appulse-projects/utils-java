@@ -24,13 +24,17 @@ import ch.qos.logback.core.AppenderBase;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
+ * Logging catcher helper class.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressFBWarnings("MS_MUTABLE_COLLECTION_PKGPROTECT")
 public class TestAppender extends AppenderBase<ILoggingEvent> {
 
+  /**
+   * The collected logging events.
+   */
   public static final List<ILoggingEvent> EVENTS = new LinkedList<>();
 
   @Override

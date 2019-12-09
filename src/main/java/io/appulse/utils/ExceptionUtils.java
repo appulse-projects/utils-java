@@ -19,8 +19,8 @@ package io.appulse.utils;
 /**
  * Different exception helpers.
  *
- * @author Artem Labazin
  * @since 1.6.0
+ * @author Artem Labazin
  */
 public final class ExceptionUtils {
 

@@ -23,30 +23,34 @@ package io.appulse.utils.exception;
  * <p>
  * #NotThreadSafe# because Throwable is not thread-safe.
  *
- * @author Artem Labazin
  * @since 1.8.0
+ * @author Artem Labazin
  */
 public class SerializationException extends RuntimeException {
 
   private static final long serialVersionUID = 8179675064137603549L;
 
-  public SerializationException() {
+  public SerializationException () {
     super();
   }
 
-  public SerializationException(String message) {
+  public SerializationException (String message) {
     super(message);
   }
 
-  public SerializationException(String message, Throwable cause) {
+  public SerializationException (String message, Throwable cause) {
     super(message, cause);
   }
 
-  public SerializationException(Throwable cause) {
+  public SerializationException (Throwable cause) {
     super(cause);
   }
 
-  public SerializationException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+  public SerializationException (String message,
+                                 Throwable cause,
+                                 boolean enableSuppression,
+                                 boolean writableStackTrace
+  ) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }

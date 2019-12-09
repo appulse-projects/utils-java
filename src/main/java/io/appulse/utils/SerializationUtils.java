@@ -33,8 +33,8 @@ import lombok.val;
 /**
  * Different serialization helpers.
  *
- * @author Artem Labazin
  * @since 1.8.0
+ * @author Artem Labazin
  */
 public final class SerializationUtils {
 

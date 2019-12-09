@@ -24,11 +24,6 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.6.0
- */
 class ExceptionUtilsTest {
 
   @Test

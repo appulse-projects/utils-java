@@ -33,8 +33,8 @@ import lombok.val;
 /**
  * The helper methods for reading different streams/channels/files to buffers.
  *
- * @author Artem Labazin
  * @since 1.14.0
+ * @author Artem Labazin
  */
 public final class ReadBytesUtils {
 

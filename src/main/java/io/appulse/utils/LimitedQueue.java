@@ -24,8 +24,10 @@ import lombok.Value;
 /**
  * Just a regular {@link LinkedList}, but with limited capacity.
  *
- * @author Artem Labazin
+ * @param <T> the list's element type.
+ *
  * @since 1.15.0
+ * @author Artem Labazin
  */
 @Value
 @EqualsAndHashCode(callSuper = true)

@@ -28,8 +28,8 @@ import lombok.val;
 /**
  * The set of different HEX helper funtions.
  *
- * @author Artem Labazin
  * @since 1.16.0
+ * @author Artem Labazin
  */
 public final class HexUtil {
 
@@ -197,7 +197,10 @@ public final class HexUtil {
       }
 
       result.append(NEW_LINE)
-          .append('|').append(String.format(ENGLISH, "%07x0", row)).append('|').append(hexDump).append('|').append(asciiDump).append('|');
+          .append('|').append(String.format(ENGLISH, "%07x0", row))
+          .append('|').append(hexDump)
+          .append('|').append(asciiDump)
+          .append('|');
     }
 
     return result.append(NEW_LINE)

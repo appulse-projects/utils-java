@@ -24,8 +24,8 @@ import java.nio.charset.Charset;
  * This interface provides an abstract view for a primitive byte
  * arrays ({@code byte[]}).
  *
- * @author Artem Labazin
  * @since 1.12.0
+ * @author Artem Labazin
  */
 @SuppressWarnings({
     "PMD.ExcessiveClassLength",
@@ -90,7 +90,9 @@ public interface Bytes {
   }
 
   /**
-   * Create a new {@link Bytes} instance with a fixed size content
+   * Create a new {@link Bytes} instance with a fixed size content.
+   *
+   * @param size the size of a new buffer.
    *
    * @return the new {@link Bytes} instance
    */
@@ -1638,6 +1640,8 @@ public interface Bytes {
 
   /**
    * Returns the number of bytes (octets) this buffer can contain.
+   *
+   * @return the number of bytes.
    */
   int capacity ();
 
@@ -1766,7 +1770,7 @@ public interface Bytes {
 
   /**
    * Returns the copy of range the buffer's back byte array from
-   * <b>0</b> till <b>writeIndex</t>.
+   * <b>0</b> till <b>writeIndex</b>.
    * <p>
    * Modifications to this buffer's content may NOT cause the
    * returned array's content to be modified, and vice versa.

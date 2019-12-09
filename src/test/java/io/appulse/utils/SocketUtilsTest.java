@@ -22,11 +22,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.2.0
- */
 class SocketUtilsTest {
 
   @Test

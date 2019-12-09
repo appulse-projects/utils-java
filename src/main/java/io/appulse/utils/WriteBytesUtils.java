@@ -34,8 +34,8 @@ import lombok.val;
 /**
  * The helper methods for writing the data to different streams/channels/files.
  *
- * @author Artem Labazin
  * @since 1.14.0
+ * @author Artem Labazin
  */
 public final class WriteBytesUtils {
 

@@ -28,9 +28,10 @@ import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 
 /**
+ * The {@link ForkJoinPool}'s builder object.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressWarnings("PMD.AvoidLiteralsInIfCondition")
 @FieldDefaults(level = PRIVATE)

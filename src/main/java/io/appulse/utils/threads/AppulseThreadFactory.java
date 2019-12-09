@@ -33,9 +33,10 @@ import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 /**
+ * The {@link ThreadFactory} custom implementation, which adds fancy builder.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 @FieldDefaults(level = PRIVATE, makeFinal = true)

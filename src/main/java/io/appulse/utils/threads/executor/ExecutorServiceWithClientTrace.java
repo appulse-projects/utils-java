@@ -23,9 +23,10 @@ import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
 /**
+ * The {@link ExecutorService}'s wrapper for client's stack trace.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @Slf4j
 @SuppressWarnings("PMD.DoNotUseThreads")

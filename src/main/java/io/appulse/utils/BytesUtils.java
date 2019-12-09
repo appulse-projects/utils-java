@@ -27,9 +27,10 @@ import lombok.NonNull;
 import lombok.val;
 
 /**
+ * Different methods for working with bytes.
  *
- * @author Artem Labazin
  * @since 1.3.0
+ * @author Artem Labazin
  */
 @SuppressWarnings({
     "PMD.ExcessiveClassLength",

@@ -30,8 +30,10 @@ import lombok.experimental.FieldDefaults;
 /**
  * Round robin collection wrapper.
  *
- * @author Artem Labazin
+ * @param <T> the type of the selecting objects.
+ *
  * @since 1.8.0
+ * @author Artem Labazin
  */
 @FieldDefaults(level = PRIVATE)
 public final class RoundRobin<T> {
@@ -40,6 +42,7 @@ public final class RoundRobin<T> {
 
   final T[] elements;
 
+  @SuppressWarnings("PMD.AvoidUsingVolatile")
   volatile int size;
 
   @SuppressWarnings("unchecked")

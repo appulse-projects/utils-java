@@ -12,6 +12,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.17.0](https://github.com/appulse-projects/utils-java/releases/tag/1.17.0) - 2019-12-09
+
+### Added
+
+- `BytesInputStream` implementation of `InputStream` with `Bytes` internal;
+- `BytesOutputStream` implementation of `OutputStream` with `Bytes` internal.
+
+### Changed
+
+- Updated plugins;
+- Updated `pmd` and `checkstyle` rules;
+- Correct *Javadoc*s.
+
 ## [1.16.4](https://github.com/appulse-projects/utils-java/releases/tag/1.16.4) - 2019-12-05
 
 ### Changed

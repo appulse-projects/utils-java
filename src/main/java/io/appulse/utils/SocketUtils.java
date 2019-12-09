@@ -29,9 +29,10 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 
 /**
+ * The utility class for working with TCP connections.
  *
- * @author Artem Labazin
  * @since 1.2.0
+ * @author Artem Labazin
  */
 public final class SocketUtils {
 

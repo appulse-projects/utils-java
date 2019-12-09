@@ -27,8 +27,11 @@ import lombok.experimental.FieldDefaults;
 /**
  * FIFO cache implementation based on {@code LinkedHashMap}.
  *
- * @author Artem Labazin
+ * @param <K> the cache's key
+ * @param <V> the value type of the cache
+ *
  * @since 1.10.0
+ * @author Artem Labazin
  */
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class FifoCache<K, V> extends LinkedHashMap<K, V> {

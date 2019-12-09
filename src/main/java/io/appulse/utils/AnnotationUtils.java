@@ -31,8 +31,8 @@ import java.util.stream.Stream;
 /**
  * Different annotation helpers.
  *
- * @author Artem Labazin
  * @since 1.7.0
+ * @author Artem Labazin
  */
 public final class AnnotationUtils {
 
@@ -62,6 +62,8 @@ public final class AnnotationUtils {
    *
    * @param annotationType the annotation type to look for, both locally and as a meta-annotation
    *
+   * @param <T> the annotation type.
+   *
    * @return the first matching annotation
    *
    * @since 1.7.0
@@ -88,6 +90,8 @@ public final class AnnotationUtils {
    * @param annotatedElement the {@code AnnotatedElement} on which to find the annotation
    *
    * @param annotationType the annotation type to look for, both locally and as a meta-annotation
+   *
+   * @param <T> the annotation type.
    *
    * @return the first matching annotation
    *
@@ -118,6 +122,8 @@ public final class AnnotationUtils {
    *
    * @param annotationType the annotation type to look for
    *
+   * @param <T> the annotation type.
+   *
    * @return the first matching annotation
    *
    * @since 1.7.0
@@ -141,7 +147,8 @@ public final class AnnotationUtils {
   }
 
   /**
-   * Determine if the {@link Annotation} with the supplied name is defined in the core JDK {@code java.lang.annotation} package.
+   * Determine if the {@link Annotation} with the supplied name is defined in
+   * the core JDK {@code java.lang.annotation} package.
    *
    * @param annotationType the annotation type to check
    *
@@ -154,7 +161,8 @@ public final class AnnotationUtils {
   }
 
   /**
-   * Determine if the {@link Annotation} with the supplied name is defined in the core JDK {@code java.lang.annotation} package.
+   * Determine if the {@link Annotation} with the supplied name is defined in
+   * the core JDK {@code java.lang.annotation} package.
    *
    * @param annotationType the name of the annotation type to check
    *

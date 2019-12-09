@@ -29,8 +29,8 @@ import lombok.val;
 /**
  * Different future helpers.
  *
- * @author Artem Labazin
  * @since 1.11.0
+ * @author Artem Labazin
  */
 public final class FutureUtils {
 
@@ -38,6 +38,8 @@ public final class FutureUtils {
    * Creates {@link CompletableFuture} instance and completes it with specified exception.
    *
    * @param throwable the exception
+   *
+   * @param <T> the future's generic type.
    *
    * @return completed exceptionally {@link CompletableFuture} instance.
    */
@@ -52,9 +54,13 @@ public final class FutureUtils {
    *
    * @param futures array of futures.
    *
+   * @param <T> the future's generic type.
+   *
    * @return first non-exceptional completed future.
    */
-  public static <T> CompletableFuture<T> firstCompletedWithoutException (@NonNull CompletionStage<? extends T>... futures) {
+  public static <T> CompletableFuture<T> firstCompletedWithoutException (
+      @NonNull CompletionStage<? extends T>... futures
+  ) {
     val stream = Stream.of(futures);
     return firstCompletedWithoutException(stream);
   }
@@ -64,9 +70,13 @@ public final class FutureUtils {
    *
    * @param futures list of futures.
    *
+   * @param <T> the future's generic type.
+   *
    * @return first non-exceptional completed future.
    */
-  public static <T> CompletableFuture<T> firstCompletedWithoutException (@NonNull List<? extends CompletionStage<? extends T>> futures) {
+  public static <T> CompletableFuture<T> firstCompletedWithoutException (
+      @NonNull List<? extends CompletionStage<? extends T>> futures
+  ) {
     val stream = futures.stream();
     return firstCompletedWithoutException(stream);
   }
@@ -76,6 +86,8 @@ public final class FutureUtils {
    *
    * @param future for transform.
    *
+   * @param <T> the future's generic type.
+   *
    * @return {@link CompletableFuture} instance.
    */
   public static <T> CompletableFuture<T> toCompletableFuture (@NonNull Future<T> future) {
@@ -83,7 +95,9 @@ public final class FutureUtils {
   }
 
   // https://stackoverflow.com/a/34163913
-  private static <T> CompletableFuture<T> firstCompletedWithoutException (Stream<? extends CompletionStage<? extends T>> stream) {
+  private static <T> CompletableFuture<T> firstCompletedWithoutException (
+      Stream<? extends CompletionStage<? extends T>> stream
+  ) {
     CompletableFuture<T> result = new CompletableFuture<>();
     val complete = (Consumer<T>) result::complete;
 

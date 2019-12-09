@@ -40,8 +40,8 @@ import lombok.val;
 /**
  * The customisable {@link Bytes} pool.
  *
- * @author Artem Labazin
  * @since 1.15.0
+ * @author Artem Labazin
  */
 @FieldDefaults(level = PRIVATE, makeFinal = true)
 public class BytesPool implements AutoCloseable {

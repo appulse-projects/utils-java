@@ -24,11 +24,6 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.3.0
- */
 class ResourceUtilsTest {
 
   @Test

@@ -28,9 +28,10 @@ import lombok.Getter;
 import lombok.experimental.FieldDefaults;
 
 /**
+ * The {@link ScheduledExecutorService} wrapper, which delegates all methods execution.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 @FieldDefaults(level = PRIVATE, makeFinal = true)

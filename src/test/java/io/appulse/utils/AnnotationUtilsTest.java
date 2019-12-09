@@ -30,10 +30,6 @@ import java.lang.reflect.Method;
 
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author alabazin
- */
 class AnnotationUtilsTest {
 
   @Test

@@ -30,11 +30,6 @@ import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.11.0
- */
 class FutureUtilsTests {
 
   @Test

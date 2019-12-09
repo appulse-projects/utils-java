@@ -28,9 +28,10 @@ import io.appulse.utils.threads.executor.builder.ForkJoinPoolBuilder;
 import io.appulse.utils.threads.executor.builder.ScheduledExecutorServiceBuilder;
 
 /**
+ * The {@link ExecutorService} implementation with fancy builder.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressWarnings("PMD.ClassNamingConventions")
 public final class AppulseExecutors {

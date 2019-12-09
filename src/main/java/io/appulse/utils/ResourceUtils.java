@@ -42,9 +42,10 @@ import lombok.SneakyThrows;
 import lombok.val;
 
 /**
+ * The set of helper methods for working with classpath resources.
  *
- * @author Artem Labazin
  * @since 1.3.0
+ * @author Artem Labazin
  */
 public final class ResourceUtils {
 

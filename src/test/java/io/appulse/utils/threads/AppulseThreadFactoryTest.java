@@ -24,11 +24,6 @@ import java.util.concurrent.ThreadFactory;
 
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.5.0
- */
 class AppulseThreadFactoryTest {
 
   @Test

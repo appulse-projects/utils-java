@@ -30,9 +30,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 /**
+ * The {@link ExecutorService} wrapper, which delegates all methods execution.
  *
- * @author Artem Labazin
  * @since 1.5.0
+ * @author Artem Labazin
  */
 @SuppressWarnings("PMD.DoNotUseThreads")
 @RequiredArgsConstructor(access = PROTECTED)

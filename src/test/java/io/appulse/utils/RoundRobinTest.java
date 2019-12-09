@@ -20,10 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 
-/**
- * @author Artem Labazin
- * @since 1.8.0
- */
 class RoundRobinTest {
 
   @Test

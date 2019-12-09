@@ -25,11 +25,6 @@ import java.nio.ByteBuffer;
 import lombok.val;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author Artem Labazin
- * @since 1.0.0
- */
 class BytesTest {
 
   @Test
