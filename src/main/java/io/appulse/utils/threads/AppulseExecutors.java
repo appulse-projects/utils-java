@@ -28,7 +28,7 @@ import io.appulse.utils.threads.executor.builder.ForkJoinPoolBuilder;
 import io.appulse.utils.threads.executor.builder.ScheduledExecutorServiceBuilder;
 
 /**
- * The {@link ExecutorService} implementation with fancy builder.
+ * The {@link java.util.concurrent.ExecutorService} implementation with fancy builder.
  *
  * @since 1.5.0
  * @author Artem Labazin

@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.17.1](https://github.com/appulse-projects/utils-java/releases/tag/1.17.1) - 2019-12-09
+
+### Changed
+
+- Added a new wrapper constructor for `BytesOutputStream`.
+
 ## [1.17.0](https://github.com/appulse-projects/utils-java/releases/tag/1.17.0) - 2019-12-09
 
 ### Added

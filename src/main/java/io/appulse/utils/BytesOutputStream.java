@@ -65,6 +65,16 @@ public class BytesOutputStream extends OutputStream {
     buffer = Bytes.resizableArray(size);
   }
 
+  /**
+   * The constructor wraps already existent {@link Bytes}.
+   *
+   * @param bytes the bytes buffer to wraps.
+   */
+  public BytesOutputStream (Bytes bytes) {
+    super();
+    buffer = bytes;
+  }
+
   @Override
   public synchronized void write (int value) throws IOException {
     buffer.write1B(value);
