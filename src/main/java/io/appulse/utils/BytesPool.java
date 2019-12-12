@@ -208,7 +208,7 @@ public class BytesPool implements AutoCloseable {
    */
   @FieldDefaults(level = PRIVATE)
   @SuppressWarnings("PMD.LinguisticNaming")
-  public class PooledBytes extends BytesAbstract {
+  public final class PooledBytes extends BytesAbstract implements AutoCloseable {
 
     Bytes delegate;
 
@@ -224,6 +224,11 @@ public class BytesPool implements AutoCloseable {
      */
     public void release () {
       BytesPool.this.release(this);
+    }
+
+    @Override
+    public void close () {
+      release();
     }
 
     @Override

@@ -105,8 +105,8 @@ class BytesPoolTest {
 
   @Test
   void instantiation () {
-    try (val pool = new BytesPool()) {
-      val buffer = pool.acquire(16);
+    try (val pool = new BytesPool();
+         val buffer = pool.acquire(16)) {
       assertThat(buffer.capacity()).isGreaterThanOrEqualTo(16);
     }
   }
