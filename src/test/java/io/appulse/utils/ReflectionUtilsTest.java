@@ -59,7 +59,7 @@ class ReflectionUtilsTest {
     assertThat(object.isFlag()).isTrue();
 
     assertThat(ReflectionUtils.invokeMethodOf(object, "popa"))
-      .isNull();
+        .isNull();
   }
 
   @Getter

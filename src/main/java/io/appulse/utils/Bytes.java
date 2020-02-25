@@ -20,6 +20,8 @@ import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
+import lombok.val;
+
 /**
  * This interface provides an abstract view for a primitive byte
  * arrays ({@code byte[]}).
@@ -120,6 +122,53 @@ public interface Bytes {
    */
   static Bytes resizableArray (int initialSize) {
     return new BytesExtendableArray(initialSize);
+  }
+
+  /**
+   * Wraps a byte array into a new read-only {@link Bytes} object.
+   * <p>
+   * All modifications are forbidden.
+   *
+   * @param bytes the value to wrap
+   *
+   * @return the new {@link Bytes} read-only instance
+   *
+   * @since 1.17.3
+   */
+  static Bytes readOnly (byte[] bytes) {
+    val delegate = Bytes.wrap(bytes);
+    return readOnly(delegate);
+  }
+
+  /**
+   * Wraps a {@link ByteBuffer} buffer into a new read-only {@link Bytes} object.
+   * <p>
+   * All modifications are forbidden.
+   *
+   * @param buffer the value to wrap
+   *
+   * @return the new {@link Bytes} read-only instance
+   *
+   * @since 1.17.3
+   */
+  static Bytes readOnly (ByteBuffer buffer) {
+    val delegate = Bytes.wrap(buffer);
+    return readOnly(delegate);
+  }
+
+  /**
+   * Wraps a {@link Bytes} into a new read-only {@link Bytes} object.
+   * <p>
+   * All modifications are forbidden.
+   *
+   * @param delegate the value to wrap
+   *
+   * @return the new {@link Bytes} read-only instance
+   *
+   * @since 1.17.3
+   */
+  static Bytes readOnly (Bytes delegate) {
+    return new BytesReadOnly(delegate);
   }
 
   /**

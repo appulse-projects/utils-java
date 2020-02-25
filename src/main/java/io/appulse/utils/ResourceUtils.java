@@ -21,6 +21,7 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -69,11 +70,10 @@ public final class ResourceUtils {
    * @since 1.10.0
    */
   public static Optional<byte[]> getBytesContent (@NonNull URL url) {
-    try {
-      InputStream inputStream = url.openStream();
-      byte[] bytes = ReadBytesUtils.read(inputStream).arrayCopy();
+    try (val inputStream = url.openStream()) {
+      val bytes = ReadBytesUtils.read(inputStream).arrayCopy();
       return of(bytes);
-    } catch (Exception ex) {
+    } catch (IOException ex) {
       return empty();
     }
   }
@@ -118,19 +118,27 @@ public final class ResourceUtils {
    *
    * @since 1.10.0
    */
+  @SneakyThrows
   public static Optional<String> getTextContent (@NonNull String name, @NonNull Charset charset) {
     val classLoader = Thread.currentThread().getContextClassLoader();
-    InputStream inputStream = classLoader.getResourceAsStream(name);
-    if (inputStream == null) {
-      inputStream = ResourceUtils.class.getResourceAsStream(name);
+    InputStream inputStream = null;
+    try {
+      inputStream = classLoader.getResourceAsStream(name);
       if (inputStream == null) {
-        return empty();
+        inputStream = ResourceUtils.class.getResourceAsStream(name);
+        if (inputStream == null) {
+          return empty();
+        }
+      }
+
+      val bytes = ReadBytesUtils.read(inputStream).arrayCopy();
+      val string = new String(bytes, charset);
+      return of(string);
+    } finally {
+      if (inputStream != null) {
+        inputStream.close();
       }
     }
-
-    val bytes = ReadBytesUtils.read(inputStream).arrayCopy();
-    val string = new String(bytes, charset);
-    return of(string);
   }
 
   /**

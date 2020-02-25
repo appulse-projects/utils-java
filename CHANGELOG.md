@@ -14,6 +14,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [1.17.3](https://github.com/appulse-projects/utils-java/releases/tag/1.17.3) - 2020-02-25
 
+### Added
+
+- A **read-only** implementation of `Bytes`.
+
 ### Changed
 
 - Updated dependencies;

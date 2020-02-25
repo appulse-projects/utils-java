@@ -77,7 +77,6 @@ limitations under the License.
     <module name="JavadocMethod">
       <property name="scope" value="protected"/>
       <property name="allowedAnnotations" value="Override, Test"/>
-      <property name="allowThrowsTagsForSubclasses" value="true"/>
     </module>
     <module name="JavadocType">
       <property name="scope" value="protected"/>
