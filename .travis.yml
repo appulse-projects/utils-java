@@ -6,12 +6,11 @@ language: java
 jdk:
   - openjdk8
 
-
 install:
-  ./mvnw --settings .settings.xml install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V
+  ./mvnw --settings .settings.xml compile -B
 
 script:
-  ./mvnw --settings .settings.xml clean verify -DskipTests=false -Dmaven.javadoc.skip=true -Dgpg.skip -B -U
+  ./mvnw --settings .settings.xml verify -DskipTests=false -Dmaven.javadoc.skip=true -B -U
 
 before_deploy:
   - ./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\['
@@ -19,7 +18,7 @@ before_deploy:
   - echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import
   - echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust
   - sed -i -- "s/\${env.SONATYPE_PASSWORD}/$SONATYPE_PASSWORD/g" .settings.xml
-  - ./mvnw --settings .settings.xml clean deploy -DskipTests=true -Dmaven.javadoc.skip=false -B -U
+  - ./mvnw --settings .settings.xml deploy -DskipTests=true -Dmaven.javadoc.skip=false -B
 
 deploy:
   provider: releases
