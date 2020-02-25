@@ -12,6 +12,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Add more tests.
 - Add `JavaDoc`.
 
+## [1.17.3](https://github.com/appulse-projects/utils-java/releases/tag/1.17.3) - 2020-02-25
+
+### Changed
+
+- Updated dependencies;
+- Changed copyright;
+- Update Maven wrapper;
+- Improve different codestyle settings.
+
 ## [1.17.2](https://github.com/appulse-projects/utils-java/releases/tag/1.17.2) - 2019-12-12
 
 ### Changed

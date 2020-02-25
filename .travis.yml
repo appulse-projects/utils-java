@@ -1,8 +1,11 @@
 
+os: linux
+
 language: java
 
 jdk:
   - openjdk8
+
 
 install:
   ./mvnw --settings .settings.xml install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V
@@ -26,7 +29,7 @@ deploy:
     - "target/utils-java-$project_version.jar"
     - "target/utils-java-$project_version-javadoc.jar"
     - "target/utils-java-$project_version-sources.jar"
-  skip_cleanup: true
+  cleanup: false
   on:
     tags: true
     repo: appulse-projects/utils-java
