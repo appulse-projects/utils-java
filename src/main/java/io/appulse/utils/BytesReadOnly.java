@@ -19,7 +19,6 @@ package io.appulse.utils;
 import static lombok.AccessLevel.PACKAGE;
 import static lombok.AccessLevel.PRIVATE;
 
-import java.math.BigInteger;
 import java.nio.charset.Charset;
 
 import lombok.RequiredArgsConstructor;
@@ -27,11 +26,13 @@ import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
+@FieldDefaults(level = PRIVATE)
 @RequiredArgsConstructor(access = PACKAGE)
-@FieldDefaults(level = PRIVATE, makeFinal = true)
-class BytesReadOnly implements Bytes {
+class BytesReadOnly extends BytesAbstract {
 
-  Bytes delegate;
+  final Bytes delegate;
+
+  int readerIndex;
 
   @Override
   public boolean isAutoResizable () {
@@ -39,31 +40,7 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes writeNB (byte[] bytes) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes writeNB (byte[] bytes, int offset) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public Bytes writeNB (byte[] bytes, int offset, int length) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes writeNB (String value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes writeNB (String value, Charset charset) {
     val msg = "The operation doesn't support in BytesReadOnly wrapper";
     throw new UnsupportedOperationException(msg);
   }
@@ -75,91 +52,7 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes write1B (short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write1B (int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write1B (long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write1B (float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write1B (double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write1B (char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public Bytes write2B (short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write2B (char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write4B (byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write4B (short value) {
     val msg = "The operation doesn't support in BytesReadOnly wrapper";
     throw new UnsupportedOperationException(msg);
   }
@@ -171,79 +64,7 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes write4B (long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write4B (float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write4B (double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write4B (char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public Bytes write8B (long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes write8B (char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes setNB (int index, byte[] bytes) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes setNB (int index, byte[] bytes, int offset) {
     val msg = "The operation doesn't support in BytesReadOnly wrapper";
     throw new UnsupportedOperationException(msg);
   }
@@ -255,61 +76,7 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes setNB (int index, String value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes setNB (int index, String value, Charset charset) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public Bytes set1B (int index, byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set1B (int index, char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set2B (int index, byte value) {
     val msg = "The operation doesn't support in BytesReadOnly wrapper";
     throw new UnsupportedOperationException(msg);
   }
@@ -321,91 +88,7 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes set2B (int index, int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set2B (int index, long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set2B (int index, float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set2B (int index, double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set2B (int index, char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public Bytes set4B (int index, int value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, long value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set4B (int index, char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set8B (int index, byte value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set8B (int index, short value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set8B (int index, int value) {
     val msg = "The operation doesn't support in BytesReadOnly wrapper";
     throw new UnsupportedOperationException(msg);
   }
@@ -417,135 +100,60 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public Bytes set8B (int index, float value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set8B (int index, double value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes set8B (int index, char value) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
   public byte readByte () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public short readUnsignedByte () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getByte(readerIndex);
+    readerIndex += Byte.BYTES;
+    return result;
   }
 
   @Override
   public short readShort () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public int readUnsignedShort () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getShort(readerIndex);
+    readerIndex += Short.BYTES;
+    return result;
   }
 
   @Override
   public int readInt () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public long readUnsignedInt () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getInt(readerIndex);
+    readerIndex += Integer.BYTES;
+    return result;
   }
 
   @Override
   public long readLong () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public BigInteger readUnsignedLong () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getLong(readerIndex);
+    readerIndex += Long.BYTES;
+    return result;
   }
 
   @Override
   public float readFloat () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getFloat(readerIndex);
+    readerIndex += Float.BYTES;
+    return result;
   }
 
   @Override
   public double readDouble () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getDouble(readerIndex);
+    readerIndex += Double.BYTES;
+    return result;
   }
 
   @Override
   public char readChar () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public byte[] readBytes () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public byte[] readBytes (int length) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public Bytes readBytes (byte[] destination) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    val result = getChar(readerIndex);
+    readerIndex += Character.BYTES;
+    return result;
   }
 
   @Override
   public Bytes readBytes (byte[] destination, int offset, int length) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public String readString () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public String readString (Charset charset) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public String readString (int length) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public String readString (int length, Charset charset) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    checkReaderBounds(readerIndex, length);
+    System.arraycopy(array(), readerIndex, destination, offset, length);
+    readerIndex += length;
+    return this;
   }
 
   @Override
@@ -554,18 +162,8 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public short getUnsignedByte (int index) {
-    return delegate.getUnsignedByte(index);
-  }
-
-  @Override
   public short getShort (int index) {
     return delegate.getShort(index);
-  }
-
-  @Override
-  public int getUnsignedShort (int index) {
-    return delegate.getUnsignedShort(index);
   }
 
   @Override
@@ -574,18 +172,8 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public long getUnsignedInt (int index) {
-    return delegate.getUnsignedInt(index);
-  }
-
-  @Override
   public long getLong (int index) {
     return delegate.getLong(index);
-  }
-
-  @Override
-  public BigInteger getUnsignedLong (int index) {
-    return delegate.getUnsignedLong(index);
   }
 
   @Override
@@ -604,28 +192,8 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public byte[] getBytes (int index) {
-    return delegate.getBytes(index);
-  }
-
-  @Override
   public byte[] getBytes (int index, int length) {
     return delegate.getBytes(index, length);
-  }
-
-  @Override
-  public String getString (int index) {
-    return delegate.getString(index);
-  }
-
-  @Override
-  public String getString (int index, Charset charset) {
-    return delegate.getString(index, charset);
-  }
-
-  @Override
-  public String getString (int index, int length) {
-    return delegate.getString(index, length);
   }
 
   @Override
@@ -656,59 +224,18 @@ class BytesReadOnly implements Bytes {
   }
 
   @Override
-  public int writableBytes () {
-    return delegate.writableBytes();
-  }
-
-  @Override
-  public boolean isWritable () {
-    return delegate.isWritable();
-  }
-
-  @Override
-  public boolean isWritable (int size) {
-    return delegate.isWritable(size);
-  }
-
-  @Override
   public int readerIndex () {
-    return delegate.readerIndex();
+    return readerIndex;
   }
 
   @Override
   public Bytes readerIndex (int newIndex) {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
-  }
-
-  @Override
-  public int readableBytes () {
-    return delegate.readableBytes();
-  }
-
-  @Override
-  public boolean isReadable () {
-    return delegate.isReadable();
-  }
-
-  @Override
-  public boolean isReadable (int size) {
-    return delegate.isReadable(size);
-  }
-
-  @Override
-  public Bytes reset () {
-    val msg = "The operation doesn't support in BytesReadOnly wrapper";
-    throw new UnsupportedOperationException(msg);
+    readerIndex = newIndex;
+    return this;
   }
 
   @Override
   public byte[] array () {
     return delegate.array();
-  }
-
-  @Override
-  public byte[] arrayCopy () {
-    return delegate.arrayCopy();
   }
 }
