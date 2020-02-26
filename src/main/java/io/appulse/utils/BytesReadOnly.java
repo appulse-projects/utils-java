@@ -230,6 +230,13 @@ class BytesReadOnly extends BytesAbstract {
 
   @Override
   public Bytes readerIndex (int newIndex) {
+    if (newIndex < 0 || newIndex > writerIndex()) {
+      val msg = String.format(
+          "Reader index error: newIndex(%d) < 0 || newIndex(%d) > writerIndex(%d)",
+          newIndex, newIndex, writerIndex()
+      );
+      throw new IndexOutOfBoundsException(msg);
+    }
     readerIndex = newIndex;
     return this;
   }
