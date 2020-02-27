@@ -10,15 +10,14 @@ install:
   ./mvnw --settings .settings.xml compile -B
 
 script:
-  ./mvnw --settings .settings.xml verify -DskipTests=false -Dmaven.javadoc.skip=true -B -U
+  ./mvnw -Dmaven.javadoc.skip=true --settings .settings.xml verify -B -U
 
 before_deploy:
   - ./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\['
   - export project_version=$(./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\[')
-  - echo "${GPG_SECRET_KEYS}" | base64 --decode | "${GPG_EXECUTABLE}" --import
-  - echo "${GPG_OWNERTRUST}" | base64 --decode | "${GPG_EXECUTABLE}" --import-ownertrust
-  - sed -i -- "s/\${env.SONATYPE_PASSWORD}/$SONATYPE_PASSWORD/g" .settings.xml
-  - ./mvnw --settings .settings.xml deploy -DskipTests=true -Dmaven.javadoc.skip=false -B
+  - echo "${GPG_SECRET_KEYS}" | base64 --decode | "${GPG_EXECUTABLE}" --batch --passphrase "${GPG_PASSPHRASE}" --import
+  - echo "${GPG_OWNERTRUST}" | base64 --decode | "${GPG_EXECUTABLE}" --batch --passphrase "${GPG_PASSPHRASE}" --import-ownertrust
+  - ./mvnw -DskipTests -Dmaven.test.skip=true -Dfindbugs.skip=true -Dpmd.skip=true -Dcheckstyle.skip -Dmaven.javadoc.skip=false  --settings .settings.xml deploy -B
 
 deploy:
   provider: releases
