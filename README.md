@@ -62,6 +62,31 @@ $> mvn clean test
 
 Also, if you do `package` or `install` goals, the tests launch automatically.
 
+## Deploy
+
+To deploy the project in Maven Central, use the following command:
+
+```bash
+$> ./mvnw \
+    -DskipTests \
+    -Dmaven.test.skip=true \
+    -Dfindbugs.skip=true \
+    -Dpmd.skip=true \
+    -Dcheckstyle.skip \
+    -Dmaven.javadoc.skip=false \
+    --settings .settings.xml \
+    deploy -B
+```
+
+It maybe usefull to import `gpg`'s secret keys and ownertrust from somewhere:
+
+```bash
+$> echo "${GPG_SECRET_KEYS}" | base64 --decode | "${GPG_EXECUTABLE}" --batch --passphrase "${GPG_PASSPHRASE}" --import
+...
+$> echo "${GPG_OWNERTRUST}" | base64 --decode | "${GPG_EXECUTABLE}" --batch --passphrase "${GPG_PASSPHRASE}" --import-ownertrust
+...
+```
+
 ## Built With
 
 * [Java](http://www.oracle.com/technetwork/java/javase) - is a systems and applications programming language
