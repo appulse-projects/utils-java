@@ -24,12 +24,14 @@ import java.util.Arrays;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @SuppressWarnings("PMD.LinguisticNaming")
 @FieldDefaults(level = PRIVATE)
+@EqualsAndHashCode(callSuper = true)
 public final class BytesByteBuf extends BytesAbstract {
 
   public static BytesByteBuf allocate (int size) {

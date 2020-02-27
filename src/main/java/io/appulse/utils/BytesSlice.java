@@ -16,168 +16,151 @@
 
 package io.appulse.utils;
 
-import static lombok.AccessLevel.PROTECTED;
+import static lombok.AccessLevel.PRIVATE;
 
 import java.nio.charset.Charset;
-import java.util.Arrays;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
-@SuppressWarnings("PMD.LinguisticNaming")
-@FieldDefaults(level = PROTECTED)
 @EqualsAndHashCode(callSuper = true)
-class BytesFixedArray extends BytesAbstract {
+@FieldDefaults(level = PRIVATE, makeFinal = true)
+class BytesSlice extends BytesFixedArray {
 
-  static BytesFixedArray copy (@NonNull byte[] bytes) {
-    val copy = Arrays.copyOf(bytes, bytes.length);
-    return new BytesFixedArray(copy);
-  }
+  int from;
 
-  byte[] buffer;
+  int to;
 
-  int writerIndex;
-
-  int readerIndex;
-
-  BytesFixedArray (int size) {
+  @Builder
+  BytesSlice (Bytes delegate, @NonNull Integer from, @NonNull Integer to) {
     super();
-    buffer = new byte[size];
-  }
+    super.buffer = delegate.array();
+    this.from = from;
+    this.to = to;
 
-  @SuppressWarnings("PMD.ArrayIsStoredDirectly")
-  BytesFixedArray (@NonNull byte[] bytes) {
-    super();
-    buffer = bytes;
-    writerIndex(bytes.length);
-  }
-
-  protected BytesFixedArray () {
-    super();
-  }
-
-  @Override
-  public boolean isAutoResizable () {
-    return false;
+    if (delegate.writerIndex() < from) {
+      writerIndex = from;
+    } else if (delegate.writerIndex() > to) {
+      writerIndex = to;
+    } else {
+      writerIndex = delegate.writerIndex();
+    }
+    readerIndex = from;
   }
 
   @Override
   public Bytes writeNB (@NonNull byte[] bytes, int offset, int length) {
-    setNB(writerIndex, bytes, offset, length);
+    super.setNB(writerIndex, bytes, offset, length);
     writerIndex += length;
     return this;
   }
 
   @Override
   public Bytes write1B (byte value) {
-    set1B(writerIndex, value);
+    super.set1B(writerIndex, value);
     writerIndex += Byte.BYTES;
     return this;
   }
 
   @Override
   public Bytes write2B (short value) {
-    set2B(writerIndex, value);
+    super.set2B(writerIndex, value);
     writerIndex += Short.BYTES;
     return this;
   }
 
   @Override
   public Bytes write4B (int value) {
-    set4B(writerIndex, value);
+    super.set4B(writerIndex, value);
     writerIndex += Integer.BYTES;
     return this;
   }
 
   @Override
   public Bytes write8B (long value) {
-    set8B(writerIndex, value);
+    super.set8B(writerIndex, value);
     writerIndex += Long.BYTES;
     return this;
   }
 
   @Override
-  public Bytes setNB (int index, @NonNull byte[] bytes, int offset, int length) {
-    checkWriteBounds(index, length);
-    System.arraycopy(bytes, offset, buffer, index, length);
-    return this;
+  public Bytes setNB (int index, byte[] bytes, int offset, int length) {
+    val newIndex = from + index;
+    return super.setNB(newIndex, bytes, offset, length);
   }
 
   @Override
   public Bytes set1B (int index, byte value) {
-    checkWriteBounds(index, Byte.BYTES);
-    buffer[index] = value;
-    return this;
+    val newIndex = from + index;
+    return super.set1B(newIndex, value);
   }
 
   @Override
   public Bytes set2B (int index, short value) {
-    checkWriteBounds(index, Short.BYTES);
-    BytesUtils.unsafeWriteShort(value, buffer, index);
-    return this;
+    val newIndex = from + index;
+    return super.set2B(newIndex, value);
   }
 
   @Override
   public Bytes set4B (int index, int value) {
-    checkWriteBounds(index, Integer.BYTES);
-    BytesUtils.unsafeWriteInteger(value, buffer, index);
-    return this;
+    val newIndex = from + index;
+    return super.set4B(newIndex, value);
   }
 
   @Override
   public Bytes set8B (int index, long value) {
-    checkWriteBounds(index, Long.BYTES);
-    BytesUtils.unsafeWriteLong(value, buffer, index);
-    return this;
+    val newIndex = from + index;
+    return super.set8B(newIndex, value);
   }
 
   @Override
   public byte readByte () {
-    val result = getByte(readerIndex);
+    val result = super.getByte(readerIndex);
     readerIndex += Byte.BYTES;
     return result;
   }
 
   @Override
   public short readShort () {
-    val result = getShort(readerIndex);
+    val result = super.getShort(readerIndex);
     readerIndex += Short.BYTES;
     return result;
   }
 
   @Override
   public int readInt () {
-    val result = getInt(readerIndex);
+    val result = super.getInt(readerIndex);
     readerIndex += Integer.BYTES;
     return result;
   }
 
   @Override
   public long readLong () {
-    val result = getLong(readerIndex);
+    val result = super.getLong(readerIndex);
     readerIndex += Long.BYTES;
     return result;
   }
 
   @Override
   public float readFloat () {
-    val result = getFloat(readerIndex);
+    val result = super.getFloat(readerIndex);
     readerIndex += Float.BYTES;
     return result;
   }
 
   @Override
   public double readDouble () {
-    val result = getDouble(readerIndex);
+    val result = super.getDouble(readerIndex);
     readerIndex += Double.BYTES;
     return result;
   }
 
   @Override
   public char readChar () {
-    val result = getChar(readerIndex);
+    val result = super.getChar(readerIndex);
     readerIndex += Character.BYTES;
     return result;
   }
@@ -192,76 +175,72 @@ class BytesFixedArray extends BytesAbstract {
 
   @Override
   public byte getByte (int index) {
-    checkReaderBounds(index, Byte.BYTES);
-    return buffer[index];
+    val newIndex = from + index;
+    return super.getByte(newIndex);
   }
 
   @Override
   public short getShort (int index) {
-    checkReaderBounds(index, Short.BYTES);
-    return BytesUtils.unsafeReadShort(buffer, index);
+    val newIndex = from + index;
+    return super.getShort(newIndex);
   }
 
   @Override
   public int getInt (int index) {
-    checkReaderBounds(index, Integer.BYTES);
-    return BytesUtils.unsafeReadInteger(buffer, index);
+    val newIndex = from + index;
+    return super.getInt(newIndex);
   }
 
   @Override
   public long getLong (int index) {
-    checkReaderBounds(index, Long.BYTES);
-    return BytesUtils.unsafeReadLong(buffer, index);
+    val newIndex = from + index;
+    return super.getLong(newIndex);
   }
 
   @Override
   public float getFloat (int index) {
-    checkReaderBounds(index, Float.BYTES);
-    return BytesUtils.unsafeReadFloat(buffer, index);
+    val newIndex = from + index;
+    return super.getFloat(newIndex);
   }
 
   @Override
   public double getDouble (int index) {
-    checkReaderBounds(index, Double.BYTES);
-    return BytesUtils.unsafeReadDouble(buffer, index);
+    val newIndex = from + index;
+    return super.getDouble(newIndex);
   }
 
   @Override
   public char getChar (int index) {
-    checkReaderBounds(index, Character.BYTES);
-    return BytesUtils.unsafeReadCharacter(buffer, index);
+    val newIndex = from + index;
+    return super.getChar(newIndex);
   }
 
   @Override
   public byte[] getBytes (int index, int length) {
-    checkReaderBounds(index, length);
-    return Arrays.copyOfRange(buffer, index, index + length);
+    val newIndex = from + index;
+    return super.getBytes(newIndex, length);
   }
 
   @Override
-  public String getString (int index, int length, @NonNull Charset charset) {
-    checkReaderBounds(index, length);
-    return new String(buffer, index, length, charset);
+  public String getString (int index, int length, Charset charset) {
+    val newIndex = from + index;
+    return super.getString(newIndex, length, charset);
   }
 
   @Override
   public int capacity () {
-    return buffer.length;
+    return to - from;
   }
 
   @Override
   public void capacity (int bytes) {
-    if (capacity() == bytes) {
-      return;
-    }
-    buffer = Arrays.copyOf(buffer, bytes);
-    writerIndex = Math.min(writerIndex, bytes - 1);
-    readerIndex = Math.min(readerIndex, bytes - 1);
+    val msg = "The operation doesn't support in BytesSlice wrapper";
+    throw new UnsupportedOperationException(msg);
   }
 
   @Override
   public int writerIndex () {
-    return writerIndex;
+    return super.writerIndex() - from;
   }
 
   @Override
@@ -273,13 +252,37 @@ class BytesFixedArray extends BytesAbstract {
       );
       throw new IndexOutOfBoundsException(msg);
     }
-    writerIndex = newIndex;
+
+    val index = from + newIndex;
+    writerIndex = index;
     return this;
   }
 
   @Override
   public int readerIndex () {
-    return readerIndex;
+    return super.readerIndex() - from;
+  }
+
+  @Override
+  protected void checkWriteBounds (int index, int length) {
+    if (index < super.readerIndex() || index + length > super.capacity()) {
+      val msg = String.format(
+          "Writer index error. index(%d) < readerIndex(%d) || index(%d)+length(%d) > capacity(%d)",
+          index, super.readerIndex(), index, length, super.capacity()
+      );
+      throw new IndexOutOfBoundsException(msg);
+    }
+  }
+
+  @Override
+  protected void checkReaderBounds (int index, int length) {
+    if (index < 0 || index + length > super.writerIndex()) {
+      val msg = String.format(
+          "Reader index error. index(%d) < 0 || index(%d)+length(%d) > writerIndex(%d)",
+          index, index, length, super.writerIndex()
+      );
+      throw new IndexOutOfBoundsException(msg);
+    }
   }
 
   @Override
@@ -291,13 +294,9 @@ class BytesFixedArray extends BytesAbstract {
       );
       throw new IndexOutOfBoundsException(msg);
     }
-    readerIndex = newIndex;
-    return this;
-  }
 
-  @Override
-  @SuppressWarnings("PMD.MethodReturnsInternalArray")
-  public byte[] array () {
-    return buffer;
+    val index = from + newIndex;
+    readerIndex = index;
+    return this;
   }
 }

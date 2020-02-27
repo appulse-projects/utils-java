@@ -21,12 +21,14 @@ import static lombok.AccessLevel.PRIVATE;
 
 import java.nio.charset.Charset;
 
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
 @SuppressWarnings("PMD.AvoidDuplicateLiterals")
 @FieldDefaults(level = PRIVATE)
+@EqualsAndHashCode(callSuper = true)
 @RequiredArgsConstructor(access = PACKAGE)
 class BytesReadOnly extends BytesAbstract {
 

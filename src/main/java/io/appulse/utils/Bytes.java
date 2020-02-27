@@ -133,7 +133,7 @@ public interface Bytes {
    *
    * @return the new {@link Bytes} read-only instance
    *
-   * @since 1.17.3
+   * @since 1.18.0
    */
   static Bytes readOnly (byte[] bytes) {
     val delegate = Bytes.wrap(bytes);
@@ -149,7 +149,7 @@ public interface Bytes {
    *
    * @return the new {@link Bytes} read-only instance
    *
-   * @since 1.17.3
+   * @since 1.18.0
    */
   static Bytes readOnly (ByteBuffer buffer) {
     val delegate = Bytes.wrap(buffer);
@@ -165,7 +165,7 @@ public interface Bytes {
    *
    * @return the new {@link Bytes} read-only instance
    *
-   * @since 1.17.3
+   * @since 1.18.0
    */
   static Bytes readOnly (Bytes delegate) {
     return new BytesReadOnly(delegate);
@@ -1827,4 +1827,13 @@ public interface Bytes {
    * @return the copy of the array that backs this buffer
    */
   byte[] arrayCopy ();
+
+  /**
+   * Creates a new {@link BytesSliceBuilder} instance for making the buffer's slize.
+   *
+   * @return the {@link BytesSliceBuilder} instance
+   *
+   * @since 1.18.0
+   */
+  BytesSliceBuilder slice ();
 }

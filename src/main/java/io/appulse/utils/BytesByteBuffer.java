@@ -22,12 +22,14 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import lombok.experimental.FieldDefaults;
 import lombok.val;
 
-@FieldDefaults(level = PRIVATE)
 @SuppressWarnings("PMD.LinguisticNaming")
+@FieldDefaults(level = PRIVATE)
+@EqualsAndHashCode(callSuper = true)
 class BytesByteBuffer extends BytesAbstract {
 
   static BytesByteBuffer copy (@NonNull ByteBuffer buffer) {

@@ -18,8 +18,10 @@ package io.appulse.utils;
 
 import java.util.Arrays;
 
+import lombok.EqualsAndHashCode;
 import lombok.val;
 
+@EqualsAndHashCode(callSuper = true)
 class BytesExtendableArray extends BytesFixedArray {
 
   /**

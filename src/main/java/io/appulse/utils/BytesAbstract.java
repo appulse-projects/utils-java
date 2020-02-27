@@ -480,6 +480,11 @@ abstract class BytesAbstract implements Bytes {
   }
 
   @Override
+  public BytesSliceBuilder slice () {
+    return new BytesSliceBuilder(this);
+  }
+
+  @Override
   public String toString () {
     return new StringBuilder()
         .append(getClass().getSimpleName()).append('{')
