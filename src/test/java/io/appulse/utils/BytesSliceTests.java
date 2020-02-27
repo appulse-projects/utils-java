@@ -185,9 +185,9 @@ class BytesSliceTests {
         );
 
     assertThatThrownBy(() -> {
-            slice.readerIndex(8);
-            slice.writerIndex(7);
-        })
+      slice.readerIndex(8);
+      slice.writerIndex(7);
+    })
         .isInstanceOf(IndexOutOfBoundsException.class)
         .hasMessage(
             "Writer index error: newIndex(%d) < readerIndex(%d) || newIndex(%d) > capacity(%d)",
