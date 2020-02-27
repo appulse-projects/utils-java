@@ -7,10 +7,10 @@ jdk:
   - openjdk8
 
 install:
-  ./mvnw --settings .settings.xml compile -B -U
+  ./mvnw compile -B -U
 
 script:
-  ./mvnw -Dmaven.javadoc.skip=true --settings .settings.xml verify -B
+  ./mvnw install -B
 
 before_deploy:
   - ./mvnw help:evaluate -N -Dexpression=project.version | grep -v '\['
